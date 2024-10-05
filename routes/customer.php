@@ -43,5 +43,12 @@ Route::post('customer/login', [CustomerAppController::class, 'customerLogin'])
     ->name('auth.customer.login');
 
 // Step 9: Handle Step 4 For Sign In and Step 8 for Customer Registering Submission
-Route::post('customer/homepage', [CustomerAppController::class, 'customerIndexPage'])
+Route::get('customer/homepage', [CustomerAppController::class, 'customerIndexPage'])
     ->name('customer.index.page');
+
+//Log Out
+Route::post('customer/logout', [CustomerAppController::class, 'customerLogout'])
+    ->name('logout');
+
+Route::post('customer/booking/trip', [CustomerAppController::class, 'customerBookingTrip'])
+    ->name('customer.book.trip.store');

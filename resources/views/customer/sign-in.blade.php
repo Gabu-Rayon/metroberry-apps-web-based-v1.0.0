@@ -30,6 +30,15 @@
 
                 <!--Sign Up Container Start-->
                 <div class="sign-up-form-container text-center">
+
+                    @if (session('success'))
+                        <div class="alert alert-success">{{ session('success') }}</div>
+                    @endif
+
+                    @if (session('error'))
+                        <div class="alert alert-danger">{{ session('error') }}</div>
+                    @endif
+
                     <form class="width-100"method="POST" action="{{ route('auth.customer.login') }}">
                         @csrf
                         <!--Sign In Form Field Start-->
@@ -42,7 +51,7 @@
                                     </span>
                                 </div>
                                 <input class="form-control" type="text" autocomplete="off" name="email"
-                                    placeholder="Email Address">
+                                    placeholder="Email Address" value="{{ old('email') }}">
                             </div>
                         </div>
                         <!--Sign In Form Field End-->

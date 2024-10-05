@@ -19,7 +19,7 @@
                         <img src="{{ asset('mobile-app-assets/icons/back.svg') }}" alt="Back Icon">
                     </span>
                 </a>
-                <span>Sign Up</span>
+                <span>Verify  Your Account</span>
             </div>
             <!--Page Title & Icons End-->
 

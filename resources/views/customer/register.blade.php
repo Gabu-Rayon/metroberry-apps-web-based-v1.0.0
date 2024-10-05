@@ -52,7 +52,7 @@
                                             alt="Avatar Icon">
                                     </span>
                                 </div>
-                                <input class="form-control" type="text" autocomplete="off" name="name"
+                                <input class="form-control" type="text" autocomplete="on" name="name"
                                     placeholder="Name" value ="{{ old('name') }}">
                             </div>
                         </div>
@@ -65,11 +65,26 @@
                                     <span><img src="{{ asset('mobile-app-assets/icons/envelope.svg') }}"
                                             alt="Envelope Icon"></span>
                                 </div>
-                                <input class="form-control" type="text" autocomplete="off" name="email"
+                                <input class="form-control" type="text" autocomplete="on" name="email"
                                     placeholder="Email" value ="{{ old('email') }}">
                             </div>
                         </div>
                         <!--Sign Up Input Field End-->
+
+                        {{-- For Mobile  here  --}}
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span>
+                                        {{-- <img src="{{ asset('mobile-app-assets/icons/envelope.svg') }}"
+                                            alt="Envelope Icon"> --}}
+                                    </span>
+                                </div>
+                                <input class="form-control" id="phone-input" type="text" name="phone" autocomplete="on"
+                                    data-intl-tel-input-id="0" placeholder="(254) 70 0000 000">
+                            </div>
+                        </div>
+                        {{-- For Email verification here  --}}
 
                         <!--Sign Up Input Field Start-->
                         <div class="form-group">
@@ -95,7 +110,8 @@
                                     <span><img src="{{ asset('mobile-app-assets/icons/lock.svg') }}"
                                             alt="Lock Icon"></span>
                                 </div>
-                                <input class="form-control" type="password" name="password_confirmation" placeholder="Confirm Password" value ="{{ old('password_confirmation') }}">
+                                <input class="form-control" type="password" name="password_confirmation"
+                                    placeholder="Confirm Password" value ="{{ old('password_confirmation') }}">
                                 <div class="input-group-append password-visibility">
                                     <span>
                                         <img src="{{ asset('mobile-app-assets/icons/eye.svg') }}"
@@ -120,7 +136,8 @@
                                         id="organisation" required>
                                         <option value="" readonly>Select Organisation</option>
                                         @foreach ($organisations as $organisation)
-                                            <option value="{{ $organisation->id }}">{{ $organisation->user->name }}</option>
+                                            <option value="{{ $organisation->id }}">{{ $organisation->user->name }}
+                                            </option>
                                         @endforeach
                                     </select>
                                 </span>

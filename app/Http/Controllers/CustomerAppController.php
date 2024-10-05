@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use App\Rules\Phone;
 
 class CustomerAppController extends Controller
 {
@@ -54,6 +55,7 @@ class CustomerAppController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
+            'phone' => ['required', 'string', 'unique:users,phone', 'max:15', new Phone()],
             'password' => [
                 'required',
                 'string',
@@ -111,7 +113,7 @@ class CustomerAppController extends Controller
             Log::info('Customer created: ', $customer->toArray());
 
             // Redirect to phone input page with success message
-            return redirect()->route('sign.up.continue.page')->with('success', 'Account created successfully. Please provide your phone number.');
+            return redirect()->route('customer.sign.in.page')->with('success', 'Account created successfully. Please provide your phone number.');
         } catch (\Exception $e) {
             // Handle exceptions and show an error message
             return redirect()->back()->with('error', 'Failed to register customer. Please try again later.');
@@ -182,13 +184,40 @@ class CustomerAppController extends Controller
             return redirect()->route('customer.index.page')->with('success', 'Welcome back!');
         }
 
-        // If authentication fails, redirect back with error
-        return redirect()->back()->withErrors(['email' => 'Invalid credentials'])->withInput();
+        // Authentication failed
+        return redirect()->back()
+            ->with('error', 'Invalid credentials. Please try again.')
+            ->withInput($request->only('email'));
     }
 
     // Sign-in page method
     public function signInPage()
     {
         return view('customer.sign-in');
+    }
+
+
+
+    public function customerBookingTrip(){
+        
+    }
+
+
+    public function customerLogout(Request $request)
+    {
+        // Log the logout attempt
+        Log::info('Customer logout attempt: ', ['user_id' => Auth::id()]);
+
+        // Log out the user
+        Auth::guard('web')->logout();
+
+        // Invalidate the session
+        $request->session()->invalidate();
+
+        // Regenerate the CSRF token
+        $request->session()->regenerateToken();
+
+        // Redirect to the login page with a success message
+        return redirect()->route('login')->with('success', 'You have been logged out successfully.');
     }
 }
