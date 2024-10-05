@@ -13,6 +13,12 @@ use Illuminate\Support\Facades\Validator;
 
 class CustomerAppController extends Controller
 {
+
+
+    //Customer homepage
+    public function customerIndexPage(){
+         return view('customer.index');
+    }
     // Welcome page method
     public function WelcomePage()
     {
@@ -128,13 +134,6 @@ class CustomerAppController extends Controller
     {
         return view('customer.sign-up-continue-to-verify');
     }
-
-    // Phone number input page
-    public function phoneInputPage()
-    {
-        return view('customer.verify-account');
-    }
-
     // Send verification code method
     public function sendVerificationCode(Request $request)
     {
@@ -142,11 +141,14 @@ class CustomerAppController extends Controller
         $request->validate([
             'phone' => 'required|string|max:15',
         ]);
+        $request->validate([
+            'email' => 'required|email|unique:users,email',
+        ]);
 
-        // Simulate sending verification code (here you can use an SMS API to send the actual code)
+        // Simulate sending verification code using the  an SMS API or Imap to send the actual code)
         $verificationCode = rand(1000, 9999);
 
-        // Store the verification code in session or database (you can implement better storage if needed)
+        // Store the verification code in session or database ,implement better storage if needed
         session(['verification_code' => $verificationCode]);
 
         // Redirect to the verification code input page
@@ -159,6 +161,7 @@ class CustomerAppController extends Controller
         return view('customer.verify-account');
     }
 
+    
     // Handle verification code submission
     public function verifyCode(Request $request)
     {
@@ -171,7 +174,7 @@ class CustomerAppController extends Controller
         if ($request->input('verification-code') == session('verification_code')) {
             // Code is correct, mark the user as verified (or proceed to log in)
             session()->forget('verification_code');
-            return redirect()->route('welcome.page')->with('success', 'Phone number verified successfully.');
+            return redirect()->route('customer.index.page')->with('success', 'Phone number verified successfully.');
         }
 
         // If the code is incorrect
