@@ -88,7 +88,6 @@
                             </div>
                         </div>
                         <!--Sign Up Input Field End-->
-
                         <!--Sign Up Input Field Start-->
                         <div class="form-group">
                             <div class="input-group">
