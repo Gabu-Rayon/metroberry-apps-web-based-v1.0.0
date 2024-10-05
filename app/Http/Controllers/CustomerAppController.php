@@ -13,12 +13,12 @@ use Illuminate\Support\Facades\Validator;
 
 class CustomerAppController extends Controller
 {
-
-
-    //Customer homepage
-    public function customerIndexPage(){
-         return view('customer.index');
+    // Customer homepage
+    public function customerIndexPage()
+    {
+        return view('customer.index');
     }
+
     // Welcome page method
     public function WelcomePage()
     {
@@ -40,14 +40,9 @@ class CustomerAppController extends Controller
     }
 
     // Handle registration form submission
-
     public function registerCustomer(Request $request)
     {
-
-        Log::info('Data from the Customer Registration : ');
-
-        Log::info($request);
-
+        Log::info('Data from the Customer Registration : ', $request->all());
 
         // Trim password inputs
         $request->merge([
@@ -71,7 +66,7 @@ class CustomerAppController extends Controller
             ],
             'organisation' => 'required|exists:organisations,id',
         ], [
-            'password.regex' => 'Password must contain at least one uppercase, one lowercase, one number, and one special character.',
+            'password.regex' => 'Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character.',
         ]);
 
         // Redirect with errors if validation fails
@@ -80,9 +75,6 @@ class CustomerAppController extends Controller
         }
 
         try {
-            // Get authenticated user as the creator
-            // $creator = Auth::user();
-
             // Handle avatar upload if provided
             $avatarPath = null;
             if ($request->hasFile('avatar')) {
@@ -100,8 +92,7 @@ class CustomerAppController extends Controller
                 'created_by' => null,
                 'role' => 'customer',
             ]);
-            Log::info('user created is : ');
-            Log::info($user);
+            Log::info('User created: ', $user->toArray());
 
             // Retrieve the organisation code
             $organisation = Organisation::find($request->input('organisation'));
@@ -117,23 +108,22 @@ class CustomerAppController extends Controller
                 'national_id_front_avatar' => null,
                 'national_id_behind_avatar' => null,
             ]);
-            Log::info('Customer Created is : ');
-            Log::info($customer);
+            Log::info('Customer created: ', $customer->toArray());
 
             // Redirect to phone input page with success message
             return redirect()->route('sign.up.continue.page')->with('success', 'Account created successfully. Please provide your phone number.');
-
         } catch (\Exception $e) {
             // Handle exceptions and show an error message
             return redirect()->back()->with('error', 'Failed to register customer. Please try again later.');
         }
     }
 
-
+    // Sign-up continue page method
     public function signUpContinuePage()
     {
         return view('customer.sign-up-continue-to-verify');
     }
+
     // Send verification code method
     public function sendVerificationCode(Request $request)
     {
@@ -141,14 +131,11 @@ class CustomerAppController extends Controller
         $request->validate([
             'phone' => 'required|string|max:15',
         ]);
-        $request->validate([
-            'email' => 'required|email|unique:users,email',
-        ]);
 
-        // Simulate sending verification code using the  an SMS API or Imap to send the actual code)
+        // Simulate sending verification code (replace with actual SMS sending logic)
         $verificationCode = rand(1000, 9999);
 
-        // Store the verification code in session or database ,implement better storage if needed
+        // Store the verification code in session
         session(['verification_code' => $verificationCode]);
 
         // Redirect to the verification code input page
@@ -161,7 +148,6 @@ class CustomerAppController extends Controller
         return view('customer.verify-account');
     }
 
-    
     // Handle verification code submission
     public function verifyCode(Request $request)
     {
@@ -181,13 +167,28 @@ class CustomerAppController extends Controller
         return redirect()->back()->withErrors(['verification-code' => 'Invalid code'])->withInput();
     }
 
+    // Customer login method
+    public function customerLogin(Request $request)
+    {
+        // Validate request data
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required|string',
+        ]);
 
-     public function customerLogin(Request $request){
-        //customer auth code 
-     }
+        // Attempt to authenticate the user
+        if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
+            // Authentication passed, redirect to homepage
+            return redirect()->route('customer.index.page')->with('success', 'Welcome back!');
+        }
 
+        // If authentication fails, redirect back with error
+        return redirect()->back()->withErrors(['email' => 'Invalid credentials'])->withInput();
+    }
 
-      public function   signInPage(){
+    // Sign-in page method
+    public function signInPage()
+    {
         return view('customer.sign-in');
-      }
+    }
 }
