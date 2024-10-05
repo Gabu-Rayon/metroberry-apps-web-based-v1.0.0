@@ -218,6 +218,6 @@ class CustomerAppController extends Controller
         $request->session()->regenerateToken();
 
         // Redirect to the login page with a success message
-        return redirect()->route('login')->with('success', 'You have been logged out successfully.');
+        return redirect()->route('customer.sign.in.page')->with('success', 'You have been logged out successfully.');
     }
 }
