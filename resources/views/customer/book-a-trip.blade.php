@@ -12,7 +12,7 @@
         <div class="col-xs-12 col-sm-12">
             <!--Page Title & Icons Start-->
             <div class="header-icons-container text-center">
-                <a href="index.html">
+                <a href="{{ route('customer.index.page') }}">
                     <span class="float-left">
                         <img src="{{ asset('mobile-app-assets/icons/back.svg') }}" alt="Back Icon" />
                     </span>
@@ -26,8 +26,8 @@
             </div>
             <!--Page Title & Icons End-->
             <div class="rest-container">
-                <form action="{{ route('customer.book.trip.create') }}" method="POST"
-                    class="needs-validation modal-content" enctype="multipart/form-data">
+                <form action="{{ route('customer.book.trip.store') }}" method="POST" class="needs-validation modal-content"
+                    enctype="multipart/form-data">
                     @csrf
                     <div class="scan-your-card-container-none">
                         <div class="clearfix"></div>
@@ -36,14 +36,20 @@
                         <div class="car-info-container car-info-container-top font-weight-light">
                             <div class="card-number">
                                 {{-- Customer_id --}}
-                                {{ 'Customer Id Being in used hapa ni: ' . $customer->user->id }}
+                                {{-- @if (isset($customer))
+                                    <p>Customer ID: {{ $customer->id }}</p>
+                                @else
+                                    <p>Customer details not found.</p>
+                                @endif --}}
+
                                 <!--Route Field Start-->
                                 <div class="form-group">
                                     <label class="width-100">
-                                        <span class="label-title">Customer id</span>
+                                        {{-- <span class="label-title">Customer id</span> --}}
                                         <span class="car-info-wrap display-block">
-                                            <input name="customer_id" class="form-control" type="number" id="customer_id"
-                                                value="{{ $customer->user->id }}" required>
+                                            <input name="customer_id" class="form-control" type="hidden" id="customer_id"
+                                                value="{{ isset($customer) ? $customer->id : '' }}" required>
+
                                         </span>
                                     </label>
                                 </div>
@@ -56,13 +62,18 @@
                                     <label class="width-100">
                                         <span class="label-title">Route</span>
                                         <span class="car-info-wrap display-block">
-                                            <select class="custom-select font-weight-light preferred_route_id"
-                                                name="preferred_route_id" id="preferred_route_id"
-                                                data-url="{{ route('route.location.waypoints') }}" required>
-                                                @foreach ($routes as $routeData)
-                                                    <option value="{{ $routeData->id }}">{{ $routeData->name }}</option>
-                                                @endforeach
-                                            </select>
+                                            @if (isset($routes))
+                                                <select class="custom-select font-weight-light preferred_route_id"
+                                                    name="preferred_route_id" id="preferred_route_id"
+                                                    data-url="{{ route('route.location.waypoints') }}" required>
+                                                    @foreach ($routes as $routeData)
+                                                        <option value="{{ $routeData->id }}">{{ $routeData->name }}</option>
+                                                    @endforeach
+                                                </select>
+                                            @else
+                                                <p>Routes variable is not defined.</p>
+                                            @endif
+
                                         </span>
                                     </label>
                                 </div>

@@ -1,5 +1,6 @@
+  <br>
    <!--Terms And Conditions Agreement Container Start-->
-    <div class="col-xs-12 col-sm-12 text-center sms-rate-text font-roboto flex-end margin-bottom-30">
+    {{-- <div class="col-xs-12 col-sm-12 text-center sms-rate-text font-roboto flex-end margin-bottom-30">
         <div class="container-sms-rate-text width-100 font-11">
             <span class="light-gray font-weight-light">By using our App you have agreed to our </span>
             <br/>
@@ -10,7 +11,7 @@
     </div>
     <!--Terms And Conditions Agreement Container End-->
 
-</div>
+</div> --}}
     <!--Terms And Conditions Agreement Container End--><!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="{{ asset('mobile-app-assets/js/jquery-3.4.1.js') }}"></script>

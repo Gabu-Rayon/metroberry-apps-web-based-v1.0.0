@@ -15,7 +15,7 @@
          </div>
          <div class="menu-items">
              <div class="all-menu-items">
-                 <a class="menu-item" href="index.html">
+                 <a class="menu-item" href="{{ route('customer.index.page') }}">
                      <div>
                          <span class="menu-item-icon menu-dark">
                              <img src="{{ asset('mobile-app-assets/icons/home.svg') }} " alt="Home Icon">
@@ -27,7 +27,7 @@
                          <span class="menu-item-click fas fa-arrow-right"></span>
                      </div>
                  </a>
-                 <a class="menu-item" href="profile.html">
+                 <a class="menu-item" href="{{ route('customer.profile') }}">
                      <span class="menu-item-icon menu-dark profile">
                          <img src="{{ asset('mobile-app-assets/icons/avatar-dark.svg') }} " alt="Avatar Darker Icon">
                      </span>
@@ -37,12 +37,12 @@
                      <span class="menu-item-title profile">Profile</span>
                      <span class="menu-item-click fas fa-arrow-right"></span>
                  </a>
-                 <a class="menu-item" href="payment-method.html">
+                 <a class="menu-item" href="customer.payment.method.page">
                      <span class="menu-item-icon far fa-money-bill-alt"></span>
                      <span class="menu-item-title">Payment Methods</span>
                      <span class="menu-item-click fas fa-arrow-right"></span>
                  </a>
-                 <a class="menu-item" href="history.html">
+                 <a class="menu-item" href="{{ route('customer.trip.history') }}">
                      <span class="menu-item-icon menu-light">
                          <img src="{{ asset('mobile-app-assets/icons/history-light.svg') }} " alt="History Icon">
                      </span>
@@ -52,7 +52,7 @@
                      <span class="menu-item-title">History</span>
                      <span class="menu-item-click fas fa-arrow-right"></span>
                  </a>
-                 <a class="menu-item" href="addresses.html">
+                 <a class="menu-item" href="{{ route('customer.addresses.page') }}">
                      <span class="menu-item-icon menu-dark">
                          <img src="{{ asset('mobile-app-assets/icons/my-addresses-dark.svg') }} "
                              alt="My Addresses Icon">
@@ -63,12 +63,12 @@
                      <span class="menu-item-title">My Addresses</span>
                      <span class="menu-item-click fas fa-arrow-right"></span>
                  </a>
-                 <a class="menu-item" href="apply-promo.html">
+                 <a class="menu-item" href="{{ route('customer.apply.promo.code.page') }}">
                      <span class="menu-item-icon far fa-plus-square"></span>
                      <span class="menu-item-title promo">Apply Promo Code</span>
                      <span class="menu-item-click fas fa-arrow-right"></span>
                  </a>
-                 <a class="menu-item" href="settings.html">
+                 <a class="menu-item" href="{{ route('customer.settings.page') }}">
                      <span class="menu-item-icon menu-dark setting">
                          <img src="{{ asset('mobile-app-assets/icons/settings.svg') }} " alt="My Settings Icon">
                      </span>
@@ -78,7 +78,7 @@
                      <span class="menu-item-title">Settings</span>
                      <span class="menu-item-click fas fa-arrow-right"></span>
                  </a>
-                 <a class="menu-item" href="online-support.html">
+                 <a class="menu-item" href="{{ route('customer.online.support.page') }}">
                      <span class="menu-item-icon menu-dark support">
                          <img src="{{ asset('mobile-app-assets/icons/support.svg') }}" alt="Support Icon">
                      </span>

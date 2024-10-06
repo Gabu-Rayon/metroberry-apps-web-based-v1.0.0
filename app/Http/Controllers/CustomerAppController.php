@@ -2,23 +2,60 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Trip;
 use App\Models\User;
+use App\Rules\Phone;
+use App\Models\Routes;
 use App\Models\Customer;
 use App\Models\Organisation;
 use Illuminate\Http\Request;
+use App\Models\RouteLocations;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use App\Rules\Phone;
 
 class CustomerAppController extends Controller
 {
     // Customer homepage
     public function customerIndexPage()
-    {
-        return view('customer.index');
+{
+    // Get the authenticated user
+    $user = Auth::user();
+
+    // Check if the user is a customer
+    if ($user->role !== 'customer') {
+        return redirect()->back()->with('error', 'Access Denied. Only customers can access this page.');
     }
+
+    // Fetch the customer data based on the user_id in the customers table
+    $customer = Customer::where('user_id', $user->id)->firstOrFail();
+
+    // Fetch the organization that the customer belongs to
+    $organization = Organisation::find($customer->organisation_id);
+    
+    // Fetch booked trips for the customer (`trips` relationship in Customer model)
+    $trips = Trip::where('customer_id', $customer->id)->get(); 
+
+    // Fetch the routes for the organization (assuming you have a routes table)
+    $routes = Routes::all();
+
+    // Fetch the route locations (route_locations table with a route_id foreign key)
+    $routeLocations = RouteLocations::whereIn('route_id', $routes->pluck('id'))->get();
+
+    // Pass the data to the view
+    return view('customer.index', [
+        'user' => $user,
+        'customer' => $customer,
+        'organisation' => $organization,
+        'routes' => $routes,
+        'routeLocations' => $routeLocations,
+        'trips' => $trips, // Pass the trips to the view
+    ]);
+}
+
+
 
     // Welcome page method
     public function WelcomePage()
@@ -196,13 +233,6 @@ class CustomerAppController extends Controller
         return view('customer.sign-in');
     }
 
-
-
-    public function customerBookingTrip(){
-        
-    }
-
-
     public function customerLogout(Request $request)
     {
         // Log the logout attempt
@@ -219,5 +249,198 @@ class CustomerAppController extends Controller
 
         // Redirect to the login page with a success message
         return redirect()->route('customer.sign.in.page')->with('success', 'You have been logged out successfully.');
+    }
+
+
+
+    //Get all the routes  waypoint for the selected route
+    public function getAllRouteWaypoints(Request $request)
+    {
+        Log::info('HERE');
+        try {
+            $routeLocationWaypoints = RouteLocations::where('route_id', $request->route_id)
+                ->get(['name', 'id', 'point_order']);
+            Log::info('Data request for getting all waypoints for route ID: ' . $request->route_id);
+            Log::info('Retrieved waypoints: ', $routeLocationWaypoints->toArray());
+
+            return response()->json($routeLocationWaypoints);
+        } catch (\Exception $e) {
+            // Log any errors
+            Log::error('Error fetching waypoints: ' . $e->getMessage());
+            return response()->json(['error' => 'Failed to fetch waypoints'], 500);
+        }
+    }
+
+
+
+    public function customerBookingPage()
+    {
+        // Get the authenticated user
+        $user = Auth::user();
+
+        // Check if the user is a customer
+        if ($user->role !== 'customer') {
+            return redirect()->back()->with('error', 'Access Denied. Only customers can access this page.');
+        }
+
+        // Fetch the customer data based on the user_id in the customers table
+        $customer = Customer::where('user_id', $user->id)->firstOrFail();
+
+        // Fetch the organization that the customer belongs to
+        $organization = Organisation::find($customer->organisation_id);
+
+        // Fetch the routes for the organization (assuming you have a routes table)
+        $routes = Routes::all();
+
+        // Fetch the route locations (assuming you have a route_locations table with a route_id foreign key)
+        $routeLocations = RouteLocations::whereIn('route_id', $routes->pluck('id'))->get();
+
+        // Pass the data to the view
+        return view('customer.book-a-trip', [
+            'user' => $user,
+            'customer' => $customer,
+            'organisation' => $organization,
+            'routes' => $routes,
+            'routeLocations' => $routeLocations,
+        ]);
+    }
+    public function customerBookingTrip(Request $request)
+    {
+        try {
+            // Get all data from the request
+            $data = $request->all();
+
+            // Log the incoming booking data for debugging
+            Log::info('Customer booking trip data: ', $data);
+
+            // Validate incoming data
+            $validator = Validator::make($data, [
+                'customer_id' => 'required|exists:customers,id',
+                'pick_up_location' => 'required|string',
+                'preferred_route_id' => 'required|exists:routes,id',
+                'drop_off_location' => 'required|string',
+                'pickup_time' => 'required|date_format:H:i',
+                'trip_date' => 'required|date|after_or_equal:today',
+            ]);
+
+            // Handle validation failures
+            if ($validator->fails()) {
+                Log::info('Validation failed: ', $validator->errors()->toArray());
+                return redirect()->back()->with('error', $validator->errors()->first())->withInput();
+            }
+
+            // Begin transaction to ensure atomic operations
+            DB::beginTransaction();
+
+            // Create the trip record in the database
+            $trip = Trip::create([
+                'customer_id' => $data['customer_id'],
+                'route_id' => $data['preferred_route_id'],
+                'pick_up_time' => $data['pickup_time'],
+                'pick_up_location' => $data['pick_up_location'],
+                'drop_off_location' => $data['drop_off_location'],
+                'trip_date' => $data['trip_date'],
+                'created_by' => $data['customer_id'],
+            ]);
+
+            // Commit the transaction if all went well
+            DB::commit();
+
+            // Log trip creation success
+            Log::info('Trip created successfully: ', ['trip_id' => $trip->id]);
+
+            // Redirect with a success message
+            return redirect()->route('customer.profile')->with('success', 'Trip Booked successfully.');
+
+        } catch (\Exception $e) {
+            // Rollback transaction in case of any errors
+            DB::rollBack();
+
+            // Log the error for debugging
+            Log::error('Error creating trip: ', ['error' => $e->getMessage()]);
+
+            // Redirect with an error message
+            return redirect()->back()->with('error', 'Something Went Wrong. Please try again later.')->withInput();
+        }
+    }
+
+
+    public function customerProfile()
+    {
+        // Get the authenticated user
+        $user = Auth::user();
+        $organisations = Organisation::all();
+
+        // Check if the user is a customer
+        if ($user->role !== 'customer') {
+            return redirect()->back()->with('error', 'Access Denied. Only customers can access this page.');
+        }
+
+        // Fetch the customer data based on the user_id in the customers table
+        $customer = Customer::where('user_id', $user->id)->firstOrFail();
+
+        return view('customer.profile', compact('customer', 'user', 'organisations'));
+    }
+
+
+    public function customerProfileUpdate(Request $request, $id)
+    {
+        // Validate the incoming request data
+        $request->validate([
+            'phone' => 'required|string|max:15',
+            'full-name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'address' => 'nullable|string|max:255',
+            'organisation' => 'required|exists:organisations,id',
+            'national_id_no' => 'nullable|string|max:50',
+            'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'national_id_front_avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'national_id_behind_avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        // Find the customer by ID
+        $customer = Customer::findOrFail($id);
+        $user = $customer->user;
+
+        // Update customer details
+        $customer->phone = $request->input('phone');
+        $customer->name = $request->input('full-name');
+        $customer->address = $request->input('address');
+        $customer->organisation_id = $request->input('organisation');
+        $customer->national_id_no = $request->input('national_id_no');
+
+        // Handle profile picture upload
+        if ($request->hasFile('profile_picture')) {
+            $file = $request->file('profile_picture');
+            $filename = time() . '_profile.' . $file->getClientOriginalExtension();
+            $file->move(public_path('uploads/profile_pictures'), $filename);
+            $customer->profile_picture = 'uploads/profile_pictures/' . $filename;
+        }
+
+        // Handle national ID front avatar upload
+        if ($request->hasFile('national_id_front_avatar')) {
+            $file = $request->file('national_id_front_avatar');
+            $filename = time() . '_national_id_front.' . $file->getClientOriginalExtension();
+            $file->move(public_path('uploads/national_id_avatars'), $filename);
+            $customer->national_id_front_avatar = 'uploads/national_id_avatars/' . $filename;
+        }
+
+        // Handle national ID behind avatar upload
+        if ($request->hasFile('national_id_behind_avatar')) {
+            $file = $request->file('national_id_behind_avatar');
+            $filename = time() . '_national_id_behind.' . $file->getClientOriginalExtension();
+            $file->move(public_path('uploads/national_id_avatars'), $filename);
+            $customer->national_id_behind_avatar = 'uploads/national_id_avatars/' . $filename;
+        }
+
+        // Save the customer
+        $customer->save();
+
+        // Redirect back with a success message
+        return redirect()->route('customer.profile', $id)->with('success', 'Profile updated successfully.');
+    }
+
+    public function customerTripHistory(){
+        //customer trip history
     }
 }

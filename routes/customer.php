@@ -50,5 +50,40 @@ Route::get('customer/homepage', [CustomerAppController::class, 'customerIndexPag
 Route::post('customer/logout', [CustomerAppController::class, 'customerLogout'])
     ->name('logout');
 
-Route::post('customer/booking/trip', [CustomerAppController::class, 'customerBookingTrip'])
+Route::get('customer/booking/trip', [CustomerAppController::class, 'customerBookingPage'])
+    ->name('customer.book.trip.page');
+    
+Route::post('customer/booking/trip/store', [CustomerAppController::class, 'customerBookingTrip'])
     ->name('customer.book.trip.store');
+
+Route::post('route/locations/get/all', [CustomerAppController::class, 'getAllRouteWayPoints'])
+    ->name('route.location.waypoints');
+
+
+    //Customer Profile
+Route::get('customer/profile', [CustomerAppController::class, 'customerProfile'])
+    ->name('customer.profile');
+
+Route::put('customer/profile/{id}', [CustomerAppController::class, 'customerProfileUpdate'])
+    ->name('customer.profile.update');
+    
+// customer.trip.history
+Route::put('customer/trips/history', [CustomerAppController::class, 'customerTripHistory'])
+    ->name('customer.trip.history');
+
+// Payment Methods
+Route::get('/customer/payment-methods', [CustomerAppController::class, 'index'])->name('customer.payment.method.page');
+
+// Customer Addresses
+Route::get('/customer/addresses', [CustomerAppController::class, 'index'])->name('customer.addresses.page');
+
+// Apply Promo Code
+Route::get('/customer/apply-promo-code', [CustomerAppController::class, 'index'])->name('customer.apply.promo.code.page');
+
+// Settings
+Route::get('/customer/settings', [CustomerAppController::class, 'index'])->name('customer.settings.page');
+
+// Online Support
+Route::get('/customer/online-support', [CustomerAppController::class, 'index'])->name('customer.online.support.page');
+
+    

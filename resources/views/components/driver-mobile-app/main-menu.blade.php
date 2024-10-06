@@ -18,7 +18,7 @@
             <a class="menu-item" href="index.html">
                 <div>
                     <span class="menu-item-icon menu-dark">
-                        <img src="mobile-app-assets/icons/home.svg  {{ asset('') }}" alt="Home Icon" />
+                        <img src="  {{ asset('mobile-app-assets/icons/home.svg') }}" alt="Home Icon" />
                     </span>
                     <span class="menu-item-icon menu-light">
                         <img src="{{ asset('mobile-app-assets/icons/home-light.svg') }}" alt="Home Lighter Icon" />

@@ -14,15 +14,15 @@
 
             <!--Page Title & Icons Start-->
             <div class="header-icons-container text-center">
-                <a href="index.html">
+                <a href="{{ route('customer.index.page') }}">
                     <span class="float-left">
-                        <img src="{{ asset('mobile-app-assets/icons/back.svg')}}" alt="Back Icon">
+                        <img src="{{ asset('mobile-app-assets/icons/back.svg') }}" alt="Back Icon">
                     </span>
                 </a>
                 <span>Profile</span>
                 <a href="#">
                     <span class="float-right menu-open closed">
-                        <img src="{{ asset('mobile-app-assets/icons/menu.svg')}}" alt="Menu Hamburger Icon">
+                        <img src="{{ asset('mobile-app-assets/icons/menu.svg') }}" alt="Menu Hamburger Icon">
                     </span>
                 </a>
             </div>
@@ -33,29 +33,35 @@
                 <!--Profile Information Container Start-->
                 <div class="text-center header-icon-logo-margin">
                     <div class="profile-picture-container">
-                        <img src="{{ asset('mobile-app-assets/images/avatar.svg')}}" alt="Profile Picture">
+                        <img src="{{ isset($customer->profile_picture) ? asset($customer->profile_picture) : asset('mobile-app-assets/images/avatar.svg') }}"
+                            alt="Profile Picture">
                         <span class="fas fa-camera">
-                            <input class="file-prompt" type="file" accept="image/*">
+                            <input class="file-prompt" type="file" accept="image/*" name="profile_picture">
                         </span>
                     </div>
                     <div class="display-flex flex-column">
-                        <span class="profile-name">Nata Vacheishvili</span>
-                        <span class="profile-email font-weight-light">nata_vacheishvili@gurucar.com</span>
+                        <span class="profile-name">{{ $customer->user->name }}</span>
+                        <span class="profile-email font-weight-light">{{ $customer->user->email }}</span>
                     </div>
                 </div>
                 <!--Profile Information Container End-->
 
                 <!--Profile Information Fields Container Start-->
                 <div class="sign-up-form-container text-center">
-                    <form class="width-100">
+                    <form class="width-100" method="POST" action="{{ route('customer.profile.update', $customer->id) }}"
+                        enctype="multipart/form-data">
+                        @csrf
+                        @method('PUT')
 
                         <!--Profile Field Container Start-->
                         <div class="form-group">
                             <div class="input-group">
                                 <div class="input-group-prepend">
-                                    <span><img src="{{ asset('mobile-app-assets/icons/phone.svg')}}" alt="Phone Number"></span>
+                                    <span><img src="{{ asset('mobile-app-assets/icons/phone.svg') }}"
+                                            alt="Phone Number"></span>
                                 </div>
-                                <input class="form-control" type="tel" name="phone" placeholder="Mobile Phone Number">
+                                <input class="form-control" type="tel" name="phone"
+                                    value="{{ $customer->user->phone }}" placeholder="Mobile Phone Number">
                             </div>
                         </div>
                         <!--Profile Field Container End-->
@@ -65,11 +71,12 @@
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <span>
-                                        <img src="{{ asset('mobile-app-assets/icons/avatar-light.svg')}}" alt="Avatar Icon">
+                                        <img src="{{ asset('mobile-app-assets/icons/avatar-light.svg') }}"
+                                            alt="Avatar Icon">
                                     </span>
                                 </div>
-                                <input class="form-control" type="text" autocomplete="off" name="full-name"
-                                    placeholder="Full Name">
+                                <input class="form-control" type="text" autocomplete="off"
+                                    value="{{ $customer->user->name }}" name="full-name" placeholder="Full Name">
                             </div>
                         </div>
                         <!--Profile Field Container End-->
@@ -79,10 +86,11 @@
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <span>
-                                        <img src="{{ asset('mobile-app-assets/icons/envelope.svg')}}" alt="Envelope Icon">
+                                        <img src="{{ asset('mobile-app-assets/icons/envelope.svg') }}" alt="Envelope Icon">
                                     </span>
                                 </div>
-                                <input class="form-control" type="email" name="email" placeholder="Email">
+                                <input class="form-control" type="email" name="email"
+                                    value="{{ $customer->user->email }}" placeholder="Email">
                             </div>
                         </div>
                         <!--Profile Field Container End-->
@@ -92,116 +100,91 @@
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <span>
-                                        <img src="{{ asset('mobile-app-assets/icons/marker.svg')}}" alt="Marker Icon">
+                                        <img src="{{ asset('mobile-app-assets/icons/marker.svg') }}" alt="Marker Icon">
                                     </span>
                                 </div>
-                                <input class="form-control" type="text" autocomplete="off" name="country"
-                                    placeholder="Country">
+                                <input class="form-control" type="text" autocomplete="off"
+                                    value="{{ $customer->user->address }}" name="address" placeholder="Address">
                             </div>
                         </div>
                         <!--Profile Field Container End-->
 
-                        <!--Profile Field Container Start-->
+                        <!--Pickup organisations Field Start-->
                         <div class="form-group">
-                            <div class="input-group">
+                            <label class="width-100">
                                 <div class="input-group-prepend">
                                     <span>
-                                        <img src="{{ asset('mobile-app-assets/icons/marker.svg')}}" alt="Marker Icon">
+                                        <span class="label-title">Select Organisation</span>
                                     </span>
                                 </div>
-                                <input class="form-control" type="text" autocomplete="off" name="city"
-                                    placeholder="City">
-                            </div>
+                                <span class="car-info-wrap display-block">
+                                    <select name="organisation" class="custom-select font-weight-light car-info"
+                                        id="organisation" required>
+                                        <option value="" readonly>Select Organisation</option>
+                                        @foreach ($organisations as $organisation)
+                                            <option value="{{ $organisation->id }}"
+                                                {{ $customer->organisation_id == $organisation->id ? 'selected' : '' }}>
+                                                {{ $organisation->user->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </span>
+                            </label>
                         </div>
-                        <!--Profile Field Container End-->
+                        <!--Pickup organisations Field End-->
 
-                        <!--Profile Field Container Start-->
+                        <!--National ID No Field Container Start-->
                         <div class="form-group">
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <span>
-                                        <img src="{{ asset('mobile-app-assets/icons/marker.svg')}}" alt="Marker Icon">
+                                        <img src="{{ asset('mobile-app-assets/icons/marker.svg') }}" alt="Marker Icon">
                                     </span>
                                 </div>
-                                <input class="form-control" type="text" autocomplete="off" name="address"
-                                    placeholder="Address">
+                                <input class="form-control" type="text" autocomplete="off"
+                                    value="{{ $customer->national_id_no }}" name="national_id_no"
+                                    placeholder="National ID No">
                             </div>
                         </div>
-                        <!--Profile Field Container End-->
+                        <!--National ID No Field Container End-->
 
-                        <!--Profile Field Container Start-->
+                        <!--National ID Front Avatar Field Container Start-->
                         <div class="form-group">
+                            <div class="input-group-prepend">
+                                <span>
+                                    <span class="label-title">National Id Avatar Front</span>
+                                </span>
+                            </div>
                             <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span>
-                                        <img src="{{ asset('mobile-app-assets/icons/marker.svg')}}" alt="Marker Icon">
-                                    </span>
-                                </div>
-                                <input class="form-control" type="text" autocomplete="off" name="zip"
-                                    placeholder="Zip Code">
+                                <input class="form-control" type="file" name="national_id_front_avatar"
+                                    accept="image/*">
                             </div>
                         </div>
-                        <!--Profile Field Container End-->
+                        <!--National ID Front Avatar Field Container End-->
 
-                        <!--Profile Field Container Start-->
+                        <!--National ID Behind Avatar Field Container Start-->
                         <div class="form-group">
+                            <div class="input-group-prepend">
+                                <span>
+                                    <span class="label-title">National Id Avatar Behind</span>
+                                </span>
+                            </div>
                             <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span>
-                                        <img src="{{ asset('mobile-app-assets/icons/lock.svg')}}" alt="Lock Icon">
-                                    </span>
-                                </div>
-                                <input class="form-control" type="password" name="password" placeholder="Password">
-                                <div class="input-group-append password-visibility">
-                                    <span>
-                                        <img src="{{ asset('mobile-app-assets/icons/eye.svg')}}" alt="Password Visibility Icon">
-                                    </span>
-                                </div>
+                                <input class="form-control" type="file" name="national_id_behind_avatar"
+                                    accept="image/*">
                             </div>
                         </div>
-                        <!--Profile Field Container End-->
-
-                        <!--Profile Field Container Start-->
-                        <div class="form-group">
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span>
-                                        <img src="{{ asset('mobile-app-assets/icons/lock.svg')}}" alt="Lock Icon">
-                                    </span>
-                                </div>
-                                <input class="form-control" type="password" name="password"
-                                    placeholder="Confirm Password">
-                                <div class="input-group-append password-visibility">
-                                    <span>
-                                        <img src="{{ asset('mobile-app-assets/icons/eye.svg')}}" alt="Password Visibility Icon">
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                        <!--Profile Field Container End-->
+                        <!--National ID Behind Avatar Field Container End-->
 
                         <div class="form-submit-button">
-                            <a href="index.html" class="btn btn-dark text-uppercase ">Save <span
-                                    class="far fa-save margin-left-10"></span></a>
+                            <button type="submit" class="btn btn-dark text-uppercase">Save <span
+                                    class="far fa-save margin-left-10"></span></button>
                         </div>
                     </form>
                 </div>
                 <!--Profile Information Fields Container End-->
-
             </div>
         </div>
 
-        <!--Terms And Conditions Agreement Container Start-->
-        <div class="col-xs-12 col-sm-12 text-center sms-rate-text font-roboto flex-end margin-bottom-30">
-            <div class="container-sms-rate-text width-100 font-11">
-                <span class="light-gray font-weight-light">By signing up you have agreed to our </span>
-                <br />
-                <a href="#" class="dark-link">
-                    <span class="font-weight-light">Terms of Use & Privacy Policy</span>
-                </a>
-            </div>
-        </div>
-        <!--Terms And Conditions Agreement Container End-->
         <!--Main Menu Start-->
         @include('components.customer-mobile-app.main-menu')
         <!--Main Menu End-->
