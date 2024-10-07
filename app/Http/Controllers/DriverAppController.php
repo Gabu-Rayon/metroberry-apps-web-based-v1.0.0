@@ -421,4 +421,15 @@ class DriverAppController extends Controller
     {
         return view('driver.documents');
     }
+
+    /**
+     * Driver Vehicle Page
+     * 
+     * @return \Illuminate\View\View
+     */
+
+    public function vehicle()
+    {
+        return view('driver.vehicle');
+    }
 }
