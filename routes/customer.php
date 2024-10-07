@@ -72,19 +72,19 @@ Route::put('customer/trips/history', [CustomerAppController::class, 'customerTri
     ->name('customer.trip.history');
 
 // Payment Methods
-Route::get('/customer/payment-methods', [CustomerAppController::class, 'index'])->name('customer.payment.method.page');
+Route::get('/customer/payment-methods', [CustomerAppController::class, 'paymentMethod'])->name('customer.payment.method.page');
 
 // Customer Addresses
-Route::get('/customer/addresses', [CustomerAppController::class, 'index'])->name('customer.addresses.page');
+Route::get('/customer/addresses', [CustomerAppController::class, 'customerAddress'])->name('customer.addresses.page');
 
 // Apply Promo Code
-Route::get('/customer/apply-promo-code', [CustomerAppController::class, 'index'])->name('customer.apply.promo.code.page');
+Route::get('/customer/apply-promo-code', [CustomerAppController::class, 'applyPromoCode'])->name('customer.apply.promo.code.page');
 
 // Settings
-Route::get('/customer/settings', [CustomerAppController::class, 'index'])->name('customer.settings.page');
+Route::get('/customer/settings', [CustomerAppController::class, 'customerSettings'])->name('customer.settings.page');
 
 // Online Support
-Route::get('/customer/online-support', [CustomerAppController::class, 'index'])->name('customer.online.support.page');
+Route::get('/customer/online-support', [CustomerAppController::class, 'onlineSupport'])->name('customer.online.support.page');
 
 
 // customer.trip.show

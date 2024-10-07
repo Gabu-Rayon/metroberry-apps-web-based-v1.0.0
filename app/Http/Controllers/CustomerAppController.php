@@ -468,4 +468,40 @@ class CustomerAppController extends Controller
         return redirect()->route('customer.index.page', $trip->id)->with('status', 'Trip has been cancelled.');
     }
 
+
+
+    // Payment Methods
+    public function paymentMethod()
+    {
+       // view file resources/views/customer/payment-methods.blade.php
+        return view('customer.payment-methods');
+    }
+
+    // Customer Addresses
+    public function customerAddress()
+    {
+       // view file resources/views/customer/addresses.blade.php
+        return view('customer.addresses');
+    }
+
+    // Apply Promo Code
+    public function applyPromoCode()
+    {
+       // view file resources/views/customer/apply-promo-code.blade.php
+        return view('customer.apply-promo-code');
+    }
+
+    // Settings
+    public function customerSettings()
+    {
+       // view file resources/views/customer/settings.blade.php
+        return view('customer.settings');
+    }
+
+    // Online Support
+    public function onlineSupport()
+    {
+       // view file resources/views/customer/online-support.blade.php
+        return view('customer.online-support');
+    }
 }
