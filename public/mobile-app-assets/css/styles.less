@@ -1,0 +1,2712 @@
+/**==============================Table Of Contents Start===========================**/
+/**
+1) Fonts Import & Font Family
+2) Reused Color Definition
+3) General Reused Selectors
+4) Scan Card Container / All Credit Cards Container
+5) Upload Pictures Styles
+6) Car and Card Information Container Styles
+7) Payment Options Container
+8) Addresses Container
+9) Sign Up Container
+10) Settings Wrapper
+11) Support Container
+12) History Items Container
+13) Toggle Yes/No Check/Uncheck Settings
+14) Start Requesting Ride Container
+15) Tapped Car Container
+16) Request Ride Container
+17) Review Container
+18) Promo Container
+19) Chat Container
+20) Google Maps
+21) Buttons
+22) Display
+23) Colors
+24) Margin/Padding
+25) Container
+26) Links
+27) General
+28) Border
+29) Font Sizes
+30) Width/Height
+31) CSS Animations
+32) Responsive Styles
+**/
+/**==============================Table Of Contents End===========================**/
+
+/**==============================Fonts Start=====================================**/
+@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed:300,400,700');
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,700');
+@font-face {
+  font-family: 'Bebas Neue';
+  src: url(../fonts/BebasNeue-Light.otf);
+  font-weight: bold;
+}
+@font-face {
+  font-family: 'SF Pro Regular';
+  src: url(../fonts/SF-Pro-Display-Regular.otf);
+  font-weight: 300;
+}
+@roboto: 'Roboto';
+@roboto_condensed: 'Roboto Condensed';
+@bebas: 'Bebas Neue';
+.font-roboto-condensed{
+  font-family: @roboto_condensed, 'sans-serif';
+  font-weight:500;
+  font-style:normal;
+}
+.font-roboto{
+  font-family: @roboto, 'sans-serif';
+  font-weight:500;
+  font-style:normal;
+}
+.font-helvetica{
+  font-family:'Helvetica Neue';
+}
+/**==============================Fonts End======================================**/
+
+/**============================Colors Start=====================================**/
+@brand_color: #FFD300;
+@brand_color_secondary: #FCD300;
+@secondary_color: #3B5998;
+@white: #FFFFFF;
+@pink: #F50052;
+@black: #000000;
+@light_gray: #B1B1B1;
+@light_gray_2: #B7B7B7;
+@light_gray_3: #F1F3F8;
+@gray: #777777;
+@gray_2: #707070;
+@mainhover: #2F2F2F;
+@secondaryhover: #092869;
+@blue: #1308FE;
+/**==============================Colors End======================================**/
+
+/**============================General Selectors (Applied to all)================**/
+.loading-overlay{
+  width:100%;
+  height:100%;
+  position:fixed;
+  z-index:9999;
+  background:rgba(0,0,0,0.25);
+  .fa-spin{
+    font-size: 36px;
+  }
+}
+::-webkit-scrollbar {
+  background: transparent;
+  height: 0;
+  width: 0;
+}
+html,body{
+  width:100%;
+  height:100%;
+  .font-roboto-condensed;
+}
+select {
+  background: #FFF;
+  width: 100%;
+  border-radius: 4px;
+  padding: 16px;
+  font-size: 16px;
+  color: #3F3F3F;
+
+  /* Here's the code we need */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  -o-appearance: none;
+  appearance: none;
+
+  &.custom-select{
+    display: inline-block;
+    height:inherit;
+    width: 100%;
+    border-radius: 4px;
+    padding: 16px 0px 16px 20px;
+    font-size: 16px;
+    color: #3F3F3F;
+    -webkit-appearance: none;
+    background: #fff url(../icons/dropdown-angle.svg) no-repeat right 20px center;
+    border: 1px solid #B7B7B7;
+
+    &:focus{
+      border-color: #b7b7b7;
+    }
+  }
+}
+select::-ms-expand {
+  display: none;
+}
+input:focus,select:focus,button:focus, a:focus, a:hover{
+  outline:none!important;
+  box-shadow:none!important;
+  text-decoration:none;
+}
+input[type='radio'] {
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  outline: none;
+  border: 1px solid @gray_2;
+  vertical-align: middle;
+}
+input[type='radio']:before {
+  content: '';
+  display: block;
+  width: 10px;
+  height: 10px;
+  margin: 2px auto;
+  border-radius: 50%;
+}
+input[type="radio"]:checked:before {
+  background: #252941;
+
+}
+input[type="radio"].radio-grey:checked:before{
+  background: @gray_2;
+}
+input[type="radio"].radio-wide:before{
+  width: 7px;
+  height: 7px;
+  margin: 2px auto;
+}
+
+.form-group{
+  padding: 10px 32px;
+  margin:0;
+  .input-group{
+    font-size: 16px;
+    font-weight:300;
+    width: 100%;
+    height:60px;
+    border: 1px solid @light_gray_2;
+    border-radius:4px;
+    &.light-field{
+      border: 1px solid #DEDEDE;
+    }
+    .input-group-prepend,
+    .input-group-append{
+      span {
+        color:@gray;
+        line-height: 58px;
+      }
+      margin:0 20px;
+      .icon-inherited-color{
+        color:inherit;
+      }
+      .profile-calendar-icon{
+        height:16px;
+      }
+    }
+    .input{
+      width:100%;
+    }
+    input{
+      padding-left:0px;
+      font-weight: 300;
+      &::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+        color: @light_gray;
+        opacity: 1; /* Firefox */
+        font-weight:300;
+      }
+      border:none;
+      &:focus{
+        box-shadow:none;
+      }
+      height:100%;
+    }
+  }
+  .input-group.border-bottom{
+    .border-bottom;
+  }
+  .verify-sms{
+    font-size: 30px;
+    text-align: center;
+    letter-spacing: 15px;
+    margin-left: 15px;
+  }
+}
+.nav-tabs {
+  border:0;
+  .nav-item {
+    width: 50%;
+    float: left;
+    text-align: center;
+    text-transform: uppercase;
+    margin-bottom: 0px !important;
+
+    .nav-link {
+      border: 0;
+      padding: 16px 0px;
+      height: auto;
+      margin: 0;
+      color:#95A0B6;
+      font-weight:300;
+      &.active{
+        color: #0C82F9;
+        border-bottom:3px solid @brand_color_secondary;
+      }
+    }
+  }
+}
+.profile-name{
+  padding-top:16px;
+}
+.rest-container{
+  position: relative;
+  top: 48px;
+  &.chat-rest-container{
+    display: flex;
+    flex-flow: column;
+    top: 48px;
+    height: calc(100% - 48px);
+  }
+  &.new-request{
+    top:150px;
+  }
+  &.trip-description{
+    top:56px;
+  }
+  &.paypal{
+    top: 96px;
+  }
+}
+.main-menu{
+  position: fixed;
+  top: 0;
+  background: @white;
+  height: 100%;
+  left: 0;
+  right: 53px;
+  overflow:scroll;
+  display:flex;
+  flex-wrap:wrap;
+  z-index:10000;
+  .mini-profile-info{
+    width:100%;
+    padding-bottom:16px;
+    .profile-picture{
+      margin-top:20px;
+    }
+    .menu-close{
+      height:48px;
+      span{
+        padding: 12px;
+      }
+      &:hover{
+        cursor:pointer;
+      }
+    }
+    .profile-email{
+      font-weight:300;
+    }
+  }
+  .menu-items{
+    width:100%;
+    background-color: #E4E4E4;
+    padding-top: 24px;
+    .all-menu-items {
+      display: flex;
+      flex-flow: column;
+      height: 100%;
+      padding-bottom: 1rem;
+      margin-bottom: 0px;
+      .menu-item {
+        text-decoration:none;
+        color:inherit;
+        padding: 16px 24px;
+        font-weight:300;
+        &:active,
+        &:hover {
+          background-color: @mainhover;
+          color: @white;
+        }
+        .notification-num{
+          position: absolute;
+          left: 35px;
+          padding: 0px 6px;
+          color: @white;
+          top: 28px;
+          font-weight: bold;
+          background-color: @pink;
+          border-radius: 50%;
+          font-size: 13px;
+        }
+      }
+
+      .menu-item-icon {
+        width: 20px;
+        text-align: center;
+        margin-right: 20px;
+      }
+
+      .menu-item-click {
+        float: right;
+        color: @white;
+        font-size: 7px;
+        margin-top: 8px;
+      }
+    }
+  }
+}
+.menu-item{
+  .menu-item-icon{
+    &.menu-dark{
+      display: inline;
+    }
+    &.menu-light{
+      display:none;
+    }
+    &.profile,
+    &.logout,
+    &.setting{
+      margin-left: 4px;
+    }
+  }
+  .menu-item-title{
+    &.profile{
+      margin-left: 4px;
+    }
+    &.promo,
+    &.support,
+    &.logout{
+      margin-left:2px;
+    }
+  }
+  &:hover{
+    .menu-dark{
+      display: none;
+    }
+    .menu-light{
+      display:inline;
+    }
+  }
+}
+.header-icons-container{
+  padding:15px 32px;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  background-color: @white;
+  height: 48px;
+  z-index: 1000;
+  span {
+    line-height: 20px;
+  }
+  a{
+    text-decoration:none;
+    color:@black;
+  }
+}
+.header-icons-container-with-other{
+  height:auto;
+}
+.header-icon-logo-margin{
+  margin-top:32px;
+  .profile-picture-container{
+    position:relative;
+    span{
+      position: absolute;
+      bottom: 0;
+      margin-right: 8px;
+      padding: 8px;
+      border-radius: 50%;
+      margin-left: -24px;
+      background-color: #9B9B9B;
+      color: @white;
+      font-size: 13px;
+    }
+    .paypal-icon{
+      height: 56px;
+    }
+  }
+}
+.header-icon-logo-margin-extra{
+  margin-top:80px;
+}
+.header-icon-logo-margin-bottom{
+  margin-bottom:32px;
+}
+/**============================General Selectors End=============================**/
+
+/**============================Scan Card/All Credit Cards Start==================**/
+.scan-your-card-container,
+.scan-your-card-container-none{
+  padding:16px 32px;
+  top: 72px;
+  .close-add-card a{
+    text-decoration:none;
+    color:inherit;
+    img{
+      height:12px;
+    }
+    &:focus,
+    &:hover{
+      text-decoration:none;
+      color:inherit;
+    }
+  }
+  .btn-save{
+    width:100%;
+    margin-bottom: 24px;
+    margin-top: 30px;
+    .save-icon{
+      margin-left: 4px;
+    }
+    a {
+      height: 60px;
+      color: black;
+      font-weight: 300;
+      width:100%;
+    }
+  }
+  .register{
+    margin:32px 0px;
+  }
+}
+.scan-prompt{
+  position: absolute;
+  height: 100%;
+  top: 0;
+  width: 100%;
+  opacity: 0;
+  left:0;
+}
+.scan-your-card-prompt{
+  margin-top:16px;
+  .scan-your-card-icon{
+    height: 189px;
+    display: flex;
+    margin-bottom: 30px;
+    align-items: center;
+    flex-direction: column;
+    background-color: @mainhover;
+    border-radius: 4px;
+    justify-content: center;
+    .photocamera-icon{
+      height:35px;
+    }
+    .mastercard-icon{
+      position: absolute;
+      right: 16px;
+      top: 16px;
+    }
+  }
+  .photography-icon{
+    color: #C7C7C7;
+    img{
+      height: 27px;
+    }
+  }
+}
+
+.ride-options-bottom,
+.wish-container,
+.payment-options-container,
+.scan-your-card-container{
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  width: 100%;
+  background-color: @white;
+}
+
+.all-credit-cards {
+  margin:0 32px;
+  margin-top: 24px;
+  .credit-card-container {
+    padding-bottom: 16px;
+    border-bottom: 1px solid @light_gray_3;
+    margin-bottom: 16px;
+    .set-primary-card {
+      margin-left: 8px;
+      color: #848484;
+    }
+  }
+  .btn-dark{
+    height: 60px;
+    line-height: 47px;
+    text-align: center;
+    width: 100%;
+  }
+}
+/**============================Scan Card/All Credit Cards End====================**/
+
+/**================================Upload Picture Start==========================**/
+.upload-picture-container{
+  margin-bottom: 24px;
+  .upload-camera-container{
+    padding: 72px 0px;
+    border-radius: 4px;
+    border: 1px solid #DEDEDE;
+    .camera{
+      border-radius: 50%;
+      padding: 16px;
+      border: 1px solid #BEBEBE;
+      font-size: 21px;
+      color: #C7C7C7;
+      img{
+        height: 24px;
+        margin-top: -5px;
+      }
+    }
+  }
+}
+.upload-picture-buttons-append{
+  padding: 0px 16px 8px 16px;
+}
+.upload-picture-buttons-prepend{
+  margin-bottom: 8px;
+  padding:0px 16px;
+}
+/**================================Upload Picture End============================**/
+
+/**================================Car and Card Info Start=======================**/
+.card-info-container{
+  margin-bottom: 20px;
+  .card-number{
+    margin-top: 20px;
+  }
+  .question-cvv{
+    margin-top: 7px;
+    font-size:13px;
+    font-weight: 700;
+  }
+  .expiration-date-container{
+    width:58%;
+    max-width:160px;
+  }
+  .form-group {
+    padding: 0;
+    margin-bottom: 20px;
+    .input-group{
+      padding:24px 16px;
+    }
+  }
+  .card-info-cvv{
+    max-width: 80px;
+    padding: 16px;
+    border: 1px solid @light_gray_2;
+    border-radius:4px;
+    background-color: @white;
+  }
+}
+.car-info-container{
+  margin-bottom: 8px;
+  &.car-info-container-top{
+    margin-top:30px;
+  }
+  .form-group {
+    padding: 0;
+    margin-bottom: 24px;
+    .input-group{
+      padding-left: 16px;
+    }
+    .input-group-prepend{
+      margin:0px 16px 0px 0px!important;
+    }
+  }
+  .car-info{
+    background-color: @white;
+    height: 60px;
+    border-radius: 4px;
+    border: 1px solid #DEDEDE;
+  }
+  .form-group{
+    margin-bottom:8px;
+  }
+  .multi-form-container{
+    .form-group{
+      width:48%;
+    }
+  }
+  .car-registration-container{
+    h4{
+      margin-top:32px;
+    }
+  }
+  .register{
+    margin-top:32px;
+  }
+  .form-control.text-input{
+    height:60px;
+    padding-left: 16px;
+    border: 1px solid #DEDEDE;
+  }
+}
+
+.car-info-wrap{
+  position:relative;
+}
+/**================================Car and Card Info End=========================**/
+
+/**================================Payment Options Start=========================**/
+.add-payment-method{
+  margin-top:16px;
+  &.bottom{
+    margin-bottom: 32px;
+  }
+}
+.payment-options-list{
+  padding: 16px 24px;
+  margin: 16px 32px;
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  &:active,
+  &:focus{
+    text-decoration:none;
+    color:inherit;
+  }
+  &.disabled {
+    border-radius: 4px;
+    border: 1px solid @light_gray_2;
+  }
+  .icon{
+    margin-right: 16px;
+    &.choose{
+      margin-right:0px;
+    }
+    .hover-icon{
+      display:none;
+    }
+    &.chosen{
+      margin-left:4px;
+    }
+  }
+  &:hover{
+    color: @white!important;
+    background-color: @brand_color;
+    border-color: @brand_color;
+    .visible-icon{
+      display:none;
+    }
+    .hover-icon{
+      display:inline;
+    }
+  }
+  &.dark:hover{
+    color: @white;
+    background-color: @mainhover;
+    border-color: @mainhover;
+  }
+  &.text-center:hover{
+    background-color:inherit;
+    border-color:inherit;
+    color:inherit!important;
+  }
+}
+.payment-method-container{
+  .set-primary-card{
+    margin-left:8px;
+  }
+  input[type='radio']{
+    width:13px;
+    height:13px;
+  }
+  .payment-options-list{
+    margin:0px 32px 16px 32px;
+  }
+  label.all-container{
+    margin-bottom: 2px;
+  }
+}
+.payment-options-container {
+  .payment-options-intro-container,
+  .add-new-card-container{
+    padding: 16px 24px;
+    margin: 0 24px;
+  }
+  .payment-options-intro-container{
+    border-bottom: 1px solid @light_gray_3;
+    .payment-options-text span{
+      width:32px;
+    }
+    .paypal-icon{
+      height: 16px;
+      margin-right: 20px;
+    }
+    .check{
+      display:none;
+    }
+  }
+
+  .close-wish {
+    padding: 16px;
+  }
+
+  span.fa-angle-right {
+    padding: 3px;
+    float: right;
+  }
+
+  .payment-options-main-text{
+    margin:0px 24px 24px 24px;
+    padding:0 24px;
+    font-size: 13px;
+    font-weight:300;
+    color: #80828B;
+  }
+  .payment-ready-btn{
+    height: 24px;
+    margin: 16px;
+  }
+  .payment-option-list{
+    margin: 10px 16px;
+    list-style-type: none;
+    box-shadow: 1px 4px 3px 1px #F3F3F3;
+    .paypal-icon{
+      height: 16px;
+      margin-right: 20px;
+    }
+    li{
+      padding: 16px 16px 11px 32px;
+      span{
+        width:32px;
+      }
+    }
+  }
+}
+/**================================Payment Options End===========================**/
+
+/**================================Addresses Start===============================**/
+.address-title{
+  padding: 30px 32px 0px 32px;
+  font-size: 30px;
+  .sign-in-item{
+    padding: 8px 16px;
+    &.border-bottom-light-grey {
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+}
+.home-options-list{
+  padding: 16px 0px;
+  margin: 0px 32px;
+  font-weight:300;
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  border-bottom: 1px solid @light_gray_3;
+  &:active,
+  &:focus{
+    text-decoration:none;
+    color:inherit;
+  }
+  &.disabled {
+    border-radius: 4px;
+    border: 1px solid @light_gray_2;
+  }
+  .icon{
+    margin-right: 16px;
+    &.float-right{
+      margin-top:4px;
+    }
+    &.choose{
+      margin-right:0px;
+    }
+    &.chosen{
+      margin-left:4px;
+    }
+  }
+}
+/**================================Addresses End=================================**/
+
+/**================================Sign Up Start=================================**/
+.have-an-account{
+  .font-roboto-condensed;
+  font-weight:300;
+}
+.verification-text{
+  font-family:@roboto_condensed;
+  font-weight:600;
+  text-align:center;
+  font-size:30px;
+  margin:24px 0px;
+}
+.sms-rate-text {
+  min-height: 84px;
+}
+.sign-up-form-container{
+  margin-top:16px;
+  .add-new-address{
+    margin-top: 30px;
+    padding: 0 32px;
+    .btn-dark{
+      height: 60px;
+    }
+  }
+  .form{
+    padding:16px 24px;
+  }
+  .form-submit-button{
+    .width-100;
+    padding:20px 32px;
+    &.small-padding{
+      padding:10px 32px;
+    }
+    .btn-verify{
+      margin-top:16px;
+    }
+    a {
+      width:100%;
+      span{
+        margin-left:4px;
+      }
+    }
+    .verify-btn{
+      margin-top:10px;
+    }
+  }
+  .container-sms-rate-text{
+    margin-top: 8px;
+    margin-bottom: 24px;
+  }
+  .sms-rate-text{
+    padding: 5px 48px;
+    .font-11;
+    font-weight:300;
+  }
+  .fixed-bottom{
+    position: fixed;
+    bottom: 50px;
+    width: 100%;
+  }
+}
+.intl-tel-input {
+  display: table-cell;
+  margin-left: 10px;
+}
+.intl-tel-input .selected-flag {
+  z-index: 4;
+  outline:none;
+}
+.intl-tel-input.allow-dropdown .flag-container:hover .selected-flag {
+  background:transparent;
+}
+.intl-tel-input .country-list {
+  z-index: 5;
+}
+.input-group .intl-tel-input .form-control {
+  border-top-left-radius: 4px;
+  border-top-right-radius: 0;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 0;
+}
+.navigation-container{
+  border-bottom:0;
+  box-shadow: 0px 2px 4px #02043312;
+}
+/**================================Sign Ups End==================================**/
+
+/**================================Settings Wrapper Start========================**/
+.settings-container{
+  padding:0 32px;
+}
+.setting-wrapper,
+.setting-wrapper-1,
+.setting-wrapper-2,
+.setting-wrapper-primary{
+  line-height: 32px;
+  margin:24px 0px;
+  .switch{
+    margin-bottom:0px;
+  }
+  &:after{
+    content: "";
+    display: block;
+    border-bottom: 1px solid @light_gray_3;
+    width: 48px;
+    margin-top: 16px;
+  }
+}
+.setting-wrapper-1:after{
+  width:72px;
+}
+.setting-wrapper-2:after{
+  width:96px;
+}
+.setting-wrapper-primary:after{
+  width:120px;
+  border-color:@brand_color_secondary;
+}
+.wrapper-active:after{
+  border-color:@brand_color_secondary;
+  transition: border-color 0.5s ease;
+}
+.wrapper-disabled:after{
+  border-color:@light_gray_3;
+  transition: border-color 0.5s ease;
+}
+/**================================Settings Wrapper End===========================**/
+
+/**================================Support Start==================================**/
+#support-team,
+#notifications{
+  overflow: scroll;
+}
+.change-request-status{
+  position:absolute;
+  top: 60px;
+  padding: 0 24px;
+  width:100%;
+  .switch{
+    margin-top: 8px;
+    .slider{
+      background-color: #E4E4E4;
+      border: 2px solid #989898;
+    }
+  }
+  input:checked + .slider {
+    background-color: @brand_color;
+    border:2px solid @brand_color;
+  }
+}
+.all-support-team-messages {
+  margin: 8px 32px 16px 16px;
+  .support-team-message-container {
+    margin-top: 16px;
+    .support-team-profile-picture {
+      span {
+        font-size: 8px;
+        vertical-align: top;
+        display: inline-block;
+      }
+
+      img {
+        margin-left: 3px;
+        margin-top: -32px;
+      }
+    }
+
+    .message-information {
+      width: 100%;
+      border-bottom: 1px solid @light_gray_3;
+
+      .message-content {
+        margin-left: 16px;
+        margin-bottom: 16px;
+        width:100%;
+        &.dots{
+          letter-spacing: 6px;
+          font-weight: 900;
+        }
+        .message-description {
+          color: #95A0B6;
+          font-weight: 300;
+          font-family: @roboto;
+          font-size:14px;
+          padding-right: 16px;
+          &.cut{
+            overflow: hidden;
+            width: 100%;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+          }
+        }
+
+        .message {
+          font-weight: 300;
+          font-style: italic;
+          color: #0F73EE;
+        }
+      }
+      .date{
+        min-width: 50px;
+        text-align: right;
+        &.date-read{
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          margin-bottom: 16px;
+          color:#95A0B6;
+        }
+        .read-button a{
+          background: @white;
+          width: 100%;
+          display: block;
+          border: 1px solid #268FF9;
+          border-radius: 10px;
+          font-size: 11px;
+          color: #268FF9;
+          text-align: center;
+          padding: 2px 0px;
+          &:hover{
+            background:#268FF9;
+            color:@white;
+            transition: all ease-in 0.3s;
+          }
+        }
+      }
+    }
+  }
+}
+.support-description-text{
+  padding: 24px 0px;
+  margin: 0 32px;
+  border-bottom: 1px solid @light_gray_3;
+}
+/**================================Support End====================================**/
+
+/**========================History Items Container Start==========================**/
+.trip-history-driver-container{
+  margin-top: 16px;
+  .balance-card-container{
+    box-shadow: 0px 10px 20px #0000001a;
+    padding: 32px 0px 8px 0px;
+  }
+  .search-history{
+    padding: 0px;
+    margin: 32px 0px;
+    .input-group {
+      .form-control{
+        padding:0 16px;
+      }
+      .input-group-append {
+        margin: 8px 0px;
+        padding: 0 20px;
+        border-left: 1px solid #DEDEDE;
+
+        span {
+          color:#DEDEDE;
+          line-height: 0;
+          display: flex;
+          align-items: center;
+        }
+      }
+    }
+  }
+  .all-transaction-labels{
+    padding-bottom:16px;
+  }
+  .all-sales-history-items {
+    box-shadow: 0px 10px 20px #0000001a;
+    padding: 0px 16px;
+    .sales-history-item {
+      padding: 16px 0px;
+      border-bottom: 1px solid #D7DDE1;
+      .all-wide-container{
+        min-width:60px;
+      }
+      .order-num-container{
+        margin-top:-8px;
+      }
+    }
+    a:last-child .sales-history-item {
+      border-bottom: 0px;
+    }
+  }
+  .load-more{
+    margin: 32px 0px;
+  }
+}
+.all-history-items {
+  //overflow-y:scroll;
+  .profile-picture{
+    z-index:10;
+  }
+  .history-items-container {
+    padding: 0 16px;
+    &.trip-history{
+      padding:24px;
+    }
+    &.history-items-padding{
+      padding:8px 16px;
+    }
+    .history-item {
+      box-shadow: 2px 2px 11px 0px rgba(0, 0, 0, 0.1);
+      padding: 16px;
+      border-radius: 6px;
+      .request-info-container{
+        overflow:scroll;
+      }
+      .notification-container{
+        margin-top:16px;
+        p {
+          margin-bottom: 24px;
+          margin-top: 4px;
+        }
+      }
+      .trip-fare{
+        padding-bottom:8px;
+      }
+      .all-trip-fares {
+        margin-top:32px;
+        &.trip-fare-request{
+          margin-top: 16px;
+        }
+      }
+      .trip-fare-container {
+        margin-top: 8px;
+        padding-bottom: 16px;
+        .border-bottom-light-grey;
+
+        .trip-fare-item {
+          padding: 4px 0px;
+        }
+
+        &.trip-fare-driver {
+          padding-bottom: 0;
+          border-bottom: 0px;
+        }
+      }
+      .driver-information{
+        margin:24px 0px;
+        .driver-name{
+          margin-left: 16px;
+        }
+      }
+      .driver-car-info{
+        .driver-car-info-item{
+          margin-top:16px;
+          .info-container{
+            .info-container-label{
+              color:#7B7B7B;
+              font-weight:300;
+            }
+          }
+        }
+      }
+      .status-container {
+        border-bottom: 1px solid @light_gray_3;
+        padding-bottom: 4px;
+        margin-top: 8px;
+        .calendar-icon{
+          height: 16px;
+          margin-top: -3px;
+          margin-right: 4px;
+        }
+        &.status-container-driver{
+          margin-top:16px;
+        }
+        .status {
+          color: red;
+        }
+      }
+      .href-decoration-none{
+        .map-input-container-bottom{
+          margin-left:3px;
+        }
+        .map-input{
+          margin-left:3px;
+        }
+      }
+      .online-support{
+        margin:24px 0px;
+      }
+      .request-btn-container{
+        margin-top:8px;
+        padding:16px 0px;
+        border-top:1px solid @light_gray_3;
+        .request-btn {
+          height: 60px;
+          width:48%;
+        }
+      }
+
+    }
+
+    .border-bottom-primary {
+      &:after {
+        width: 32px;
+        margin-left: 0px;
+      }
+      &.width-48{
+        &:after {
+          width: 48px;
+        }
+      }
+    }
+
+    .addresses-container {
+      padding: 0px;
+
+      #origin-input-container {
+        padding: 0px;
+      }
+
+      .map-input-container .map-input-icon {
+        margin: 0px 16px 0px 0px;
+      }
+    }
+  }
+  &.all-history-items-driver{
+    position:relative;
+    .history-item{
+      margin-top: -38px;
+      padding:32px 16px;
+      background-color:@white;
+    }
+  }
+  .request-item-container:not(:first-child){
+    margin-top:32px;
+  }
+}
+/**========================History Items Container End============================**/
+
+/**========================Toggle Yes/No Check/Uncheck Settings Start=======**/
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 32px;
+  input{
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+}
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: @white;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+  border-radius: 20px;
+  border: 2px solid #E5E5E5;
+  &:before{
+    position: absolute;
+    content: "";
+    height: 27px;
+    width: 27px;
+    left: 1px;
+    bottom: 1px;
+    background-color: @white;
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
+    border-radius: 50%;
+    box-shadow: 2px 2px 4px 1px #c5c5c5ad;
+  }
+}
+input:checked + .slider {
+  background-color: @brand_color;
+  border:2px solid @brand_color;
+}
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+  box-shadow:none;
+}
+.slick-dots li button:before{
+  font-size:30px;
+}
+.slider.round {
+  border-radius: 34px;
+}
+.slider.round:before {
+  border-radius: 50%;
+}
+.controls {
+  border: 1px solid transparent;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  height: 50px;
+  outline: none;
+}
+.two-iframes{
+  justify-content: space-evenly;
+  flex-direction: row;
+  width: 100%;
+}
+.one-iframe{
+  width:99%;
+  height:99%;
+  border:0;
+}
+.first-layer {
+  border: 8px solid #ccc;
+  border-radius: 42px;
+  .second-layer {
+    border: 25px solid #2F2F2F;
+    border-radius: 33px;
+    .mobile-view {
+      border: 1px solid #495057;
+      border-radius: 30px;
+      width: 375px;
+      height: 812px;
+      margin: -11px;
+      iframe {
+        width: 100%;
+        height: 100%;
+        border-radius: 20px;
+        box-shadow: none;
+        border: 0;
+        transition: all 0ms ease;
+      }
+    }
+  }
+}
+/**========================Toggle Yes/No Check/Uncheck Settings End==========**/
+
+/**===========================Start Requesting Ride Start====================**/
+.wish-container{
+  .wish-content-intro-container {
+    padding: 8px 24px 24px 24px;
+    margin:0 24px;
+    border-bottom:1px solid @light_gray_3;
+  }
+  .close-wish {
+    padding: 8px 16px;
+    img{
+      height: 10px;
+    }
+  }
+
+  span.fa-angle-right{padding:3px;float:right;}
+  .wishes-main-text{
+    margin:24px 24px 0px 24px;
+    padding:0 24px;
+    font-size: 13px;
+    color: #80828B;
+    p:not(:last-child){
+      margin-bottom:24px;
+    }
+  }
+  .enter-wish{
+    margin:0px 24px;
+    height:59%;
+    border-top: 1px solid #f1f3f8;
+    padding-top: 16px;
+    textarea{
+      outline:none;
+      resize:none;
+      height:100%;
+      border:none;
+    }
+  }
+  .send-wish-btn{
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    .btn-primary {
+      width: 100%;
+      border-radius: 0;
+      height: 68px;
+      box-shadow: none;
+      color: black;
+      font-weight: 300;
+      font-size: 18px;
+      text-transform: uppercase;
+    }
+  }
+}
+.text-info-margin{
+  margin-top:16px;
+  margin-bottom:24px;
+}
+.plus-icon{
+  margin-top: -2px;
+  height: 12px;
+  margin-left: 4px;
+}
+.ride-options-bottom {
+  .cars-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin: 24px 16px 10px 16px;
+    border-bottom: 1px solid @light_gray_3;
+    padding: 0 16px;
+
+    .car-option {
+      padding: 0 16px 13px 16px;
+    }
+
+    .car-option.active {
+      padding-bottom: 8px;
+      border-bottom: 5px solid @brand_color;
+    }
+  }
+
+  .about-section-title {
+    color: @gray;
+    text-align: center;
+
+    strong, .black-text {
+      color: @black;
+    }
+  }
+
+  .about-section-more {
+    margin: 2px 16px 0px 16px;
+    text-align: center;
+    color: @light_gray;
+    font-size: 13px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid @light_gray_3;
+    margin-bottom: 8px;
+  }
+
+  .payment-options {
+    display: flex;
+    border-right: 1px solid @light_gray_3;
+    color: @gray;
+    font-weight: 300;
+
+    div.float-left,
+    div.float-right {
+      padding: 0 10px;
+    }
+
+    .default-payment-method-container,
+    .send-wishes-container {
+      width: 50%;
+      margin-bottom: 8px;
+      &:hover{
+        cursor:pointer;
+      }
+      .wishes{
+        padding: 0 16px!important;
+        height: 65%;
+        width: max-content;
+      }
+    }
+
+    .default-payment-method-container {
+      border-left: 1px solid @light_gray_3;
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  .send-wishes-container {
+    display: flex;
+    align-items: center;
+  }
+
+  .payment-options-more {
+    display: block;
+    color: @light_gray;
+    font-size: 12px;
+    word-break: break-word;
+  }
+}
+.tap-on-car{
+  position:absolute;
+  bottom:0;
+  padding: 0 48px 48px 48px;
+  width: 100%;
+  text-align: center;
+  span{
+    color:red;
+    font-size:32px;
+  }
+
+}
+/**===========================Start Requesting Ride End======================**/
+
+/**============================Tapped Car Start==============================**/
+.tapped-car-info.more{
+  top:250px;
+}
+.pending-icon{
+  margin-top:0px;
+}
+.pending-icon,
+.approved-icon{
+  height: 49px;
+  line-height: 36px;
+  width: 49px;
+  background-color: #dddddd;
+  color: @white;
+  &.call span{
+    transform: rotate(90deg);
+    color: @white;
+  }
+  &:hover,
+  &:focus{
+    outline:none;
+    color:white;
+    text-decoration:none;
+  }
+}
+.approved-icon.message{
+  background: @mainhover;
+  color: @white;
+}
+.approved-icon.call{
+  background: @brand_color;
+  &:focus{
+    background: @brand_color!important;
+    border-color:@brand_color!important;
+  }
+  span{
+    transform: rotate(90deg);
+    color: @white;
+  }
+}
+.approved-icon.call.in-process{
+  background: #FF0000;
+  &:focus{
+    background: #FF0000!important;
+    border-color:#FF0000!important;
+  }
+  span {
+    transform: rotate(227deg);
+  }
+}
+.pending-icon{
+  margin-top:0px;
+}
+.pending-icon,
+.approved-icon{
+  height: 49px;
+  line-height: 36px;
+  width: 49px;
+  background-color: #dddddd;
+  color: @white;
+  &.call span{
+    transform: rotate(90deg);
+    color: @white;
+  }
+}
+.approved-icon.message{
+  background: @mainhover;
+  color: @white;
+}
+.approved-icon.call{
+  background: @brand_color;
+}
+.approved-icon.call.in-process{
+  background: #FF0000;
+}
+.tapped-car-info{
+  position: absolute;
+  bottom: 16px;
+  width: 100%;
+  transition: 0.3s height;
+  overflow:hidden;
+  top: calc(100vh - 292px);
+  &.request{
+    top: auto;
+    overflow: visible;
+    .history-item{
+      background-color:@white;
+    }
+    .border-bottom-primary:after{
+      margin-left:0px;
+    }
+    .profile-information{
+      margin: 0 16px;
+      background-color: @white;
+      .profile-picture-img{
+        margin-top:-32px;
+      }
+    }
+    .request-btn-container{
+      margin: 16px 0px;
+      border-top:1px solid @light_gray_3;
+      .request-btn {
+        height: 60px;
+        width:48%;
+      }
+    }
+    .map-input-container .map-input-icon{
+      margin:0px 15px 0px 0px;
+    }
+    .trip-fare{
+      padding-bottom:8px;
+    }
+  }
+  .tapped-car-container{
+    .remaining-height;
+    .tapped-car-more-info{
+      padding: 8px 16px 0 24px;
+      margin:0 16px;
+      background:#fff;
+      flex:1;
+      display: flex;
+      flex-flow: column;
+      border-bottom-left-radius:10px;
+      border-bottom-right-radius:10px;
+      .more-info-container{
+        flex: 1;
+        height: 100%;
+        overflow: scroll;
+        margin: 16px 0px;
+        color: #757575;
+        font-weight: 300;
+        font-family: @roboto;
+      }
+      .cancel-trip{
+        margin-top: 16px;
+        background: transparent;
+        height: 60px;
+        font-weight: 300;
+        border: 1px solid black;
+      }
+    }
+  }
+  .request-item-container{
+    .history-item {
+      padding: 32px 16px 16px 16px;
+      &.driver-request{
+        height: 100%;
+        overflow: scroll;
+        .driver-addresses-container{
+          .map-input-container-bottom,
+          .map-input{
+            margin-left:2px;
+          }
+        }
+      }
+      .border-bottom-primary{
+        .status-container{
+          border-bottom:1px solid @light_gray_3;
+        }
+      }
+    }
+    .all-trip-fares{
+      margin-top:24px;
+    }
+  }
+  .tapped-car-info-container.more{
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+  }
+  .tapped-car-info-container{
+    margin:0 16px;
+    padding: 8px 16px 0 24px;
+    background: linear-gradient(to bottom, @brand_color 50%, #fff 50%);
+    height:265px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    .header-icons{
+      height:24px;
+    }
+    .rider-info{
+      height:45px;
+      .profile-picture{
+        border: 2px solid rgba(112, 112, 112, 0.3);
+        border-radius: 50%;
+        padding: 2px;
+        margin-right: 24px;
+      }
+    }
+    .tapped-car-info-header-icons{
+      height:24px;
+      .slide-up, .slide-down{
+        width: 75%;
+        display: inline-block;
+      }
+    }
+    .ride-status{
+      margin-top:-20px;
+      flex-flow: column;
+      display: flex;
+      text-align: right;
+    }
+    .miles-till-arrival{
+      font-size: 24px;
+      display: block;
+      margin-top: -36px;
+      text-align: end;
+      font-weight: 400;
+      font-family:@bebas,'sans-serif';
+    }
+  }
+  .request-btn{
+    .btn-transparent {
+      font-size: 15px;
+      text-transform: uppercase;
+      padding: 1px 24px;
+      border: 1px solid black;
+      background: none;
+      height:100%;
+      box-shadow: 3px 4px 6px 0px #00000012;
+    }
+  }
+  .requested-car-info{
+    padding: 18px 0px 24px 0px;
+    border-bottom:1px solid @light_gray_3;
+  }
+}
+.tapped-car-info.disabled{
+  .tapped-car-info-container {
+    background: linear-gradient(to bottom, #E4E4E4 50%, #fff 50%);
+  }
+  .tapped-car-more-info{
+    .cancel-trip{
+      display:none;
+    }
+  }
+}
+/**============================Tapped Car End=================================**/
+
+/**============================Request Ride Start=============================**/
+.request-ride-info{
+  position: absolute;
+  bottom: 16px;
+  width: 100%;
+  .drop-off-btn-container{
+    margin-bottom: 24px;
+  }
+  .tapped-car-container{
+    .remaining-height;
+    .tapped-car-more-info{
+      padding: 8px 16px 0 24px;
+      margin:0 16px;
+      background:#fff;
+      flex:1;
+      display: flex;
+      flex-flow: column;
+      .more-info-container{
+        flex: 1;
+        height: 100%;
+        overflow: scroll;
+        margin: 16px 0px;
+        color: #757575;
+        font-weight: 300;
+        font-family: @roboto;
+      }
+      .cancel-trip{
+        margin-top: 16px;
+        background: transparent;
+        height: 60px;
+        font-weight: 300;
+        border: 1px solid black;
+      }
+    }
+  }
+  .tapped-car-info-container.more{
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+  }
+  .tapped-car-info-container{
+    margin:0 16px;
+    padding: 8px 16px 0 24px;
+    background: #fff;
+    border-radius: 4px;
+    position:relative;
+    .header-icons{
+      height:24px;
+    }
+    .rider-info{
+      height:45px;
+      .profile-picture{
+        border: 2px solid rgba(112, 112, 112, 0.3);
+        border-radius: 50%;
+        padding: 2px;
+      }
+    }
+    .tapped-car-info-header-icons{
+      position: absolute;
+      top: 0;
+      right: 0px;
+      padding: 16px;
+      span{
+        position: absolute;
+        right: 0px;
+        width: 50px;
+        line-height: 50px;
+        height: 50px;
+        font-size: 27px;
+      }
+    }
+    .ride-status{
+      margin-top:-20px;
+      flex-flow: column;
+      display: flex;
+      text-align: right;
+    }
+    .miles-till-arrival{
+      font-size: 24px;
+      display: block;
+      margin-top: -36px;
+      text-align: end;
+      font-weight: 700;
+      font-family: @bebas,'sans-serif';
+    }
+    .pickup-btn-container{
+      display:flex;
+      margin-bottom:24px;
+      .pickup-btn-item{
+        width:49%;
+      }
+      .pickup-btn-other{
+        justify-content: space-between;
+        margin-left: 8px;
+        display: flex;
+        width: 50%;
+        .pickup-btn-item{
+          width:49%;
+          &:last-child{
+            margin-left: 8px;
+          }
+          button{
+            width:100%;
+            border-radius: 4px;
+            height:60px;
+            border: 0;
+          }
+        }
+      }
+    }
+  }
+  .profile-picture-img{
+    margin-top:-48px;
+  }
+  .notification-container{
+    &.addAddress{
+      margin-bottom: 24px;
+    }
+  }
+  .addresses-container{
+    margin-bottom: 24px;
+    .map-input-icon{
+      margin:0px 15px 0px 0px;
+    }
+    &.border-bottom-primary:after{
+      width:48px;
+    }
+    &.driver-addresses-container{
+      .map-input-container-bottom,
+      .map-input{
+        margin-left:2px;
+      }
+    }
+  }
+  .all-trip-fares{
+    .trip-fare-container {
+      margin-top: 8px;
+      padding-bottom: 16px;
+      .border-bottom-light-grey;
+
+      .trip-fare-item {
+        padding: 4px 0px;
+      }
+
+      &.trip-fare-driver {
+        padding-bottom: 0;
+        border-bottom: 0px;
+      }
+    }
+  }
+  .border-bottom-primary:after{
+    content: "";
+    display: block;
+    width: 24px;
+    border: 2px solid @brand_color_secondary;
+    margin-top: 16px;
+    margin-left:0px;
+  }
+  .all-trip-fares {
+    margin-bottom: 24px;
+    border-bottom: 1px solid @light_gray_3;
+    .border-bottom-primary:after {
+      margin-top: 4px;
+      width: 64px;
+    }
+    .trip-fare-container{
+      padding: 16px 0px;
+      margin-bottom: 24px;
+      margin-top: 0px;
+    }
+  }
+}
+.notification-request{
+  position: fixed;
+  width: 100%;
+  padding: 0px 16px;
+  top: 36px;
+  z-index: 1000;
+}
+.request-notification-container{
+  text-align: left;
+  padding: 16px 24px;
+  border-left: 4px solid @pink;
+  box-shadow: 0px 3px 6px #00000029;
+  background:@white;
+  margin-top: 24px;
+  margin-bottom: 16px;
+  &.map-notification{
+    background-color: hsla(0, 0%, 100%, 0.85);
+    margin-top:16px;
+  }
+  &.map-notification-warning{
+    border-left: 4px solid @brand_color;
+  }
+  .direction-icon{
+    height: 17px;
+  }
+}
+/**============================Request Ride End===============================**/
+
+/**============================Review Start===================================**/
+.comment-info{
+  margin:0 24px;
+  textarea{
+    height: 120px;
+    margin-top: 16px;
+    margin-bottom: 10px;
+    padding: 16px;
+    border: 1px solid #E3E3E3;
+    resize:none;
+    &:focus{
+      outline:none;
+    }
+  }
+  .comment-label{
+    color:@brand_color;
+  }
+  .btn-primary{
+    height: 60px;
+    color:black;
+    font-weight:300;
+    width: 100%;
+    font-size:18px;
+
+    line-height: 30px;
+  }
+}
+.comment-info-margin{
+  margin: 24px;
+  margin-bottom: 30px;
+  .btn-primary{
+    line-height:47px;
+  }
+}
+.submit-review{
+  position: absolute;
+  left: 16px;
+  right: 16px;
+  border-radius: 10px;
+  bottom: 16px;
+  background-color: @white;
+  .trip-desc-info{
+    margin:0 24px;
+    .trip-desc-question{
+      margin: 16px 0px 0px 0px;
+      font-size: 22px;
+      font-weight: bold;
+    }
+  }
+  .review-profile {
+    margin-top: -40px;
+    border: 2px solid rgba(112,112,112,0.3);
+    border-radius: 50%;
+    padding: 2px;
+  }
+  .please-rate{
+    padding: 16px;
+    margin-bottom: 16px;
+    font-weight: 300;
+    border-bottom: 1px solid #f1f1f3;
+    color: #757575;
+  }
+  .driver-stars{
+    margin-bottom:16px;
+  }
+  .driver-info{
+    height: 120px;
+    background-color: @brand_color_secondary;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    .driver-picture{
+      margin-top: -37px;
+      border-radius: 50%;
+      border: 2px solid rgba(112, 112, 112, 0.3);
+      padding: 2px;
+      margin-bottom: 8px;
+    }
+    .close-review{
+      position: absolute;
+      top: 8px;
+      right: 8px;
+    }
+  }
+  .btn-primary{
+    height: 60px;
+    width: 100%;
+    font-size:18px;
+
+    margin-bottom: 32px;
+  }
+}
+/**============================Review End=====================================**/
+
+/**============================Promo Start====================================**/
+.promocode-container{
+  .form-group .input-group{
+    border: none;
+    border-bottom: 1px solid @light_gray_2;
+    border-radius: 0;
+    margin-bottom: 16px;
+  }
+  .activate-btn{
+    padding: 0px 32px 32px 32px;
+  }
+}
+/**============================Promo End======================================**/
+
+/**============================Chat Start=====================================**/
+.chat-container {
+  margin: 8px 32px 0px 32px;
+  height:calc(100% - 110px);
+  overflow:scroll;
+  .calendar-icon{
+    height: 13px;
+    margin-top: -3px;
+  }
+  .left-align-message,
+  .right-align-message{
+    display: flex;
+    flex-flow: row;
+    justify-content: flex-end;
+    align-items: flex-end;
+    padding: 16px 0px 32px 0px;
+    .message-info {
+      flex-flow: column;
+      display: flex;
+      font-weight: 300;
+      color: #AAAAAA;
+      font-family: @roboto_condensed;
+      font-size: 11px;
+      text-align:right;
+      min-width:70px;
+      .icon{
+        margin-right:8px;
+        img{
+          height:10px;
+        }
+      }
+      .fas {
+        font-weight: 300;
+        margin-right:10px;
+        font-size:10px;
+      }
+    }
+
+    .message-content {
+      padding: 8px 24px;
+      border-radius:6px;
+      margin: 0 8px;
+      background: #EFEFF4;
+      font-weight: 300;
+      font-size: 15px;
+      font-family: 'SF Pro Regular';
+      &.dots{
+        letter-spacing: 6px;
+        font-weight: 900;
+      }
+    }
+
+    .profile-picture {
+      margin-bottom: -16px;
+      min-width: 45px;
+      .status {
+        vertical-align: bottom;
+        color: #00A457;
+        margin-right: -3px;
+        font-size: 9px;
+      }
+
+      .profile-picture-image {
+        height: 32px;
+      }
+    }
+  }
+  .left-align-message{
+    .message-content {
+      border-bottom-right-radius: 0px;
+      &.dots{
+        letter-spacing: 6px;
+        font-weight: 900;
+      }
+    }
+  }
+  .right-align-message{
+    flex-flow:row-reverse;
+    .message-content{
+      border-bottom-left-radius: 0px;
+      background-color:@brand_color;
+      &.dots{
+        letter-spacing: 6px;
+        font-weight: 900;
+      }
+    }
+    .message-info{
+      text-align:left;
+    }
+  }
+}
+.send-message {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+
+  .send-message-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 10px;
+    width: 100%;
+    border-top: 1px solid @light_gray_3;
+    color: #C7C7C7;
+
+    .message-input {
+      height: 40px;
+      line-height: 40px;
+      width: 60%;
+      border: 1px solid @light_gray_3;
+      outline: none;
+      padding: 0 10px;
+      font-weight: 300;
+    }
+  }
+}
+/**============================Chat End=======================================**/
+
+/**============================Google Maps Classes Start======================**/
+.location-icon-rotate{transform:rotate(136deg);}
+#origin-input-container{
+  padding:0 16px;
+  width:100%;
+  left:0px!important;
+}
+.map-input-container-top{
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+.map-input-container-bottom{
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+#origin-input,
+#destination-input {
+  background-color: #fff;
+  font-family: @roboto_condensed;
+  font-size: 15px;
+  font-weight: 300;
+  text-overflow: ellipsis;
+  width:100%;
+  padding-right: 8px;
+}
+#searchingModal .search{
+  width: auto;
+  margin: 0 auto;
+  padding: 24px 8px;
+  .fa-spinner{
+    color: @brand_color;
+    margin-bottom: 12px;
+    font-size: 24px;
+  }
+}
+.map-input-container .map-input{
+  width: 100%;
+  margin-right:16px;
+  span{
+    line-height:50px;
+    font-size:18px;
+  }
+  .mic{
+    margin-right:8px;
+    color:#E4E4E4;
+  }
+  .remove{
+    color:@gray_2;
+    img{
+      height: 14px;
+      margin-left: 4px;
+    }
+  }
+}
+
+.map-input-container:first-child .map-input{
+  border-bottom:1px solid @light_gray_3;
+}
+.hdpi.pac-logo:after{
+  display:none;
+}
+.row{margin-right:0px; margin-left:0px;}
+.col-xs-12,.col-sm-12{padding-right:0px;padding-left:0px;}
+.pac-container{
+  height:100%;
+  width:100%!important;
+  left: 0px!important;
+  padding:0px 28px;
+  border-top:none;
+  font-family: @roboto_condensed;
+  top:163px!important;
+  font-size:20px!important;
+  box-shadow:none;
+  .pac-icon{
+    margin-right:16px;
+  }
+  .pac-item-query, .pac-matched{
+    font-weight:300!important;
+  }
+  .pac-item{
+    padding:8px 0;
+    border-top:none;
+  }
+}
+#map > div{background-color:@white!important;}
+#map1, #map2, #map3 {
+  height:120px;
+}
+a[href^="http://maps.google.com/maps"]{display:none !important}
+a[href^="https://maps.google.com/maps"]{display:none !important}
+
+.gmnoprint a, .gmnoprint span, .gm-style-cc {
+  display:none;
+}
+.gmnoprint div {
+  background:none !important;
+}
+.gm-bundled-control.gm-bundled-control-on-bottom{display:none;}
+.map-input-container{
+  background-color:@white;
+  display:flex;
+  .map-input-icon{
+    color:#4A4F64;
+    background-color:@white;
+    margin:0 15px;
+    line-height:50px
+  }
+  input{
+    flex:1;
+    background-color: @white;
+    &:focus{
+      border:none;
+
+    }
+  }
+}
+/**============================Google Maps Classes End======================**/
+
+/**============================Buttons Start===================================**/
+.btn-dark{
+  width:100%;
+  border-radius: 4px;
+  height:60px;
+  color:@white;
+  font-weight:300;
+  font-size:18px;
+  line-height: 47px;
+  text-transform:uppercase;
+  .question-icon{
+    margin-left:16px;
+  }
+  &.shadow{
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16)!important;
+  }
+  &:hover{
+    background-color:@black;
+  }
+}
+.button-padding{
+  width:50%;
+  float:left;
+  text-align:center;
+  text-transform:uppercase;
+}
+.request-ride-btn,
+.go-to-pickup-btn{
+  position:absolute;
+  left:0;
+  right:0;
+  width:100%;
+  bottom:25px;
+  padding:0 16px;
+  button{
+    width:100%;
+    color:black;
+    height:60px;
+    font-weight:300;
+    font-size:18px;
+    text-transform: uppercase;
+  }
+}
+.confirm-ride-btn{
+  width:100%;
+  button{
+    width:100%;
+    color:black;
+    height:60px;
+    font-weight:300;
+    font-size:18px;
+    border-radius:0;
+    text-transform: uppercase;
+    box-shadow:none;
+  }
+}
+.finish-ride-btn-container{
+  margin-bottom: 24px;
+  .btn-finish {
+    background-color: @blue;
+    color: @white;
+    font-size:18px;
+    height: 60px;
+    line-height: 47px;
+    border-radius: 4px;
+  }
+}
+.btn-primary{
+  background-color: @brand_color;
+  border:1px solid @brand_color;
+  font-weight:400;
+  box-shadow: 3px 4px 6px 0px #00000024;
+  height: 60px;
+  color: black;
+  line-height: 47px;
+  &:hover, &:focus, &:active{
+    background-color:@mainhover!important;
+    color:@white!important;
+  }
+  cursor:pointer;
+  font-size:18px;
+}
+.btn-transparent,
+.btn-transparent-primary{
+  width:100%;
+  height:60px;
+  font-weight:300;
+  line-height:43px;
+  border:1px solid #2c2c2c;
+  border-radius:4px;
+  font-size:18px;
+  background-color:@white;
+  &:hover, &:focus, &:active{
+    background-color:#2c2c2c!important;
+    color:@white!important;
+  }
+  cursor:pointer;
+}
+.btn-transparent-primary{
+  color:@black!important;
+  &:hover{
+    background-color:@brand_color!important;
+    border-color:@brand_color;
+  }
+}
+.btn-secondary{
+  background-color: @secondary_color;
+  color: @white!important;
+  border:1px solid @secondary_color;
+  font-weight:300;
+  box-shadow: 3px 4px 6px 0px #00000024;
+  &:hover{
+    background-color:@secondaryhover;
+    color:@white;
+    border: 1px solid @secondary_color;
+  }
+  cursor:pointer;
+  font-size:18px;
+}
+.btn-default{background-color: @mainhover;color: @white;}
+.btn-center{margin-left:auto;margin-right:auto;}
+.btn-padding-1{padding:18px;}
+.sign-up-btn-container{margin: 30px;margin-bottom: 16px;}
+a,
+button,
+.delete-btn,
+.upload-btn,
+.btn-dark,
+.btn-primary,
+.btn-secondary,
+.slide-up,
+.slide-down{
+  &:hover {
+    cursor: pointer;
+  }
+}
+/**============================Buttons End=====================================**/
+
+/**============================Display Start=================================**/
+.display-flex{display:flex !important;}
+.flex-1{flex:1;}
+.hidden{display: none!important;}
+.hidden-soft{display: none;}
+.display-block{display:block;}
+.flex-end{display:flex;align-items:flex-end;flex-wrap: wrap;}
+/**============================Display End===================================**/
+
+/**============================Colors Start==================================**/
+.blue-price {color: @blue;}
+.blue-icon{color:#3389FF;}
+.main-background{background-color: @brand_color;}
+.light-gray{color:@light_gray;}
+.gray{color:@gray;}
+.green-status{color:#00D310!important;}
+.primary-color{color:@brand_color!important;}
+.primary-background{background:@brand_color;}
+.grey-label{color: @gray_2;}
+.pink{color:@pink;}
+/**============================Colors End====================================**/
+
+/**====================Margin/Padding Start==================================**/
+.margin-bottom-30{margin-bottom:30px;}
+.margin-right-15{margin-right:15px;}
+.margin-top-auto{margin-top:auto;}
+.margin-top-5{margin-top:5px;}
+.margin-top-10{margin-top:10px;}
+.margin-top-25{margin-top:25px;}
+.margin-bottom-up{margin-top:-50px;}
+.loading-logo-margin{margin-top: -65px;}
+/**====================Margin/Padding End====================================**/
+
+/**====================Container Start=======================================**/
+.all-container{padding:0 32px;}
+.all-wide-container{padding:0 16px;}
+.all-container-with-classes{
+  .form-group{
+    padding: 4px 0px;
+  }
+  .form-submit-button{
+    margin: 30px 0px;
+  }
+  .form-control-margin{
+    margin:30px 0px;
+  }
+}
+.form-control-with-padding{padding:0 24px!important;}
+.graph-container{margin-top:32px;padding:0 16px;}
+.small-balance-container{
+  margin-top: 32px;
+  display:flex;
+  justify-content: space-between;
+  .balance-card-container-small {
+    box-shadow: 0px 10px 20px #0000001a;
+    padding: 16px;
+    margin: 16px;
+    margin-bottom: 24px;
+    border-radius: 8px;
+    #canvas1, #canvas2 {
+      height: 165px;
+    }
+    &.slick-slide{
+      margin-right: 8px;
+    }
+    &:focus{
+      outline:none;
+    }
+  }
+}
+/**====================Container End=========================================**/
+
+/**===========================Link Start=====================================**/
+.regular-link{
+  color: @light_gray;
+  &:hover {
+    color: @gray;
+    text-decoration:none;
+  }
+}
+.dark-link{
+  color: @mainhover;
+  &:hover {
+    color: @gray;
+    text-decoration:none;
+  }
+}
+.href-decoration-none{
+  text-decoration:none;
+  color:inherit;
+  cursor:pointer;
+  &:focus,
+  &:active,
+  &:hover{
+    text-decoration:none;
+    color:inherit;
+  }
+}
+.no-hover{
+  background-color:inherit;
+
+}
+/**===========================Link End=======================================**/
+
+/**===========================General Styles Start===========================**/
+.driver-text-logo{
+  font-family:@bebas, 'sans-serif';
+  font-size:50px;
+  color: @brand_color_secondary;
+  text-shadow: 0px 3px 5px #00000031;
+}
+.file-prompt{
+  position: absolute;
+  height: 100%;
+  top: 0;
+  width: 100%;
+  opacity: 0;
+  left: 0;
+}
+.pulse {
+  display: block;
+  border-radius: 50%;
+  cursor: pointer;
+  padding: 17px;
+  box-shadow: 0 0 0 rgba(252, 211, 0, 0.4);
+  animation: pulse 2s infinite;
+  opacity: 1!important;
+  &.current-location{
+    margin-left: 5px;
+    margin-top: 6px;
+    border-radius:27%;
+    padding:0px;
+  }
+}
+.pulse:hover {
+  animation: none;
+}
+.verify-text{margin-bottom:16px;}
+.fas.fa-star{color:@brand_color;}
+.fas.fa-star:hover{cursor:pointer;}
+.label-title{
+  color: #848484;
+  font-size: 13px;
+  font-weight: 300;
+  margin-bottom: 2px;
+  &.light{
+    color: #AAB2B7;
+  }
+}
+.overflow-scroll{overflow:scroll;}
+.overflow-scroll-y{overflow-y:scroll;}
+/**===========================General Styles End=============================**/
+
+/**==============================Border Start================================**/
+.border-bottom{border:none;border-bottom:1px solid @black!important;}
+.border-radius-4{border-radius:4px;}
+.border-bottom-primary{
+  &:after {
+    content: "";
+    display: block;
+    width: 48px;
+    margin-left: 32px;
+    border: 2px solid @brand_color_secondary;
+    margin-top: -4px;
+    visibility: hidden;
+    -webkit-transform: scaleX(0);
+    transform: scaleX(0);
+    -webkit-transition: all 0.3s ease-in-out 0s;
+    transition: all 0.3s ease-in-out 0s;
+  }
+  &.thin{
+    &:after{
+      border: 1px solid @brand_color_secondary;
+      margin-top: -2px;
+    }
+  }
+}
+.border-bottom-primary:hover{
+  &:after{
+    visibility: visible;
+    -webkit-transform: scaleX(1);
+    transform: scaleX(1);
+  }
+}
+.dotted-line{
+  height: 35px;
+  position: absolute;
+  width: 1px;
+  border: 1px dashed @white;
+  z-index: 100;
+  margin-top: -14px;
+  margin-left: 4px;
+  background: linear-gradient(to right, @gray_2 50%, @gray_2 0%), linear-gradient(@gray_2 50%, @gray_2 0%), linear-gradient(to right, @gray_2 50%, rgba(112, 112, 112, 0) 0%), linear-gradient(@gray_2 50%, rgba(112, 112, 112, 0) 0%);
+  background-repeat: repeat-x, repeat-y;
+  background-size: 1px 0px, 1px 1px;
+}
+.dotted-line-index{
+  height: 38px;
+  position: absolute;
+  width: 1px;
+  border: 1px dashed @white;
+  z-index: 100;
+  margin-top: -17px;
+  margin-left: 19px;
+  background: linear-gradient(to right, @gray_2 50%, @gray_2 0%), linear-gradient(@gray_2 50%, @gray_2 0%), linear-gradient(to right, @gray_2 50%, rgba(112, 112, 112, 0) 0%), linear-gradient(@gray_2 50%, rgba(112, 112, 112, 0) 0%);
+  background-repeat: repeat-x, repeat-y;
+  background-size: 1px 0px, 1px 1px;
+}
+.border-bottom-primary-100{
+  border-bottom:1px solid @brand_color_secondary;
+}
+.border-bottom-light-grey{
+  border-bottom: 1px solid @light_gray_3;
+}
+.box-shadow-0{box-shadow:none!important;}
+/**==============================Border End===================================**/
+
+/**============================Font Sizes Start===============================**/
+.font-10{font-size:10px;}
+.font-11{font-size:11px;}
+.font-13{font-size:13px;}
+.font-15{font-size:15px;}
+.font-18{font-size:18px;}
+.font-20{font-size:20px;}
+.font-22{font-size:22px;}
+.font-28{font-size:28px;}
+.font-30{font-size:30px;}
+/**============================Font Sizes Start================================**/
+
+/**============================Width/Height Start==============================**/
+.width-100{width:100%;}
+.remaining-height{display:flex;flex-flow:column;height:100%; max-height:100%;}
+.height-auto{height:auto;}
+.height-80{height:80%;}
+.height-100{height:100%;}
+/**============================Width/Height End=================================**/
+
+/**============================Animations Start===================================**/
+@-webkit-keyframes pulse {
+  0% {
+    -webkit-box-shadow: 0 0 0 0 rgba(252, 211, 0, 0.7);
+  }
+  70% {
+    -webkit-box-shadow: 0 0 0 46px rgba(252, 211, 0, 0.3);
+  }
+  100% {
+    -webkit-box-shadow: 0 0 0 0 rgba(252, 211, 0, 0.3);
+  }
+}
+@keyframes pulse {
+  0% {
+    -moz-box-shadow: 0 0 0 0 rgba(252, 211, 0, 0.7);
+    box-shadow: 0 0 0 0 rgba(252, 211, 0, 0.7);
+  }
+  70% {
+    -moz-box-shadow: 0 0 0 46px rgba(252, 211, 0, 0.3);
+    box-shadow: 0 0 0 46px rgba(252,211,0, 0);
+  }
+  100% {
+    -moz-box-shadow: 0 0 0 0 rgba(252, 211, 0, 0.3);
+    box-shadow: 0 0 0 0 rgba(252,211,0, 0);
+  }
+}
+@-webkit-keyframes slide_up_ride {
+  0%   {top:auto;}
+  25%  {top:250px;}
+}
+@keyframes slide_up_ride {
+  0%   {top:auto;}
+  25%  {top:250px;}
+}
+/**============================Animations End=====================================**/
+@media all and (orientation:landscape) and (max-height:616px) {
+  .slide-up{
+    display:none!important;
+  }
+}
+@media all and (max-height:712px){
+  .tapped-car-info.request .addresses-container,
+  .tapped-car-info.request .all-trip-fares,
+  .request-ride-info .addresses-container,
+  .request-ride-info .notification-container{
+      display:none!important;
+  }
+}
