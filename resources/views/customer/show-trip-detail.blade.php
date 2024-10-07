@@ -32,7 +32,6 @@
                         @else
                             <div class="history-items-container history-items-padding">
                                 <div class="history-item">
-
                                     <!--Date and Price Container Start-->
                                     <div class="border-bottom-primary thin">
                                         <div class="status-container">
