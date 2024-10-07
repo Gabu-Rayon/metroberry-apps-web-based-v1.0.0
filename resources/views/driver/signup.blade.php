@@ -18,14 +18,21 @@
                     <div class="form-group">
                         <div class="input-group">
                             <input class="form-control h-100" id="name-input" type="text" name="name"
-                                autocomplete="off" placeholder="Name" required />
+                                autocomplete="off" placeholder="Name" required value="{{ old('name') }}" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input class="form-control h-100" id="name-input" type="number" name="national_id_no"
+                                autocomplete="off" placeholder="ID Number" required value="{{ old('national_id_no') }}" />
                         </div>
                     </div>
 
                     <div class="form-group">
                         <div class="input-group">
                             <input class="form-control h-100" id="email-input" type="email" name="email"
-                                autocomplete="off" placeholder="Email" required />
+                                autocomplete="off" placeholder="Email" required value="{{ old('email') }}" />
                         </div>
                     </div>
 
@@ -36,6 +43,18 @@
                         </div>
                     </div>
 
+                    <div class="form-group">
+                        <div class="input-group">
+                            <select class="form-control h-100" id="organisation-select" name="organisation_id" required>
+                                <option value="" disabled selected>Organisation</option>
+                                @foreach ($organisations as $organisation)
+                                    <option value="{{ $organisation->id }}">{{ $organisation->organisation_code }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+
                     <div class="sign-up-btn-container">
                         <button type="submit"
                             class="btn btn-center width-100 display-block btn-primary text-uppercase">Sign Up</button>
@@ -43,7 +62,7 @@
                 </form>
 
                 <div class="have-an-account text-center mt-3">
-                    <a href="{{ route('customer.sign.in.page') }}" class="regular-link">Already have an account?</a>
+                    <a href="{{ route('driver.login') }}" class="regular-link">Already have an account?</a>
                 </div>
             </div>
         </div>
