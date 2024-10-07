@@ -19,7 +19,8 @@ class DriversLicenses extends Model
         'verified',
     ];
 
-    public function driver(){
+    public function driver()
+    {
         return $this->hasOne(Driver::class, 'id', 'driver_id');
     }
 }

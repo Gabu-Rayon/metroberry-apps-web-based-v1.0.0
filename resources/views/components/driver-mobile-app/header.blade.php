@@ -20,6 +20,7 @@
     <link rel="stylesheet" href="{{ asset('mobile-app-assets/css/styles.css') }}" />
     <!--International Telephone input JS-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/8.4.6/css/intlTelInput.css">
+    <script src="https://kit.fontawesome.com/e53bf7a0b8.js" crossorigin="anonymous"></script>
     <title>@yield('title')</title>
 </head>
 

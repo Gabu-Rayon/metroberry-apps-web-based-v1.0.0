@@ -21,7 +21,7 @@ class Driver extends Model
         'status',
     ];
 
-    protected $with = ['user'];
+    protected $with = ['user', 'driverLicense', 'psvBadge'];
 
     public function user()
     {
