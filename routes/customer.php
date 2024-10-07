@@ -52,7 +52,7 @@ Route::post('customer/logout', [CustomerAppController::class, 'customerLogout'])
 
 Route::get('customer/booking/trip', [CustomerAppController::class, 'customerBookingPage'])
     ->name('customer.book.trip.page');
-    
+
 Route::post('customer/booking/trip/store', [CustomerAppController::class, 'customerBookingTrip'])
     ->name('customer.book.trip.store');
 
@@ -60,13 +60,13 @@ Route::post('route/locations/get/all', [CustomerAppController::class, 'getAllRou
     ->name('route.location.waypoints');
 
 
-    //Customer Profile
+//Customer Profile
 Route::get('customer/profile', [CustomerAppController::class, 'customerProfile'])
     ->name('customer.profile');
 
 Route::put('customer/profile/{id}', [CustomerAppController::class, 'customerProfileUpdate'])
     ->name('customer.profile.update');
-    
+
 // customer.trip.history
 Route::put('customer/trips/history', [CustomerAppController::class, 'customerTripHistory'])
     ->name('customer.trip.history');
@@ -85,5 +85,3 @@ Route::get('/customer/settings', [CustomerAppController::class, 'index'])->name(
 
 // Online Support
 Route::get('/customer/online-support', [CustomerAppController::class, 'index'])->name('customer.online.support.page');
-
-    

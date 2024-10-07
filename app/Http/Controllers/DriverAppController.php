@@ -9,6 +9,12 @@ class DriverAppController extends Controller
     /**
      * Display a listing of the resource.
      */
+
+    public function signup()
+    {
+        return view('driver.signup');
+    }
+
     public function index()
     {
         //
