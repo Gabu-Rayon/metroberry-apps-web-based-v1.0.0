@@ -28,8 +28,6 @@
             </div>
 
             <div class="change-request-status">
-                {{-- <img src="{{ asset('driver-assets/icons/map-position.svg') }}" class="float-right" alt="Map Position" /> --}}
-                {{-- <div class="clearfix"></div> --}}
 
                 @if ($driver->status == 'inactive')
                     <div
@@ -39,129 +37,130 @@
                     </div>
                 @endif
 
-                @if (!$driver->national_id_front_avatar || !$driver->national_id_behind_avatar)
-                    <div class="request-notification-container map-notification meters-left-450 map-notification-warning">
-                        <span class="font-weight-dark m-3 my-3">
-                            Kindly upload your national ID pictures
-                        </span>
-                        <form action="{{ route('driver.personal-documents') }}" method="POST"
-                            enctype="multipart/form-data">
-                            @csrf
+                <div class="request-notification-container map-notification meters-left-450 map-notification-warning">
+                    <div>
+                        <h5 for="national_id_front_avatar" class="form-label">National ID Pictures</h5>
+                        <img src="{{ asset('storage/' . $driver->national_id_front_avatar) }}" alt="National ID Front"
+                            class="img-fluid">
 
-                            <div class="mb-3">
-                                <label for="national_id_front_avatar" class="form-label">National ID Front Picture</label>
-                                <input type="file" id="national_id_front_avatar" name="national_id_front_avatar"
-                                    required>
-                            </div>
+                        <img src="{{ asset('storage/' . $driver->national_id_behind_avatar) }}" alt="National ID Back"
+                            class="img-fluid">
 
-                            <div class="mb-3">
-                                <label for="national_id_back_avatar" class="form-label">National ID Back Picture</label>
-                                <input type="file" id="national_id_back_avatar" name="national_id_back_avatar" required>
-                            </div>
-
-                            <button type="submit"
-                                class="btn btn-primary w-50 m-2 float-end font-weight-light text-uppercase">
-                                Submit
-                            </button>
-                        </form>
                     </div>
-                @endif
+                    <h5 class="font-weight-dark m-3 my-3">
+                        Update your National ID Details
+                    </h5>
 
 
-                @if ($driver->driverLicense)
-                    @if (!$driver->driverLicense->verified)
-                        <div
-                            class="request-notification-container map-notification offline-notification map-notification-warning">
-                            Your license has not been verified.
-                            <div class="font-weight-light">Contact your administrator</div>
+                    <form action="{{ route('driver.personal-documents') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+
+                        <div class="mb-3">
+                            <label for="national_id_front_avatar" class="form-label">National ID Front Picture</label>
+                            <input type="file" id="national_id_front_avatar" name="national_id_front_avatar" required>
                         </div>
-                    @endif
-                @else
-                    <div class="request-notification-container map-notification meters-left-450 map-notification-warning">
-                        <span class="font-weight-dark m-3 my-3">
-                            Kindly upload your Driver's License
-                        </span>
-                        <form action="{{ route('driver.license') }}" method="POST" enctype="multipart/form-data">
-                            @csrf
 
-                            <div class="mb-3">
-                                <label for="driving_license_no" class="form-label">License no</label>
-                                <input type="text" id="driving_license_no" name="driving_license_no" class="form-control"
-                                    required>
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="issue_date" class="form-label">Issue Date</label>
-                                <input type="date" id="issue_date" name="issue_date" class="form-control" required>
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="expiry_date" class="form-label">Expiry Date</label>
-                                <input type="date" id="expiry_date" name="expiry_date" class="form-control" required>
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="national_id_front_avatar" class="form-label">License Front Picture</label>
-                                <input type="file" id="national_id_front_avatar" name="national_id_front_avatar"
-                                    required>
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="national_id_back_avatar" class="form-label">License Back Picture</label>
-                                <input type="file" id="national_id_back_avatar" name="national_id_back_avatar" required>
-                            </div>
-
-                            <button type="submit"
-                                class="btn btn-primary w-50 m-2 float-end font-weight-light text-uppercase">
-                                Submit
-                            </button>
-                        </form>
-                    </div>
-                @endif
-
-                @if ($driver->psvBadge)
-                    @if (!$driver->psvBadge->verified)
-                        <div
-                            class="request-notification-container map-notification offline-notification map-notification-warning">
-                            Your PSV Badge has not been verified.
-                            <div class="font-weight-light">Contact your administrator</div>
+                        <div class="mb-3">
+                            <label for="national_id_back_avatar" class="form-label">National ID Back Picture</label>
+                            <input type="file" id="national_id_back_avatar" name="national_id_back_avatar" required>
                         </div>
-                    @endif
-                @else
-                    <div class="request-notification-container map-notification meters-left-450 map-notification-warning">
-                        <span class="font-weight-dark m-3 my-3">
-                            Kindly upload your PSV Badge
-                        </span>
-                        <form action="{{ route('driver.psvbadge') }}" method="POST" enctype="multipart/form-data">
-                            @csrf
 
-                            <div class="mb-3">
-                                <label for="psv_badge_no" class="form-label">Badge no</label>
-                                <input type="text" id="psv_badge_no" name="psv_badge_no" class="form-control" required>
-                            </div>
+                        <button type="submit" class="btn btn-primary w-50 m-2 float-end font-weight-light text-uppercase">
+                            Submit
+                        </button>
+                    </form>
+                </div>
 
-                            <div class="mb-3">
-                                <label for="issue_date" class="form-label">Issue Date</label>
-                                <input type="date" id="issue_date" name="issue_date" class="form-control" required>
-                            </div>
 
-                            <div class="mb-3">
-                                <label for="expiry_date" class="form-label">Expiry Date</label>
-                                <input type="date" id="expiry_date" name="expiry_date" class="form-control" required>
-                            </div>
 
-                            <div class="mb-3">
-                                <label for="badge_copy" class="form-label">Copy</label>
-                                <input type="file" id="badge_copy" name="badge_copy" required>
-                            </div>
+                <div class="request-notification-container map-notification meters-left-450 map-notification-warning">
+                    <div>
+                        <h5 for="national_id_front_avatar" class="form-label">License Pictures</h5>
+                        <img src="{{ asset('storage/' . $driver->driverLicense->driving_license_avatar_front) }}"
+                            alt="National ID Front" class="img-fluid">
 
-                            <button type="submit"
-                                class="btn btn-primary w-50 m-2 float-end font-weight-light text-uppercase">
-                                Submit
-                            </button>
-                        </form>
+                        <img src="{{ asset('storage/' . $driver->driverLicense->driving_license_avatar_back) }}"
+                            alt="National ID Back" class="img-fluid">
+
                     </div>
-                @endif
+                    <h5 class="font-weight-dark m-3 my-3">
+                        Update your Driver's License details
+                    </h5>
+                    <form action="{{ route('driver.license', $driver->driverLicense->id) }}" method="POST"
+                        enctype="multipart/form-data">
+                        @csrf
+                        @method('PUT')
+                        <div class="mb-3">
+                            <label for="driving_license_no" class="form-label">License no</label>
+                            <input type="text" id="driving_license_no" name="driving_license_no" class="form-control"
+                                required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="issue_date" class="form-label">Issue Date</label>
+                            <input type="date" id="issue_date" name="issue_date" class="form-control" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="expiry_date" class="form-label">Expiry Date</label>
+                            <input type="date" id="expiry_date" name="expiry_date" class="form-control" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="national_id_front_avatar" class="form-label">License Front Picture</label>
+                            <input type="file" id="national_id_front_avatar" name="national_id_front_avatar" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="national_id_back_avatar" class="form-label">License Back Picture</label>
+                            <input type="file" id="national_id_back_avatar" name="national_id_back_avatar" required>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-50 m-2 float-end font-weight-light text-uppercase">
+                            Submit
+                        </button>
+                    </form>
+                </div>
+
+                <div class="request-notification-container map-notification meters-left-450 map-notification-warning">
+                    <div>
+                        <h5 for="national_id_front_avatar" class="form-label">PSV Badge Copy</h5>
+                        <img src="{{ asset('storage/' . $driver->psvBadge->psv_badge_avatar) }}" alt="National ID Front"
+                            class="img-fluid">
+                    </div>
+                    <h5 class="font-weight-dark m-3 my-3">
+                        Update your PSV Badge details
+                    </h5>
+                    <form action="{{ route('driver.psvbadge', $driver->psvBadge->id) }}" method="POST"
+                        enctype="multipart/form-data">
+                        @csrf
+                        @method('PUT')
+                        <div class="mb-3">
+                            <label for="psv_badge_no" class="form-label">Badge no</label>
+                            <input type="text" id="psv_badge_no" name="psv_badge_no" class="form-control" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="issue_date" class="form-label">Issue Date</label>
+                            <input type="date" id="issue_date" name="issue_date" class="form-control" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="expiry_date" class="form-label">Expiry Date</label>
+                            <input type="date" id="expiry_date" name="expiry_date" class="form-control" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="badge_copy" class="form-label">Copy</label>
+                            <input type="file" id="badge_copy" name="badge_copy" required>
+                        </div>
+
+                        <button type="submit"
+                            class="btn btn-primary w-50 m-2 float-end font-weight-light text-uppercase">
+                            Submit
+                        </button>
+                    </form>
+                </div>
 
 
 
@@ -481,8 +480,5 @@
                 </div>
             </div>
         </div>
-        <!--Main Menu End-->
     </div>
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 @endsection

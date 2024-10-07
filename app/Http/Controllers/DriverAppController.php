@@ -242,6 +242,67 @@ class DriverAppController extends Controller
     }
 
     /**
+     * Update Driver License
+     * 
+     * @param \Illuminate\Http\Request $request
+     * @param String $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+
+    public function updateLicense(Request $request, $id)
+    {
+        try {
+            $data = $request->all();
+
+            $validator = Validator::make($data, [
+                'driving_license_no' => 'required|string|max:255',
+                'issue_date' => 'required|date',
+                'expiry_date' => 'required|date|after:issue_date',
+                'national_id_front_avatar' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
+                'national_id_back_avatar' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
+            ]);
+
+            if ($validator->fails()) {
+                Log::error('VALIDATION ERROR');
+                Log::error($validator->errors()->all());
+
+                return back()->with('error', $validator->errors()->first())->withInput();
+            }
+
+            DB::beginTransaction();
+
+            $license = DriversLicenses::find($id);
+
+            if ($request->hasFile('national_id_front_avatar')) {
+                $driving_license_avatar_front = $request->file('national_id_front_avatar')->store('drivers', 'public');
+                $license->driving_license_avatar_front = $driving_license_avatar_front;
+            }
+
+            if ($request->hasFile('national_id_back_avatar')) {
+                $driving_license_avatar_back = $request->file('national_id_back_avatar')->store('drivers', 'public');
+                $license->driving_license_avatar_back = $driving_license_avatar_back;
+            }
+
+            $license->driving_license_no = $data['driving_license_no'];
+            $license->driving_license_date_of_issue = $data['issue_date'];
+            $license->driving_license_date_of_expiry = $data['expiry_date'];
+
+            $license->save();
+
+            DB::commit();
+
+            return redirect()->route('driver.dashboard')->with('success', 'Driver license updated successfully.');
+        } catch (Exception $e) {
+            DB::rollBack();
+            Log::error('UPDATE DRIVER LICENSE ERROR');
+            Log::error($e);
+
+            return back()->with('error', 'Something went wrong.')->withInput();
+        }
+    }
+
+
+    /**
      * Store Driver PSV Badge
      * 
      * @param \Illuminate\Http\Request $request
@@ -293,5 +354,71 @@ class DriverAppController extends Controller
 
             return back()->with('error', 'Something went wrong.')->withInput();
         }
+    }
+
+    /**
+     * Update Driver PSV Badge
+     * 
+     * @param \Illuminate\Http\Request $request
+     * @param String $id
+     * 
+     * @return \Illuminate\View\View
+     */
+
+    public function updatePsvBadge(Request $request, $id)
+    {
+        try {
+            $data = $request->all();
+
+            $validator = Validator::make($data, [
+                'psv_badge_no' => 'required|string|max:255',
+                'issue_date' => 'required|date',
+                'expiry_date' => 'required|date|after:issue_date',
+                'badge_copy' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
+            ]);
+
+            if ($validator->fails()) {
+                Log::error('VALIDATION ERROR');
+                Log::error($validator->errors()->all());
+
+                return back()->with('error', $validator->errors()->first())->withInput();
+            }
+
+            DB::beginTransaction();
+
+            $psvBadge = PSVBadge::find($id);
+
+            if ($request->hasFile('badge_copy')) {
+                $psv_badge_avatar = $request->file('badge_copy')->store('drivers', 'public');
+                $psvBadge->psv_badge_avatar = $psv_badge_avatar;
+            }
+
+            $psvBadge->psv_badge_no = $data['psv_badge_no'];
+            $psvBadge->psv_badge_date_of_issue = $data['issue_date'];
+            $psvBadge->psv_badge_date_of_expiry = $data['expiry_date'];
+
+            $psvBadge->save();
+
+            DB::commit();
+
+            return redirect()->route('driver.dashboard')->with('success', 'Driver PSV badge updated successfully.');
+        } catch (Exception $e) {
+            DB::rollBack();
+            Log::error('UPDATE DRIVER PSV BADGE ERROR');
+            Log::error($e);
+
+            return back()->with('error', 'Something went wrong.')->withInput();
+        }
+    }
+
+    /**
+     * Driver Documents Page
+     * 
+     * @return \Illuminate\View\View
+     */
+
+    public function documents()
+    {
+        return view('driver.documents');
     }
 }
