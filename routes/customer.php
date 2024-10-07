@@ -86,4 +86,9 @@ Route::get('/customer/settings', [CustomerAppController::class, 'index'])->name(
 // Online Support
 Route::get('/customer/online-support', [CustomerAppController::class, 'index'])->name('customer.online.support.page');
 
-    
+
+// customer.trip.show
+Route::get('/customer/show/trip-details/{id}', [CustomerAppController::class, 'showTripDetails'])->name('customer.trip.show');
+
+// customer.trip.cancel
+Route::put('/customer/cancel/trip/{id}', [CustomerAppController::class, 'cancelTrip'])->name('customer.trip.cancel');

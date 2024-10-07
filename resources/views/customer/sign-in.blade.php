@@ -1,6 +1,6 @@
 @extends('layouts.driver-mobile-app')
 
-@section('title', 'Sign in')
+@section('title', 'Sign in | Customer')
 @section('content')
 
     <!--Loading Container Start-->
@@ -25,7 +25,7 @@
 
             <div class="rest-container">
                 <div class="text-center header-icon-logo-margin header-icon-logo-margin-extra">
-                    <img src="{{ asset('mobile-app-assets/images/logo-main.svg') }}" alt="Main Logo">
+                    <img src="{{ asset('company-logos/logo_white.png') }}" height="150" width="300" alt="Main Logo">
                 </div>
 
                 <!--Sign Up Container Start-->

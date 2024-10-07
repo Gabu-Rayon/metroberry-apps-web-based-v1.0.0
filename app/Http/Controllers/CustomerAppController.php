@@ -20,40 +20,40 @@ class CustomerAppController extends Controller
 {
     // Customer homepage
     public function customerIndexPage()
-{
-    // Get the authenticated user
-    $user = Auth::user();
+    {
+        // Get the authenticated user
+        $user = Auth::user();
 
-    // Check if the user is a customer
-    if ($user->role !== 'customer') {
-        return redirect()->back()->with('error', 'Access Denied. Only customers can access this page.');
+        // Check if the user is a customer
+        if ($user->role !== 'customer') {
+            return redirect()->back()->with('error', 'Access Denied. Only customers can access this page.');
+        }
+
+        // Fetch the customer data based on the user_id in the customers table
+        $customer = Customer::where('user_id', $user->id)->firstOrFail();
+
+        // Fetch the organization that the customer belongs to
+        $organization = Organisation::find($customer->organisation_id);
+
+        // Fetch booked trips for the customer (`trips` relationship in Customer model)
+        $trips = Trip::where('customer_id', $customer->id)->get();
+
+        // Fetch the routes for the organization (assuming you have a routes table)
+        $routes = Routes::all();
+
+        // Fetch the route locations (route_locations table with a route_id foreign key)
+        $routeLocations = RouteLocations::whereIn('route_id', $routes->pluck('id'))->get();
+
+        // Pass the data to the view
+        return view('customer.index', [
+            'user' => $user,
+            'customer' => $customer,
+            'organisation' => $organization,
+            'routes' => $routes,
+            'routeLocations' => $routeLocations,
+            'trips' => $trips, // Pass the trips to the view
+        ]);
     }
-
-    // Fetch the customer data based on the user_id in the customers table
-    $customer = Customer::where('user_id', $user->id)->firstOrFail();
-
-    // Fetch the organization that the customer belongs to
-    $organization = Organisation::find($customer->organisation_id);
-    
-    // Fetch booked trips for the customer (`trips` relationship in Customer model)
-    $trips = Trip::where('customer_id', $customer->id)->get(); 
-
-    // Fetch the routes for the organization (assuming you have a routes table)
-    $routes = Routes::all();
-
-    // Fetch the route locations (route_locations table with a route_id foreign key)
-    $routeLocations = RouteLocations::whereIn('route_id', $routes->pluck('id'))->get();
-
-    // Pass the data to the view
-    return view('customer.index', [
-        'user' => $user,
-        'customer' => $customer,
-        'organisation' => $organization,
-        'routes' => $routes,
-        'routeLocations' => $routeLocations,
-        'trips' => $trips, // Pass the trips to the view
-    ]);
-}
 
 
 
@@ -440,7 +440,32 @@ class CustomerAppController extends Controller
         return redirect()->route('customer.profile', $id)->with('success', 'Profile updated successfully.');
     }
 
-    public function customerTripHistory(){
+    public function customerTripHistory()
+    {
         //customer trip history
     }
+
+
+    public function showTripDetails($id)
+    {
+        // Retrieve the trip details using the provided id
+        $trip = Trip::findOrFail($id);
+        $customer = auth()->user();
+
+        // Pass the trip details to the view
+        return view('customer.show-trip-detail', compact('trip','customer'));
+    }
+
+    public function cancelTrip($id)
+    {
+
+        Log::info('Trip Id being cancalled');
+        Log::info($id);
+        $trip = Trip::findOrFail($id);
+        $trip->status = 'cancelled';
+        $trip->save();
+
+        return redirect()->route('customer.index.page', $trip->id)->with('status', 'Trip has been cancelled.');
+    }
+
 }
