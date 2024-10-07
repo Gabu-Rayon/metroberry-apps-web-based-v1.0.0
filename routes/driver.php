@@ -25,3 +25,6 @@ Route::put('/driver/license/{id}', [DriverAppController::class, 'updateLicense']
 
 Route::post('/driver/psvbadge', [DriverAppController::class, 'psvbadge'])->name('driver.psvbadge')->middleware('auth');
 Route::put('/driver/psvbadge/{id}', [DriverAppController::class, 'updatePsvBadge'])->name('driver.psvbadge')->middleware('auth');
+
+Route::get('/driver/vehicle', [DriverAppController::class, 'vehicle'])->name('driver.vehicle')->middleware('auth');
+Route::get('/driver/trips', [DriverAppController::class, 'trips'])->name('driver.trips')->middleware('auth');
