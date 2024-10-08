@@ -200,8 +200,8 @@ class DriverAppController extends Controller
                 'driving_license_no' => 'required|string|max:255|unique:drivers_licenses',
                 'issue_date' => 'required|date',
                 'expiry_date' => 'required|date|after:issue_date',
-                'national_id_front_avatar' => 'required|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
-                'national_id_back_avatar' => 'required|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
+                'license_front_avatar' => 'required|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
+                'license_back_avatar' => 'required|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
             ]);
 
             if ($validator->fails()) {
@@ -215,8 +215,8 @@ class DriverAppController extends Controller
 
             // Store files in the storage/app/public/drivers directory
 
-            $driving_license_avatar_front = $request->file('national_id_front_avatar')->store('drivers', 'public');
-            $driving_license_avatar_back = $request->file('national_id_back_avatar')->store('drivers', 'public');
+            $driving_license_avatar_front = $request->file('license_front_avatar')->store('drivers', 'public');
+            $driving_license_avatar_back = $request->file('license_back_avatar')->store('drivers', 'public');
 
             // Update database records with the stored file paths
 
@@ -317,8 +317,8 @@ class DriverAppController extends Controller
 
             $validator = Validator::make($data, [
                 'psv_badge_no' => 'required|string|max:255|unique:psv_badges',
-                'issue_date' => 'required|date',
-                'expiry_date' => 'required|date|after:issue_date',
+                'psv_issue_date' => 'required|date',
+                'psv_expiry_date' => 'required|date|after:issue_date',
                 'badge_copy' => 'required|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
             ]);
 
@@ -339,8 +339,8 @@ class DriverAppController extends Controller
             PSVBadge::create([
                 'driver_id' => auth()->user()->driver->id,
                 'psv_badge_no' => $data['psv_badge_no'],
-                'psv_badge_date_of_issue' => $data['issue_date'],
-                'psv_badge_date_of_expiry' => $data['expiry_date'],
+                'psv_badge_date_of_issue' => $data['psv_issue_date'],
+                'psv_badge_date_of_expiry' => $data['psv_expiry_date'],
                 'psv_badge_avatar' => $psv_badge_avatar,
             ]);
 
