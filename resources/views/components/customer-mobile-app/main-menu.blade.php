@@ -37,7 +37,7 @@
                      <span class="menu-item-title profile">Profile</span>
                      <span class="menu-item-click fas fa-arrow-right"></span>
                  </a>
-                 <a class="menu-item" href="customer.payment.method.page">
+                 <a class="menu-item" href="{{ asset('customer.payment.method.page')}}">
                      <span class="menu-item-icon far fa-money-bill-alt"></span>
                      <span class="menu-item-title">Payment Methods</span>
                      <span class="menu-item-click fas fa-arrow-right"></span>

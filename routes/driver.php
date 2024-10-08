@@ -18,13 +18,13 @@ Route::post('driver/personal-documents', [DriverAppController::class, 'iddocs'])
 
 
 Route::post('/driver/license', [DriverAppController::class, 'license'])->name('driver.license')->middleware('auth');
-// Route::put('/driver/license/{id}', [DriverAppController::class, 'updateLicense'])->name('driver.license')->middleware('auth');
+Route::put('/driver/license/{id}', [DriverAppController::class, 'updateLicense'])->name('driver.license')->middleware('auth');
 
 
 
 
 Route::post('/driver/psvbadge', [DriverAppController::class, 'psvbadge'])->name('driver.psvbadge')->middleware('auth');
-// Route::put('/driver/psvbadge/{id}', [DriverAppController::class, 'updatePsvBadge'])->name('driver.psvbadge')->middleware('auth');
+Route::put('/driver/psvbadge/{id}', [DriverAppController::class, 'updatePsvBadge'])->name('driver.psvbadge')->middleware('auth');
 
 Route::get('/driver/vehicle', [DriverAppController::class, 'vehicle'])->name('driver.vehicle')->middleware('auth');
 Route::get('/driver/trips', [DriverAppController::class, 'trips'])->name('driver.trips')->middleware('auth');
