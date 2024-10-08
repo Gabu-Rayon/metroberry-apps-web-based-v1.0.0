@@ -1,6 +1,6 @@
 @extends('layouts.driver-mobile-app')
 
-@section('title', 'Personal ID | Driver')
+@section('title', 'PSV BADGE | Driver')
 @section('content')
 
     <body>
@@ -19,7 +19,7 @@
                             <img src="{{ asset('mobile-app-assets/icons/back.svg') }}" alt="Back Icon" />
                         </span>
                     </a>
-                    <span>Personal ID Card</span>
+                    <span>Psv Badge</span>
                     <a href="#">
                         <span class="float-right menu-open closed">
                             <img src="{{ asset('mobile-app-assets/icons/menu.svg') }}" alt="Menu Hamburger Icon" />
@@ -29,14 +29,14 @@
                 <!--Page Title & Icons End-->
 
                 <div class="rest-container">
-                    <div class="address-title">Personal ID Card</div>
+                    <div class="address-title">Psv Badge</div>
 
                     <!--Personal ID Fields Container Start-->
                     <div class="all-container all-container-with-classes">
                         <form class="width-100">
                             <!--Input Field Container Start-->
                             <div class="form-group form-control-margin">
-                                <label class="label-title">Personal ID Number</label>
+                                <label class="label-title">Psv Badge</label>
                                 <div class="input-group">
                                     <input class="form-control form-control-with-padding" type="text" name="name"
                                         autocomplete="off" placeholder="Personal ID Number" />

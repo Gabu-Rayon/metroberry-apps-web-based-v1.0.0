@@ -1,6 +1,6 @@
 @extends('layouts.driver-mobile-app')
 
-@section('title', 'Vehicle Status')
+@section('title', 'Vehicle Status | Driver')
 
 @section('content')
     <div id="load" class="loading-overlay d-flex flex-column justify-content-center align-items-center">

@@ -37,21 +37,21 @@
                 <!--Driver Registration Information Links Container Start-->
                 <div class="sign-up-form-container">
                     <div class="width-100">
-                        <!--Driver Registration Item Start-->
+                        <!--Driver Driver's License Item Start-->
                         <div class="border-bottom-primary">
-                            <a href="drivers-license.html" class="home-options-list href-decoration-none">
-                                Driver's License
+                            <a href="{{ route('driver.license.document') }}" class="home-options-list href-decoration-none">
+                                License
                                 <span class="fas fa-check icon chosen hidden"></span>
                                 <span class="icon choose float-right">
                                     <img src="{{ asset('mobile-app-assets/icons/angle-right.svg') }}" alt="Angle Right Icon" />
                                 </span>
                             </a>
                         </div>
-                        <!--Driver Registration Item End-->
+                        <!--Driver Driver's License Item End-->
 
-                        <!--Driver Registration Item Start-->
+                        <!--Driver   Personal ID Card Item Start-->
                         <div class="border-bottom-primary">
-                            <a href="personal-id-card.html" class="home-options-list href-decoration-none">
+                            <a href="{{  route('personal.id.card.document') }}" class="home-options-list href-decoration-none">
                                 Personal ID Card
                                 <span class="fas fa-check icon chosen hidden"></span>
                                 <span class="icon choose float-right">
@@ -59,7 +59,18 @@
                                 </span>
                             </a>
                         </div>
-                        <!--Driver Registration Item End-->
+                        <!--Driver   Personal ID Card Item End-->
+                        <!--Driver  PSV Badge Item Start-->
+                        <div class="border-bottom-primary">
+                            <a href="{{ route('psvbadge.document') }}" class="home-options-list href-decoration-none">
+                                PSV Badge
+                                <span class="fas fa-check icon chosen hidden"></span>
+                                <span class="icon choose float-right">
+                                    <img src="{{ asset('mobile-app-assets/icons/angle-right.svg') }}" alt="Angle Right Icon" />
+                                </span>
+                            </a>
+                        </div>
+                        <!--Driver  PSV Badge Item End-->
                     </div>
                 </div>
                 <!--Driver Registration Information Links Container End-->

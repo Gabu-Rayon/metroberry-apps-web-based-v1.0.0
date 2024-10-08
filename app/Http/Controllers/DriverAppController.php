@@ -443,4 +443,21 @@ class DriverAppController extends Controller
     {
         return view('driver.trips');
     }
+
+     public function driverRegistrationPage(){
+        return view('driver.driver-registration');
+     }
+
+     public function driverLicenseDocument(){
+            return view('driver.driver-license');
+     }
+
+     public function personalIdCardDocument(){
+        return view('driver.personal-id-card');
+     }
+
+
+      public function psvbadgeDocument(){
+        return view('driver.psv-badge');
+      }
 }

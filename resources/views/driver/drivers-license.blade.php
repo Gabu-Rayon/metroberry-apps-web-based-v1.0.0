@@ -1,6 +1,6 @@
 @extends('layouts.driver-mobile-app')
 
-@section('title', 'Driver license')
+@section('title', 'License | Driver')
 @section('content')
     <!--Loading Container Start-->
     <div id="load" class="loading-overlay display-flex flex-column justify-content-center align-items-center">
@@ -9,6 +9,11 @@
     <!--Loading Container End-->
 
     <div class="row h-100">
+        @php
+            $user = Auth::user();
+            $driver = $user->driver;
+        @endphp
+
         <div class="col-xs-12 col-sm-12">
             <!--Page Title & Icons Start-->
             <div class="header-icons-container text-center">
@@ -17,7 +22,11 @@
                         <img src="{{ asset('mobile-app-assets/icons/back.svg') }}" alt="Back Icon" />
                     </span>
                 </a>
-                <span>Driver's License</span>
+                @if ($driver->status == 'inactive')
+                    <span>Deactivated</span>
+                @else
+                    <span>Driver's License</span>
+                @endif
                 <a href="#">
                     <span class="float-right menu-open closed">
                         <img src="{{ asset('mobile-app-assets/icons/menu.svg') }}" alt="Menu Hamburger Icon" />
@@ -61,7 +70,9 @@
                                 <div class="upload-picture-container">
                                     <div class="upload-camera-container text-center">
                                         <span class="camera">
-                                            <img src="{{ asset('mobile-app-assets/icons/photocamera.svg') }}" alt="Camera Icon" />
+                                            {{-- <img src="{{ asset('mobile-app-assets/icons/photocamera.svg') }}" alt="Camera Icon" /> --}}
+                                            <img src="{{ asset('storage/' . $driver->driverLicense->driving_license_avatar_front) }}"
+                                                alt="National ID Front" class="img-fluid">
                                         </span>
                                     </div>
                                 </div>
@@ -86,7 +97,10 @@
                                 <div class="upload-picture-container">
                                     <div class="upload-camera-container text-center">
                                         <span class="camera">
-                                            <img src="{{ asset('mobile-app-assets/icons/photocamera.svg') }}" alt="Camera Icon" />
+                                            <img src="{{ asset('mobile-app-assets/icons/photocamera.svg') }}"
+                                                alt="Camera Icon" />
+                                            <img src="{{ asset('storage/' . $driver->driverLicense->driving_license_avatar_back) }}"
+                                                alt="National ID Back" class="img-fluid">
                                         </span>
                                     </div>
                                 </div>

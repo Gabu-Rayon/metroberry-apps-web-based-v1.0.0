@@ -1,6 +1,6 @@
 @extends('layouts.driver-mobile-app')
 
-@section('title', 'Driver Dashboard')
+@section('title', 'Metroberry | Driver HomePage')
 @section('content')
     <div id="load" class="loading-overlay d-flex flex-column justify-content-center align-items-center">
         <div class="primary-color font-28 fas fa-spinner fa-spin"></div>
@@ -176,7 +176,7 @@
             </div>
 
             <!-- Main Menu Start -->
-            @include('components.mainmenu')
+            @include('components.driver-mobile-app.main-menu')
             <!-- Main Menu End -->
         </div>
     </div>

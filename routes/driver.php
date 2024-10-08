@@ -28,3 +28,17 @@ Route::put('/driver/psvbadge/{id}', [DriverAppController::class, 'updatePsvBadge
 
 Route::get('/driver/vehicle', [DriverAppController::class, 'vehicle'])->name('driver.vehicle')->middleware('auth');
 Route::get('/driver/trips', [DriverAppController::class, 'trips'])->name('driver.trips')->middleware('auth');
+
+
+
+//Driver Regsitrations View Routes and Update
+Route::get('driver/regsitration-documentation', [DriverAppController::class, 'driverRegistrationPage'])->name('driver.registration.page')->middleware('auth');
+
+Route::get('driver/license-document', [DriverAppController::class, 'driverLicenseDocument'])->name('driver.license.document')->middleware('auth');
+Route::put('driver/license-document/{id}', [DriverAppController::class, 'driverLicenseDocumentUpdate'])->name('driver.license.document.update')->middleware('auth');
+
+Route::get('driver/personal-id-card-documents', [DriverAppController::class, 'personalIdCardDocument'])->name('personal.id.card.document')->middleware('auth');
+Route::put('driver/personal-id-card-document/{id}', [DriverAppController::class, 'personalIdCardDocumentUpdate'])->name('personal.id.card.document.update')->middleware('auth');
+
+Route::get('driver/psvbadge-document', [DriverAppController::class, 'psvbadgeDocument'])->name('psvbadge.document')->middleware('auth');
+Route::put('driver/psvbadge-document/{id}', [DriverAppController::class, 'psvbadgeDocumentUpdate'])->name('psvbadge.document.update')->middleware('auth');
