@@ -140,6 +140,45 @@
                                 You have not been assigned a vehicle
                                 <div class="font-weight-light">Contact your administrator</div>
                             </div>
+                        @else
+                            <div
+                                class="request-notification-container map-notification meters-left-450 map-notification-warning">
+                                <span class="font-weight-dark m-3 my-3">Vehicle Details</span>
+                                <div>
+                                    <div class="mb-3">
+                                        <div class="form-label">Make</div>
+                                        <div class="form-control">
+                                            {{ $driver->vehicle->make }}
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <div class="form-label">Model</div>
+                                        <div class="form-control">
+                                            {{ $driver->vehicle->model }}
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <div class="form-label">Plate Number</div>
+                                        <div class="form-control">
+                                            {{ $driver->vehicle->plate_number }}
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <div class="form-label">Engine Size (L)</div>
+                                        <div class="form-control">
+                                            {{ $driver->vehicle->engine_size }}
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <div class="form-label">Picture</div>
+                                        <div class="form-control">
+                                            <img src="{{ asset('storage/' . $driver->vehicle->avatar) }}"
+                                                alt="{{ $driver->vehicle->make . ' ' . $driver->vehicle->model }}"
+                                                class="img-fluid">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         @endif
                     @endif
                 @endif
