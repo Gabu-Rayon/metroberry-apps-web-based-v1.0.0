@@ -1,6 +1,6 @@
 @extends('layouts.driver-mobile-app')
 
-@section('title', 'Metroberry Customer | Add New Card')
+@section('title', 'Add New Card| Customer')
 @section('content')
 
     <!--Loading Container Start-->

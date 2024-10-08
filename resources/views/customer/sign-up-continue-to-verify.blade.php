@@ -1,6 +1,6 @@
 @extends('layouts.driver-mobile-app')
 
-@section('title', 'Sign Up')
+@section('title', 'Auth Options | Customer')
 @section('content')
 
     <!--Loading Container Start-->

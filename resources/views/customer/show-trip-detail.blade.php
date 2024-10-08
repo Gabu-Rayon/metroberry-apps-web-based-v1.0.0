@@ -1,6 +1,7 @@
 @extends('layouts.driver-mobile-app')
 
-@section('title', 'Homepage | Customer')
+@section('title', 'Trip Details | Customer')
+
 @section('content')
     <!--Loading Container Start-->
     <div id="load" class="loading-overlay display-flex flex-column justify-content-center align-items-center">
@@ -13,7 +14,7 @@
 
             <!--Page Title & Icons Start-->
             <div class="header-icons-container text-center">
-                <span class="title">Homepage : Booked Trips</span>
+                <span class="title">Trip Details</span>
                 <a href="#">
                     <span class="float-right menu-open closed">
                         <img src="{{ asset('mobile-app-assets/icons/menu.svg') }}" alt="Menu Hamburger Icon">
@@ -24,25 +25,13 @@
 
             <div class="rest-container">
                 <div class="all-history-items remaining-height">
-                    <!-- Check if there are trips booked -->
-                    @if ($trips->isEmpty())
+                    <!-- Check if the trip exists -->
+                    @if (is_null($trip))
                         <div class="text-center">
-                            <p>No booked trips found.</p>
-                            <a href="{{ route('customer.book.trip.page') }}" class="btn btn-primary text-uppercase">Book A
-                                Trip</a>
-                        </div>
-                    @else
-                        <!-- Loop through booked trips -->
-                        @foreach ($trips as $trip)
+                            <p>No trip details found.</p>
+                        @else
                             <div class="history-items-container history-items-padding">
-                                <!--Support Button Start-->
-                                <div class="p-1">
-                                    <a href="{{ route('customer.book.trip.page') }}"
-                                        class="btn btn-primary text-uppercase">Book A Trip</a>
-                                </div>
-                                <!--Support Button End-->
                                 <div class="history-item">
-
                                     <!--Date and Price Container Start-->
                                     <div class="border-bottom-primary thin">
                                         <div class="status-container">
@@ -57,10 +46,10 @@
                                                 @endif
                                             </div>
                                             <div class="status-none float-right text-uppercase">
-                                                Charges :  Kes {{ number_format($trip->total_price, 2) }}
+                                                Charges : Kes {{ number_format($trip->total_price, 2) }}
                                                 <!-- Format charges -->
                                             </div>
-                                             <div class="status-none float-right text-uppercase">
+                                            <div class="status-none float-right text-uppercase">
                                                 @php
                                                     $statusColors = [
                                                         'scheduled' => 'text-success',
@@ -69,7 +58,7 @@
                                                         'paid' => 'text-info',
                                                         'partially paid' => 'text-muted',
                                                         'assigned' => 'text-secondary',
-                                                        'cancelled' => 'text-danger'
+                                                        'cancelled' => 'text-danger',
                                                     ];
                                                     $statusClass = $statusColors[$trip->status] ?? 'text-dark';
                                                 @endphp
@@ -79,6 +68,37 @@
                                         </div>
                                     </div>
                                     <!--Date and Price Container End-->
+
+                                    <!--Trips Details Address Container Start-->
+                                    <div class="addresses-container position-relative">
+                                        <div class="height-auto">
+                                            <div class="">
+
+                                                <div class="map-input display-flex">
+                                                    Driver : {{ $trip->driver->user->name ?? null }}
+                                                </div>
+                                            </div>
+                                            <div class="">
+
+                                                <div class="map-input display-flex">
+                                                    Driver License : {{ $trip->driver->license ?? null }}
+                                                </div>
+                                            </div>
+                                            <div class="">
+
+                                                <div class="map-input display-flex">
+                                                    Driver PSV : {{ $trip->driver->psvBadge ?? null }}
+                                                </div>
+                                            </div>
+                                            <div class="">
+
+                                                <div class="map-input display-flex">
+                                                    vehicle : {{ $trip->vehicle->plate_number ?? null }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--Trip Details Address Container End-->
 
                                     <!--Trips Details Address Container Start-->
                                     <div class="addresses-container position-relative">
@@ -108,15 +128,22 @@
                                     </div>
                                     <!--Trip Details Address Container End-->
 
-                                    <!--trip History Button Start-->
-                                    <div>
-                                        <a href="{{ route('customer.trip.show', $trip->id) }}"
-                                            class="btn btn-dark text-uppercase">More Details</a>
-                                    </div>
-                                    <!--trip History Button End-->
+                                    <!--Trip Cancel Button Start-->
+                                    @if ($trip->status !== 'cancelled')
+                                        <div class="p-2">
+                                            <!-- This form is for the user to cancel the trip -->
+                                            <form action="{{ route('customer.trip.cancel', $trip->id) }}" method="POST"
+                                                enctype="multipart/form-data">
+                                                @csrf
+                                                @method('PUT')
+                                                <button type="submit" class="btn btn-primary text-uppercase">Cancel
+                                                    Trip</button>
+                                            </form>
+                                        </div>
+                                    @endif
+                                    <!--Trip Cancel Button End-->
                                 </div>
                             </div>
-                        @endforeach
                     @endif
                 </div>
             </div>

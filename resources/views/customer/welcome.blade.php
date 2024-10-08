@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="{{ asset('mobile-app-assets/css/fontawesome.css') }}">
     <!-- Main Style -->
     <link rel="stylesheet" href="{{ asset('mobile-app-assets/css/styles.css') }}">
-    <title>Loading...</title>
+    <title>Loading... | Customer</title>
 </head>
 
 <body>
@@ -23,11 +23,11 @@
     <!--Loading Container End-->
 
     <!--Loading Logo Container Start-->
-    <div class="main-background w-100 h-100">
+    <div class="justify-content-center w-100 h-100">
         <input type="hidden" class="loading-logo  customer">
         <div class="d-flex h-100 justify-content-center align-items-center flex-column">
-            <a href="{{ route('sign.up.options.page') }}" class="loading-logo-margin">
-                <img src="{{ asset('mobile-app-assets/images/logo-white.svg') }}" alt="Main Logo"></a>
+            <a href="{{ route('sign.up.options.page') }}" class="loading-logo-margin text-center">
+                <img src="{{ asset('company-logos/logo_white.png') }}" height="150" width="300" alt="Main Logo"></a>
         </div>
     </div>
     <!--Loading Logo Container End-->

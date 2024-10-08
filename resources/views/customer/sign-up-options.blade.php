@@ -12,7 +12,7 @@
     <div class="row h-100 align-items-center">
         <div class="col-xs-12 col-sm-12 margin-bottom-up">
             <div class="text-center mb-5">
-                <img src="{{ asset( 'mobile-app-assets/images/logo-main.svg' ) }}" alt="Main Logo">
+                <img src="{{ asset('company-logos/logo_white.png') }}" height="150" width="300" alt="Main Logo">
             </div>
 
             <!--Sign Up Buttons Container Start-->

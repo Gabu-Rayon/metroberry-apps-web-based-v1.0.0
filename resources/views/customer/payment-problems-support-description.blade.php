@@ -1,6 +1,6 @@
 @extends('layouts.driver-mobile-app')
 
-@section('title', 'Payment Problems')
+@section('title', 'Payment Problems | Customer')
 @section('content')
 
     <!--Loading Container Start-->
