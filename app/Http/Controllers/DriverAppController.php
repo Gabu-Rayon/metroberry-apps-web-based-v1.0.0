@@ -461,24 +461,29 @@ class DriverAppController extends Controller
         return view('driver.trips');
     }
 
-     public function driverRegistrationPage(){
+    public function driverRegistrationPage()
+    {
         return view('driver.driver-registration');
-     }
+    }
 
-     public function driverLicenseDocument(){
-            return view('driver.driver-license');
-     }
+    public function driverLicenseDocument()
+    {
+        return view('driver.driver-license');
+    }
 
-     public function personalIdCardDocument(){
+    public function personalIdCardDocument()
+    {
         return view('driver.personal-id-card');
-     }
+    }
 
 
-      public function psvbadgeDocument(){
+    public function psvbadgeDocument()
+    {
         return view('driver.psv-badge');
-      }
+    }
 
-      public function profile(){
+    public function profile()
+    {
 
         // Get the authenticated user
         $user = Auth::user();
@@ -490,10 +495,48 @@ class DriverAppController extends Controller
 
         // Fetch the customer data based on the user_id in the customers table
         $driver = Driver::where('user_id', $user->id)->firstOrFail();
-        return view('driver.profile',compact('driver'));
-      }
+        return view('driver.profile', compact('driver'));
+    }
 
-      public function profileUpdate(Request $request,$id){
-        //Update Profile
-      }
+    public function profileUpdate(Request $request, $id)
+    {
+        try {
+            $data = $request->all();
+
+            Log::info('DATA');
+            Log::info($data);
+
+            $validator = Validator::make($data, [
+                'full-name' => 'nullable|string|max:255',
+                'email' => 'required|string|email|max:255',
+                'phone' => 'required|string|max:255',
+                'national_id_no' => 'required|string|max:255',
+                'organisation_id' => 'required|integer',
+            ]);
+
+            if ($validator->fails()) {
+                Log::error('VALIDATION ERROR');
+                Log::error($validator->errors()->all());
+
+                return back()->with('error', $validator->errors()->first())->withInput();
+            }
+
+            $driver = Driver::find($id);
+
+            $driver->name = $data['name'];
+            $driver->email = $data['email'];
+            $driver->phone = $data['phone'];
+            $driver->national_id_no = $data['national_id_no'];
+            $driver->organisation_id = $data['organisation_id'];
+
+            $driver->save();
+
+            return redirect()->route('driver.profile')->with('success', 'Driver profile updated successfully.');
+        } catch (Exception $e) {
+            Log::error('UPDATE DRIVER PROFILE ERROR');
+            Log::error($e);
+
+            return back()->with('error', 'Something went wrong.')->withInput();
+        }
+    }
 }

@@ -9,7 +9,10 @@ Route::get('/driver/login', [DriverAppController::class, 'login'])->name('driver
 Route::post('/driver/login', [DriverAppController::class, 'loginstore'])->name('driver.login');
 
 Route::get('/driver/profile', [DriverAppController::class, 'profile'])->name('driver.profile');
-Route::get('/driver/profile/update/{id}', [DriverAppController::class, 'profileUpdate'])->name('driver.profile.update');
+Route::put('/driver/profile/update/{id}', [DriverAppController::class, 'profileUpdate'])->name('driver.profile.update');
+
+Route::put('/driver/password/update/{id}', [DriverAppController::class, 'passwordUpdate'])->name('driver.password.update');
+
 
 Route::get('/driver/documents', [DriverAppController::class, 'documents'])->name('driver.documents');
 
