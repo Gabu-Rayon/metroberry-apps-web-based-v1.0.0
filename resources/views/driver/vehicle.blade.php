@@ -25,7 +25,7 @@
                         </span>
                     </a>
             </div>
-            
+
             <!--Page Title & Icons End-->
 
             <div class="rest-container">
@@ -68,14 +68,15 @@
                                 <!--Car Registration Field Start-->
                                 <div class="form-group">
                                     <label class="width-100">
-                                        <span class="label-title">{{ $driver->vehicle->organisation->user->name }}</span>
+                                        <span class="label-title">Current Organisation</span>
                                         <span class="car-info-wrap display-block">
-                                            <select class="custom-select font-weight-light car-info">
-                                                <option value="opel">Opel</option>
-                                                <option value="mercedes">Mercedes</option>
-                                                <option value="toyota">Toyota</option>
-                                                <option value="nissan">Nissan</option>
-                                                <option value="bmw">BMW</option>
+                                            <select class="custom-select font-weight-light car-info" name="organisation_id">
+                                                @foreach ($organisations as $organisation)
+                                                    <option value="{{ $organisation->id }}"
+                                                        {{ $driver->vehicle->organisation_id == $organisation->id ? 'selected' : '' }}>
+                                                        {{ $organisation->user->name }}
+                                                    </option>
+                                                @endforeach
                                             </select>
                                         </span>
                                     </label>
@@ -85,21 +86,22 @@
                                 <!--Car Registration Field Start-->
                                 <div class="form-group">
                                     <label class="width-100">
-                                        <span class="label-title">{{ $driver->vehicle->class }}</span>
+                                        <span class="label-title">Current Vehicle Class</span>
                                         <span class="car-info-wrap display-block">
-                                            <select class="custom-select font-weight-light car-info">
-                                                <option value="vectra">Vectra</option>
-                                                <option value="glc">GLC</option>
-                                                <option value="camri">Camri</option>
-                                                <option value="altima">Altima</option>
-                                                <option value="m3">M3</option>
+                                            <select class="custom-select font-weight-light car-info"
+                                                name="vehicle_class_id">
+                                                @foreach ($vehicleClasses as $vehicleClass)
+                                                    <option value="{{ $vehicleClass->id }}"
+                                                        {{ $driver->vehicle->class_id == $vehicleClass->id ? 'selected' : '' }}>
+                                                        {{ $vehicleClass->name }}
+                                                    </option>
+                                                @endforeach
                                             </select>
                                         </span>
                                     </label>
                                 </div>
                             </div>
                             <!--Car Registration Field End-->
-
                             <!--Car Registration Two Fields Container Start-->
                             <div class="multi-form-container display-flex justify-content-between">
                                 <div class="form-group">

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\VehicleClass;
 use Exception;
 use App\Models\Driver;
 use App\Models\PSVBadge;
@@ -436,6 +437,8 @@ class DriverAppController extends Controller
 
         // Get the authenticated user
         $user = Auth::user();
+        $organisations = Organisation::all();
+        $vehicleClasses = VehicleClass::all();
 
         // Check if the user is a customer
         if ($user->role !== 'driver') {
@@ -444,7 +447,7 @@ class DriverAppController extends Controller
 
         // Fetch the customer data based on the user_id in the customers table
         $driver = Driver::where('user_id', $user->id)->firstOrFail();
-        return view('driver.vehicle', compact('driver'));
+        return view('driver.vehicle', compact('driver','organisations','vehicleClasses'));
     }
 
     /**
