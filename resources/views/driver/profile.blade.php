@@ -40,96 +40,156 @@
                         <span class="profile-email font-weight-light">{{ $driver->user->email }}</span>
                     </div>
                 </div>
-                <!--Profile Information Container End-->
 
-                <!--Profile Information Fields Container Start-->
                 <div class="sign-up-form-container text-center">
-                     <form class="width-100" action="{{ route('driver.profile.update', $driver->id) }}"
-                        method="POST" enctype="multipart/form-data">
+                    <form class="width-100" action="{{ route('driver.profile.update', $driver->id) }}" method="POST"
+                        enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
-                        <!--Profile Field Container Start-->
                         <div class="form-group">
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <span>
-                                        <img src="{{ asset('mobile-app-assets/icons/avatar-light.svg') }}" alt="Avatar Icon" />
+                                        <i class="fa-solid fa-user"></i>
                                     </span>
                                 </div>
-                                <input class="form-control" type="text" autocomplete="off" name="full-name"
-                                    placeholder="Full Name"  value="{{ $driver->user->name }}"/>
+                                <input class="form-control" type="text" autocomplete="off" name="name"
+                                    placeholder="Name" value="{{ $driver->user->name }}" />
                             </div>
                         </div>
-                        <!--Profile Field Container End-->
 
-                        <!--Profile Field Container Start-->
                         <div class="form-group">
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <span>
-                                        <img src="{{ asset('mobile-app-assets/icons/personal-id.svg') }}" alt="ID Card Icon" />
+                                        <i class="fa-solid fa-envelope"></i>
                                     </span>
                                 </div>
-                                <input class="form-control" type="text" autocomplete="off" name="id-number"
-                                    placeholder="Personal Id Number"  value="{{ $driver->national_id_no }}" />
+                                <input class="form-control" type="email" autocomplete="off" name="email"
+                                    placeholder="Personal Id Number" value="{{ $driver->user->email }}" />
                             </div>
                         </div>
-                        <!--Profile Field Container End-->
 
-                        <!--Profile Field Container Start-->
                         <div class="form-group">
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <span>
-                                        <img src="{{ asset('mobile-app-assets/icons/calendar.svg') }}" alt="Calendar Icon"
-                                            class="profile-calendar-icon" />
+                                        <i class="fa-solid fa-phone"></i>
                                     </span>
                                 </div>
-                                <input class="form-control" type="text" autocomplete="off" name="dob"
-                                    placeholder="Date of Birth"   value="{{ $driver->user->dob ?? null }}" />
+                                <input class="form-control" type="text" autocomplete="off" name="phone"
+                                    placeholder="Phone" value="{{ $driver->user->phone }}" />
                             </div>
                         </div>
-                        <!--Profile Field Container End-->
 
-                        <!--Profile Field Container Start-->
                         <div class="form-group">
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <span>
-                                        <img src="{{ asset('mobile-app-assets/icons/phone.svg') }}" alt="Phone Number" />
+                                        <i class="fa-solid fa-map-marker"></i>
                                     </span>
                                 </div>
-                                <input class="form-control" type="tel" name="phone"
-                                    placeholder="Mobile Phone Number"  value="{{ $driver->user->phone }}" />
+                                <input class="form-control" type="text" autocomplete="off" name="address"
+                                    placeholder="Address" value="{{ $driver->user->address }}" />
                             </div>
                         </div>
-                        <!--Profile Field Container End-->
 
-                        <!--Profile Field Container Start-->
                         <div class="form-group">
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <span>
-                                        <img src="{{ asset('mobile-app-assets/icons/envelope.svg') }}" alt="Envelope Icon" />
+                                        <i class="fa-solid fa-id-card"></i>
                                     </span>
                                 </div>
-                                <input class="form-control" type="email" name="email" placeholder="Email"    value="{{ $driver->user->email }}" />
+                                <input class="form-control" type="text" autocomplete="off" name="national_id_no"
+                                    placeholder="Address" value="{{ $driver->national_id_no }}" />
                             </div>
                         </div>
-                        <!--Profile Field Container End-->
 
-                         <div class="form-submit-button text-center">
+                        <div class="form-group">
+                            <label for="national_id_front_avatar">Front Page of National ID</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span>
+                                        <i class="fa-solid fa-id-card"></i>
+                                    </span>
+                                </div>
+
+                                <input class="form-control" type="file" autocomplete="off"
+                                    name="national_id_front_avatar" placeholder="Front Page of National ID" />
+
+                                <a href="{{ asset('storage/' . $driver->national_id_front_avatar) }}"
+                                    class="btn btn-light">
+                                    Download
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="national_id_behind_avatar">Back Page of National ID</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span>
+                                        <i class="fa-solid fa-id-card"></i>
+                                    </span>
+                                </div>
+
+                                <input class="form-control" type="file" autocomplete="off"
+                                    name="national_id_behind_avatar" placeholder="Back Page of National ID" />
+
+                                <a href="{{ asset('storage/' . $driver->national_id_behind_avatar) }}"
+                                    class="btn btn-light">
+                                    Download
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="form-submit-button text-center">
                             <button type="submit" class="btn btn-dark text-uppercase">
-                                Update 
+                                Update
                             </button>
                         </div>
                     </form>
                 </div>
-                <!--Profile Information Fields Container End-->
+
+                <div class="sign-up-form-container text-center">
+                    <form class="width-100" action="{{ route('driver.password.update', $driver->id) }}" method="POST"
+                        enctype="multipart/form-data">
+                        @csrf
+                        @method('PUT')
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span>
+                                        <i class="fa-solid fa-lock"></i>
+                                    </span>
+                                </div>
+                                <input class="form-control" type="text" autocomplete="off" name="current_password"
+                                    placeholder="Current Password" />
+                            </div>
+                        </div>
+
+                        <div class="form-group margin-top-20">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span>
+                                        <i class="fa-solid fa-lock"></i>
+                                    </span>
+                                </div>
+                                <input class="form-control" type="text" autocomplete="off" name="password"
+                                    placeholder="New Password" />
+                            </div>
+
+                            <div class="form-submit-button text-center">
+                                <button type="submit" class="btn btn-dark text-uppercase">
+                                    Change Password
+                                </button>
+                            </div>
+                    </form>
+                </div>
             </div>
         </div>
 
-        <!--Terms And Conditions Agreement Container Start-->
         <div class="col-xs-12 col-sm-12 text-center sms-rate-text font-roboto flex-end margin-bottom-30">
             <div class="container-sms-rate-text width-100 font-11">
                 <span class="light-gray font-weight-light">
@@ -140,12 +200,7 @@
                 </a>
             </div>
         </div>
-        <!--Terms And Conditions Agreement Container End-->
 
-       <!--Main Menu Start-->
         @include('components.driver-mobile-app.main-menu')
-        <!--Main Menu End-->
     </div>
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 @endsection
