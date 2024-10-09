@@ -2,20 +2,23 @@
 
 @section('title', 'Metroberry | Driver HomePage')
 @section('content')
-    <div id="load" class="loading-overlay d-flex flex-column justify-content-center align-items-center">
+    <!--Loading Container Start-->
+    <div id="load" class="loading-overlay display-flex flex-column justify-content-center align-items-center">
         <div class="primary-color font-28 fas fa-spinner fa-spin"></div>
     </div>
+    <!--Loading Container End-->
 
     <div class="row h-100">
+
         @php
             $user = Auth::user();
             $driver = $user->driver;
         @endphp
-
         <div class="col-xs-12 col-sm-12 remaining-height">
+            <!--Page Title & Icons Start-->
             <div class="header-icons-container text-center">
                 <span class="float-left back-to-map hidden">
-                    <i class="fa-solid fa-arrow-left"></i>
+                    <img src=" {{ asset('mobile-app-assets/icons/back.svg') }}" alt="Back Icon" />
                 </span>
                 @if ($driver->status == 'inactive')
                     <span class="title">Inactive</span>
@@ -24,12 +27,14 @@
                 @endif
                 <a href="#">
                     <span class="float-right menu-open closed">
-                        <i class="fa-solid fa-bars"></i>
+                        <img src=" {{ asset('mobile-app-assets/icons/menu.svg') }}" alt="Menu Hamburger Icon" />
                     </span>
                 </a>
             </div>
+            <!--Page Title & Icons End-->
 
-            <div class="change-request-status">
+            <!--All Notifications & Status Container Start-->
+             <div class="change-request-status">
                 @if ($driver->status == 'inactive')
                     <div
                         class="request-notification-container map-notification offline-notification map-notification-warning">
@@ -174,10 +179,25 @@
                     @endif
                 @endif
             </div>
+        </div>
 
-            <!-- Main Menu Start -->
-            @include('components.driver-mobile-app.main-menu')
-            <!-- Main Menu End -->
+        <!--Main Menu Start-->
+        @include('components.driver-mobile-app.main-menu')
+        <!--Main Menu End-->
+    </div>
+
+    <!--Terms And Conditions Agreement Container Start-->
+    <div class="col-xs-12 col-sm-12 text-center sms-rate-text font-roboto flex-end margin-bottom-30">
+        <div class="container-sms-rate-text width-100 font-11">
+            <span class="light-gray font-weight-light">
+            </span>
+            <br />
+            <a href="#" class="dark-link">
+                <span class="font-weight-light">Metroberry Tours & Travel</span>
+            </a>
         </div>
     </div>
+    <!--Terms And Conditions Agreement Container End-->
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 @endsection

@@ -12,7 +12,7 @@
         <div class="col-xs-12 col-sm-12">
             <!--Page Title & Icons Start-->
             <div class="header-icons-container text-center">
-                <a href="index.html">
+                <a href="{{ route('driver.dashboard') }}">
                     <span class="float-left">
                         <img src="{{ asset('mobile-app-assets/icons/back.svg') }}" alt="Back Icon" />
                     </span>
@@ -36,15 +36,18 @@
                         </span>
                     </div>
                     <div class="display-flex flex-column">
-                        <span class="profile-name">Jonathan McBerly</span>
-                        <span class="profile-email font-weight-light">lorem@loremipsum.com</span>
+                        <span class="profile-name">{{ $driver->user->name }}</span>
+                        <span class="profile-email font-weight-light">{{ $driver->user->email }}</span>
                     </div>
                 </div>
                 <!--Profile Information Container End-->
 
                 <!--Profile Information Fields Container Start-->
                 <div class="sign-up-form-container text-center">
-                    <form class="width-100">
+                     <form class="width-100" action="{{ route('driver.profile.update', $driver->id) }}"
+                        method="POST" enctype="multipart/form-data">
+                        @csrf
+                        @method('PUT')
                         <!--Profile Field Container Start-->
                         <div class="form-group">
                             <div class="input-group">
@@ -54,7 +57,7 @@
                                     </span>
                                 </div>
                                 <input class="form-control" type="text" autocomplete="off" name="full-name"
-                                    placeholder="Full Name" />
+                                    placeholder="Full Name"  value="{{ $driver->user->name }}"/>
                             </div>
                         </div>
                         <!--Profile Field Container End-->
@@ -68,7 +71,7 @@
                                     </span>
                                 </div>
                                 <input class="form-control" type="text" autocomplete="off" name="id-number"
-                                    placeholder="Personal Id Number" />
+                                    placeholder="Personal Id Number"  value="{{ $driver->national_id_no }}" />
                             </div>
                         </div>
                         <!--Profile Field Container End-->
@@ -83,7 +86,7 @@
                                     </span>
                                 </div>
                                 <input class="form-control" type="text" autocomplete="off" name="dob"
-                                    placeholder="Date of Birth" />
+                                    placeholder="Date of Birth"   value="{{ $driver->user->dob ?? null }}" />
                             </div>
                         </div>
                         <!--Profile Field Container End-->
@@ -97,7 +100,7 @@
                                     </span>
                                 </div>
                                 <input class="form-control" type="tel" name="phone"
-                                    placeholder="Mobile Phone Number" />
+                                    placeholder="Mobile Phone Number"  value="{{ $driver->user->phone }}" />
                             </div>
                         </div>
                         <!--Profile Field Container End-->
@@ -110,65 +113,15 @@
                                         <img src="{{ asset('mobile-app-assets/icons/envelope.svg') }}" alt="Envelope Icon" />
                                     </span>
                                 </div>
-                                <input class="form-control" type="email" name="email" placeholder="Email" />
+                                <input class="form-control" type="email" name="email" placeholder="Email"    value="{{ $driver->user->email }}" />
                             </div>
                         </div>
                         <!--Profile Field Container End-->
 
-                        <!--Profile Field Container Start-->
-                        <div class="form-group">
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span>
-                                        <img src="{{ asset('mobile-app-assets/icons/marker.svg') }}" alt="Marker Icon" />
-                                    </span>
-                                </div>
-                                <input class="form-control" type="text" autocomplete="off" name="country"
-                                    placeholder="Country" />
-                            </div>
-                        </div>
-                        <!--Profile Field Container End-->
-
-                        <!--Profile Field Container Start-->
-                        <div class="form-group">
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span>
-                                        <img src="{{ asset('mobile-app-assets/icons/lock.svg') }}" alt="Lock Icon" />
-                                    </span>
-                                </div>
-                                <input class="form-control" type="password" name="password" placeholder="New Password" />
-                                <div class="input-group-append password-visibility">
-                                    <span>
-                                        <img src="{{ asset('mobile-app-assets/icons/eye.svg') }}" alt="Password Visibility Icon" />
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                        <!--Profile Field Container End-->
-
-                        <!--Profile Field Container Start-->
-                        <div class="form-group">
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span>
-                                        <img src="{{ asset('mobile-app-assets/icons/lock.svg') }}" alt="Lock Icon" />
-                                    </span>
-                                </div>
-                                <input class="form-control" type="password" name="password"
-                                    placeholder="Confirm Password" />
-                                <div class="input-group-append password-visibility">
-                                    <span>
-                                        <img src="{{ asset('mobile-app-assets/icons/eye.svg') }}" alt="Password Visibility Icon" />
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                        <!--Profile Field Container End-->
-
-                        <div class="form-submit-button">
-                            <a href="index.html" class="btn btn-dark text-uppercase">Save <span
-                                    class="far fa-save margin-left-10"></span></a>
+                         <div class="form-submit-button text-center">
+                            <button type="submit" class="btn btn-dark text-uppercase">
+                                Update 
+                            </button>
                         </div>
                     </form>
                 </div>
@@ -179,11 +132,11 @@
         <!--Terms And Conditions Agreement Container Start-->
         <div class="col-xs-12 col-sm-12 text-center sms-rate-text font-roboto flex-end margin-bottom-30">
             <div class="container-sms-rate-text width-100 font-11">
-                <span class="light-gray font-weight-light">By signing up you have agreed to our
+                <span class="light-gray font-weight-light">
                 </span>
                 <br />
                 <a href="#" class="dark-link">
-                    <span class="font-weight-light">Terms of Use & Privacy Policy</span>
+                    <span class="font-weight-light">Metroberry Tours & Travel</span>
                 </a>
             </div>
         </div>

@@ -12,7 +12,7 @@
         <div class="col-xs-12 col-sm-12">
             <!--Page Title & Icons Start-->
             <div class="header-icons-container text-center">
-                <a href="index.html">
+               <a href="{{ route('driver.dashboard') }}">
                     <span class="float-left">
                         <img src="{{ asset('mobile-app-assets/icons/back.svg') }}" alt="Back Icon" />
                     </span>
@@ -25,7 +25,6 @@
                 </a>
             </div>
             <!--Page Title & Icons End-->
-
             <div class="rest-container">
                 <div class="text-center header-icon-logo-margin header-icon-logo-margin-extra">
                     <div class="profile-picture-container">
@@ -76,6 +75,19 @@
                 <!--Driver Registration Information Links Container End-->
             </div>
         </div>
+        <!--Terms And Conditions Agreement Container Start-->
+            <div class="col-xs-12 col-sm-12 text-center sms-rate-text font-roboto flex-end margin-bottom-30">
+                <div class="container-sms-rate-text width-100 font-11">
+                    <span class="light-gray font-weight-light">
+                    </span>
+                    <br />
+                    <a href="#" class="dark-link">
+                        <span class="font-weight-light">Metroberry Tours & Travel</span>
+                    </a>
+                </div>
+            </div>
+            <!--Terms And Conditions Agreement Container End-->
+            
         <!--Main Menu Start-->
         @include('components.driver-mobile-app.main-menu')
         <!--Main Menu End-->

@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\DriversLicenses;
-use App\Models\PSVBadge;
 use Exception;
+use App\Models\Driver;
+use App\Models\PSVBadge;
+use App\Models\Organisation;
 use Illuminate\Http\Request;
+use App\Models\DriversLicenses;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class DriverAppController extends Controller
@@ -430,7 +433,18 @@ class DriverAppController extends Controller
 
     public function vehicle()
     {
-        return view('driver.vehicle');
+
+        // Get the authenticated user
+        $user = Auth::user();
+
+        // Check if the user is a customer
+        if ($user->role !== 'driver') {
+            return redirect()->back()->with('error', 'Access Denied. Only Drivers can access this page.');
+        }
+
+        // Fetch the customer data based on the user_id in the customers table
+        $driver = Driver::where('user_id', $user->id)->firstOrFail();
+        return view('driver.vehicle', compact('driver'));
     }
 
     /**
@@ -459,5 +473,24 @@ class DriverAppController extends Controller
 
       public function psvbadgeDocument(){
         return view('driver.psv-badge');
+      }
+
+      public function profile(){
+
+        // Get the authenticated user
+        $user = Auth::user();
+
+        // Check if the user is a customer
+        if ($user->role !== 'driver') {
+            return redirect()->back()->with('error', 'Access Denied. Only Drivers can access this page.');
+        }
+
+        // Fetch the customer data based on the user_id in the customers table
+        $driver = Driver::where('user_id', $user->id)->firstOrFail();
+        return view('driver.profile',compact('driver'));
+      }
+
+      public function profileUpdate(Request $request,$id){
+        //Update Profile
       }
 }

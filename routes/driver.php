@@ -9,6 +9,8 @@ Route::get('/driver/login', [DriverAppController::class, 'login'])->name('driver
 Route::post('/driver/login', [DriverAppController::class, 'loginstore'])->name('driver.login');
 
 Route::get('/driver/profile', [DriverAppController::class, 'profile'])->name('driver.profile');
+Route::get('/driver/profile/update/{id}', [DriverAppController::class, 'profileUpdate'])->name('driver.profile.update');
+
 Route::get('/driver/documents', [DriverAppController::class, 'documents'])->name('driver.documents');
 
 
@@ -32,7 +34,7 @@ Route::get('/driver/trips', [DriverAppController::class, 'trips'])->name('driver
 
 
 //Driver Regsitrations View Routes and Update
-Route::get('driver/regsitration-documentation', [DriverAppController::class, 'driverRegistrationPage'])->name('driver.registration.page')->middleware('auth');
+Route::get('driver/registration-documentation', [DriverAppController::class, 'driverRegistrationPage'])->name('driver.registration.page')->middleware('auth');
 
 Route::get('driver/license-document', [DriverAppController::class, 'driverLicenseDocument'])->name('driver.license.document')->middleware('auth');
 Route::put('driver/license-document/{id}', [DriverAppController::class, 'driverLicenseDocumentUpdate'])->name('driver.license.document.update')->middleware('auth');
