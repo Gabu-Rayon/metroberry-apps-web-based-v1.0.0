@@ -576,13 +576,28 @@ class DriverAppController extends Controller
     // Method to show completed trips page
     public function tripsCompletedPage()
     {
+        // Get the authenticated user
         $user = Auth::user();
-        $driver = $user->driver;
 
+        // Check if the user is a driver
+        if ($user->role !== 'driver') {
+            return redirect()->back()->with('error', 'Access Denied. Only Drivers can access this page.');
+        }
+
+        // Fetch the driver data based on the user_id in the drivers table
+        $driver = Driver::where('user_id', $user->id)->firstOrFail();
+
+        // Log driver information for debugging
+        Log::info('Driver is Huyo Apa:', ['driver' => $driver]);
+
+        // Fetch the completed trips for the driver
         $trips = Trip::where('driver_id', $driver->id)->where('status', 'completed')->get();
+        Log::info('Driver Trips Ndizo hzi  Apa:', ['trips' => $trips]);
 
+        // Return the view with the trips data
         return view('driver.trips-completed', compact('trips'));
     }
+
 
     // Method to show a specific completed trip details
     public function tripCompletedShowPage($id)

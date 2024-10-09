@@ -1,4 +1,3 @@
-
 @extends('layouts.driver-mobile-app')
 
 @section('title', 'Trips Completed | Driver')
@@ -29,7 +28,7 @@
                         <img src="{{ asset('mobile-app-assets/icons/back.svg') }}" alt="Back Icon" />
                     </span>
                 </a>
-                <span class="title"> Trips : {{ $driver->status == 'inactive' ? 'Inactive' : 'Active' }}</span>
+                <span class="title"> Trips | Completed</span>
 
                 <a href="#">
                     <span class="float-right menu-open closed">
@@ -83,8 +82,8 @@
                                             </div>
                                             <div class="mb-3">
                                                 <label for="issue_date" class="form-label">Issue Date</label>
-                                                <input type="date" id="issue_date" name="issue_date"
-                                                    class="form-control" required>
+                                                <input type="date" id="issue_date" name="issue_date" class="form-control"
+                                                    required>
                                             </div>
                                             <div class="mb-3">
                                                 <label for="expiry_date" class="form-label">Expiry Date</label>
@@ -94,8 +93,8 @@
                                             <div class="mb-3">
                                                 <label for="license_front_avatar" class="form-label">License Front
                                                     Picture</label>
-                                                <input type="file" id="license_front_avatar"
-                                                    name="license_front_avatar" required>
+                                                <input type="file" id="license_front_avatar" name="license_front_avatar"
+                                                    required>
                                             </div>
                                             <div class="mb-3">
                                                 <label for="license_back_avatar" class="form-label">License Back
@@ -154,7 +153,24 @@
                                     </div>
                                 @endif
 
-                                Trips
+                                <!-- Trips Completed -->
+                                <div
+                                    class="request-notification-container map-notification meters-left-450 map-notification-warning">
+                                    <h3>Completed Trips</h3>
+                                    @if ($trips->isEmpty())
+                                        <p>No completed trips found.</p>
+                                    @else
+                                        <ul>
+                                            @foreach ($trips as $trip)
+                                                <p>
+                                                         Date: {{ $trip->trip_date }}, 
+                                                         Distance: {{ $trip->distance }} km
+                                                </p>
+                                            @endforeach
+                                        </ul>
+                                    @endif
+                                </div>
+                                <!-- End of Trips Completed -->
                             @endif
                         @endif
                     </div>
