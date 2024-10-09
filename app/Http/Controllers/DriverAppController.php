@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\VehicleClass;
 use Exception;
+use App\Models\Trip;
 use App\Models\Driver;
 use App\Models\PSVBadge;
 use App\Models\Organisation;
+use App\Models\VehicleClass;
 use Illuminate\Http\Request;
 use App\Models\DriversLicenses;
 use Illuminate\Support\Facades\DB;
@@ -447,19 +448,15 @@ class DriverAppController extends Controller
 
         // Fetch the customer data based on the user_id in the customers table
         $driver = Driver::where('user_id', $user->id)->firstOrFail();
-        return view('driver.vehicle', compact('driver','organisations','vehicleClasses'));
+        return view('driver.vehicle', compact('driver', 'organisations', 'vehicleClasses'));
     }
 
     /**
-     * Driver Trips Page
+     * 
      * 
      * @return \Illuminate\View\View
      */
-
-    public function trips()
-    {
-        return view('driver.trips');
-    }
+ 
 
     public function driverRegistrationPage()
     {
@@ -539,4 +536,61 @@ class DriverAppController extends Controller
             return back()->with('error', 'Something went wrong.')->withInput();
         }
     }
+
+    /****
+     * 
+     * Driver Trips History 
+     * 
+     */
+
+    // Method to show trip history page
+    public function tripHistoryPage()
+    {
+        // $user = Auth::user();
+        // $driver = $user->driver;
+
+        // $trips = Trip::where('driver_id', $driver->id)->get();
+
+        return view('driver.trips-history');
+    }
+
+    // Method to show assigned trips page
+    public function tripsAssignedPage()
+    {
+        $user = Auth::user();
+        $driver = $user->driver;
+
+        $trips = Trip::where('driver_id', $driver->id)->where('status', 'assigned')->get();
+
+        return view('driver.trips-assigned', compact('trips'));
+    }
+
+    // Method to show a specific assigned trip details
+    public function tripAssignedShowPage($id)
+    {
+        $trip = Trip::findOrFail($id);
+
+        return view('driver.trip-assigned-show', compact('trip'));
+    }
+
+    // Method to show completed trips page
+    public function tripsCompletedPage()
+    {
+        $user = Auth::user();
+        $driver = $user->driver;
+
+        $trips = Trip::where('driver_id', $driver->id)->where('status', 'completed')->get();
+
+        return view('driver.trips-completed', compact('trips'));
+    }
+
+    // Method to show a specific completed trip details
+    public function tripCompletedShowPage($id)
+    {
+        $trip = Trip::findOrFail($id);
+
+        return view('driver.trip-completed-show', compact('trip'));
+    }
+
+
 }

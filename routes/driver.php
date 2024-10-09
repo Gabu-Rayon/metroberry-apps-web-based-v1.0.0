@@ -47,3 +47,16 @@ Route::put('driver/personal-id-card-document/{id}', [DriverAppController::class,
 
 Route::get('driver/psvbadge-document', [DriverAppController::class, 'psvbadgeDocument'])->name('psvbadge.document')->middleware('auth');
 Route::put('driver/psvbadge-document/{id}', [DriverAppController::class, 'psvbadgeDocumentUpdate'])->name('psvbadge.document.update')->middleware('auth');
+
+
+
+
+
+//DriverTrips View Routes and Update
+Route::get('driver/trips-history', [DriverAppController::class, 'tripHistorypage'])->name('trips.history.page')->middleware('auth');
+
+Route::get('driver/trips-assigned', [DriverAppController::class, 'tripsAssignedPage'])->name('trips.assigned.page')->middleware('auth');
+Route::put('driver/trip-assigned/show/{id}', [DriverAppController::class, 'tripAssignedShowPage'])->name('trip.assigned.show.page')->middleware('auth');
+
+Route::get('driver/trips-completed', [DriverAppController::class, 'tripsCompletedPage'])->name('trips.completed.page')->middleware('auth');
+Route::put('driver/trip-completed/show/{id}', [DriverAppController::class, 'tripCompletedShowPage'])->name('trip.compelete.show.page')->middleware('auth');

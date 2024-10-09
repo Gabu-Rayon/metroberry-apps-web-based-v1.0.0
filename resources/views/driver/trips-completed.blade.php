@@ -1,7 +1,7 @@
 
 @extends('layouts.driver-mobile-app')
 
-@section('title', 'Trips History | Driver')
+@section('title', 'Trips Completed | Driver')
 
 @section('content')
     <!--Loading Container Start-->

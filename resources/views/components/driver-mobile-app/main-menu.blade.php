@@ -59,7 +59,7 @@
                         alt="Driver Registration Icon" />
                 </span>
                 <span class="menu-item-icon menu-light">
-                    <img src="{{ asset('') }}mobile-app-assets/icons/driver-registration.svg"
+                    <img src="{{ asset('mobile-app-assets/icons/driver-registration.svg') }}"
                         alt="Driver Registration Icon" />
                 </span>
                 <span class="menu-item-title">Driver Registration</span>
@@ -82,7 +82,7 @@
                 <span class="menu-item-click fas fa-check green-status"></span>
             </a>
 
-            <a class="menu-item" href="{{ route('driver.trips') }}">
+            {{-- <a class="menu-item" href="{{ route('trips.hisotry.page') }}">
                 <span class="menu-item-icon">
                     <i class="fa-solid fa-plane-departure">
                     </i>
@@ -90,7 +90,29 @@
                 <span class="menu-item-title"> Trips</span>
                 <span class="menu-item-click fas fa-check green-status">
                 </span>
+            </a> --}}
+
+
+            <a class="menu-item" href="{{ route('trips.history.page') }}">
+                <span class="menu-item-icon menu-dark">
+                    {{-- <img src="{{ asset('mobile-app-assets/icons/driver-registration-dark.svg') }}"
+                        alt="Driver Trips History Icon" /> --}}
+                    <i class="fa-solid fa-plane-departure">
+                    </i>
+                </span>
+                <span class="menu-item-icon menu-light">
+                    {{-- <img src="{{ asset('mobile-app-assets/icons/driver-registration.svg') }}"
+                        alt="Driver Trips History Icon" /> --}}
+                    <i class="fa-solid fa-plane-departure">
+                    </i>
+                </span>
+                <span class="menu-item-title">Trips History</span>
+                <span class="menu-item-click fas fa-check green-status"></span>
             </a>
+
+
+
+
             <a class="menu-item" href="#">
                 <span class="menu-item-icon menu-dark support">
                     <img src="{{ asset('mobile-app-assets/icons/support.svg') }}" alt="Support Icon" />
