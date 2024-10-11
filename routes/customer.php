@@ -67,25 +67,36 @@ Route::get('customer/profile', [CustomerAppController::class, 'customerProfile']
 Route::put('customer/profile/{id}', [CustomerAppController::class, 'customerProfileUpdate'])
     ->name('customer.profile.update');
 
-// customer.trip.history
-Route::put('customer/trips/history', [CustomerAppController::class, 'customerTripHistory'])
-    ->name('customer.trip.history');
 
 // Payment Methods
-Route::get('customer/payment-methods', [CustomerAppController::class, 'index'])->name('customer.payment.method.page');
+Route::get('customer/payment/methods', [CustomerAppController::class, 'index'])->name('customer.payment.method.page');
 
 // Customer Addresses
 Route::get('customer/addresses', [CustomerAppController::class, 'index'])->name('customer.addresses.page');
 
 // Apply Promo Code
-Route::get('customer/apply-promo-code', [CustomerAppController::class, 'index'])->name('customer.apply.promo.code.page');
+Route::get('customer/apply/promo/code', [CustomerAppController::class, 'index'])->name('customer.apply.promo.code.page');
 
 // Settings
 Route::get('customer/settings', [CustomerAppController::class, 'index'])->name('customer.settings.page');
 
 // Online Support
-Route::get('customer/online-support', [CustomerAppController::class, 'index'])->name('customer.online.support.page');
+Route::get('customer/online/support', [CustomerAppController::class, 'index'])->name('customer.online.support.page');
 
 
 //customer update profile avatar 
-Route::post('customer/update-profile-picture', [CustomerAppController::class, 'updateProfilePicture'])->name('customer.updateProfilePicture')->middleware('auth');
+Route::post('customer/update/profile/picture', [CustomerAppController::class, 'updateProfilePicture'])->name('customer.updateProfilePicture')->middleware('auth');
+
+
+
+//Trips History
+Route::get('customer/trips/history', [CustomerAppController::class, 'tripsHistory'])->name('customer.trip.history');
+
+// compeleted
+Route::get('customer/trips/completed', [CustomerAppController::class, 'tripsCompleted'])->name('customer.trips.completed.page');
+
+// Booked
+Route::get('customer/trips/booked', [CustomerAppController::class, 'tripsBooked'])->name('customer.trips.booked.page');
+
+// Cancelled
+Route::get('customer/trips/cancelled', [CustomerAppController::class, 'tripsCancelled'])->name('customer.trips.cancelled.page');

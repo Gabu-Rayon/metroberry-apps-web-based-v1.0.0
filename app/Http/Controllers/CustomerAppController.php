@@ -441,9 +441,9 @@ class CustomerAppController extends Controller
         return redirect()->route('customer.profile', $id)->with('success', 'Profile updated successfully.');
     }
 
-    public function customerTripHistory()
+    public function tripsHistory()
     {
-        //customer trip history
+        return view('customer.trips-history');
     }
 
 
@@ -504,5 +504,68 @@ class CustomerAppController extends Controller
     {
        // view file resources/views/customer/online-support.blade.php
         return view('customer.online-support');
+    }
+
+    public function tripsCompleted()
+    {
+        $user = Auth::user();
+        $customer = $user->customer;
+
+        $trips = Trip::where('customer_id', $customer->id)->where('status', 'completed')->get();
+
+        return view('customer.trips-completed', compact('trips'));
+    }
+
+    // Method to show a specific Completed trip details
+    public function tripCompletedShowPage($id)
+    {
+        $trip = Trip::findOrFail($id);
+
+        return view('customer.trip-completed-show', compact('trip'));
+    }
+
+    // Method to show Booked trips page
+    public function tripsBooked()
+    {
+        // Get the authenticated user
+        $user = Auth::user();
+
+        // Check if the user is a customer
+        if ($user->role !== 'customer') {
+            return redirect()->back()->with('error', 'Access Denied. Only customers can access this page.');
+        }
+
+        // Fetch the customer data based on the user_id in the customers table
+        $customer = customer::where('user_id', $user->id)->firstOrFail();
+
+        // Log customer information for debugging
+        Log::info('customer is Huyo Apa:', ['customer' => $customer]);
+
+        // Fetch the completed trips for the customer
+        $trips = Trip::where('customer_id', $customer->id)->where('status', 'scheduled')->get();
+        Log::info('customer Trips Ndizo hzi  Apa:', ['trips' => $trips]);
+
+        // Return the view with the trips data
+        return view('customer.trips-booked', compact('trips'));
+    }
+
+
+
+    public function tripsCancelled()
+    {
+        $user = Auth::user();
+        $customer = $user->customer;
+
+        $trips = Trip::where('customer_id', $customer->id)->where('status', 'cancelled')->get();
+
+        return view('customer.trips-cancelled', compact('trips'));
+    }
+
+    // Method to show a specific cancelled trip details
+    public function tripCancelledShowPage($id)
+    {
+        $trip = Trip::findOrFail($id);
+
+        return view('customer.trip-cancelled-show', compact('trip'));
     }
 }

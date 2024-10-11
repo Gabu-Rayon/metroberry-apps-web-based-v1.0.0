@@ -43,11 +43,11 @@
                      <span class="menu-item-title profile">Profile</span>
                      <span class="menu-item-click fas fa-arrow-right"></span>
                  </a>
-                 <a class="menu-item" href="#">
+                 {{-- <a class="menu-item" href="#">
                      <span class="menu-item-icon far fa-money-bill-alt"></span>
                      <span class="menu-item-title">Payment Methods</span>
                      <span class="menu-item-click fas fa-arrow-right"></span>
-                 </a>
+                 </a> --}}
                  <a class="menu-item" href="{{ route('customer.trip.history') }}">
                      <span class="menu-item-icon menu-light">
                          <img src="{{ asset('mobile-app-assets/icons/history-light.svg') }} " alt="History Icon">
@@ -58,7 +58,7 @@
                      <span class="menu-item-title">Trips History</span>
                      <span class="menu-item-click fas fa-arrow-right"></span>
                  </a>
-                 <a class="menu-item" href="#">
+                 {{-- <a class="menu-item" href="#">
                      <span class="menu-item-icon menu-dark">
                          <img src="{{ asset('mobile-app-assets/icons/my-addresses-dark.svg') }} "
                              alt="My Addresses Icon">
@@ -73,8 +73,8 @@
                      <span class="menu-item-icon far fa-plus-square"></span>
                      <span class="menu-item-title promo">Apply Promo Code</span>
                      <span class="menu-item-click fas fa-arrow-right"></span>
-                 </a>
-                 <a class="menu-item" href="{{ route('customer.settings.page') }}">
+                 </a> --}}
+                 {{-- <a class="menu-item" href="{{ route('customer.settings.page') }}">
                      <span class="menu-item-icon menu-dark setting">
                          <img src="{{ asset('mobile-app-assets/icons/settings.svg') }} " alt="My Settings Icon">
                      </span>
@@ -83,8 +83,8 @@
                      </span>
                      <span class="menu-item-title">Settings</span>
                      <span class="menu-item-click fas fa-arrow-right"></span>
-                 </a>
-                 <a class="menu-item" href="#">
+                 </a> --}}
+                 {{-- <a class="menu-item" href="#">
                      <span class="menu-item-icon menu-dark support">
                          <img src="{{ asset('mobile-app-assets/icons/support.svg') }}" alt="Support Icon">
                      </span>
@@ -94,7 +94,7 @@
                      </span>
                      <span class="menu-item-title">Online Support</span>
                      <span class="menu-item-click fas fa-arrow-right"></span>
-                 </a>
+                 </a> --}}
 
                  <form method="POST" action="{{ route('logout') }}" class="menu-item margin-top-auto">
                      @csrf

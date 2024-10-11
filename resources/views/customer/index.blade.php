@@ -1,4 +1,4 @@
-@extends('layouts.driver-mobile-app')
+@extends('layouts.mobile-app')
 
 @section('title', 'Homepage | Customer')
 @section('content')
@@ -94,7 +94,7 @@
                                                         value="{{ $trip->drop_off_location }}" disabled>
                                                 </div>
                                             </div>
-                                            <a href="{{ route('customer.trip.show', $trip->id) }}"
+                                            <a href="#"
                                                 class="href-decoration-none">
                                                 <div class="w-100 map-input-container map-input-container-bottom">
                                                     <span class="map-input-icon"><img
@@ -112,7 +112,7 @@
 
                                     <!--trip History Button Start-->
                                     <div>
-                                        <a href="{{ route('customer.trip.show', $trip->id) }}"
+                                        <a href="#"
                                             class="btn btn-dark text-uppercase">More Details</a>
                                     </div>
                                     <!--trip History Button End-->

@@ -1,6 +1,6 @@
 @extends('layouts.mobile-app')
 
-@section('title', 'Registration | Driver')
+@section('title', 'Trips History | Customer')
 @section('content')
     <!--Loading Container Start-->
     <div id="load" class="loading-overlay display-flex flex-column justify-content-center align-items-center">
@@ -12,7 +12,7 @@
         <div class="col-xs-12 col-sm-12">
             <!--Page Title & Icons Start-->
             <div class="header-icons-container text-center">
-                <a href="{{ route('driver.dashboard') }}">
+                <a href="{{ route('customer.index.page') }}">
                     <span class="float-left">
                         <img src="{{ asset('mobile-app-assets/icons/back.svg') }}" alt="Back Icon" />
                     </span>
@@ -37,10 +37,10 @@
                 <!--Driver Registration Information Links Container Start-->
                 <div class="sign-up-form-container">
                     <div class="width-100">
-                        <!--Driver Assigned Item Start-->
+                     <!--Driver Assigned Item Start-->
                         <div class="border-bottom-primary">
-                            <a href="{{ route('trips.assigned.page') }}" class="home-options-list href-decoration-none">
-                                Assgined Trips
+                            <a href="{{ route('customer.trips.booked.page') }}" class="home-options-list href-decoration-none">
+                                Booked Trips
                                 <span class="fas fa-check icon chosen hidden"></span>
                                 <span class="icon choose float-right">
                                     <img src="{{ asset('mobile-app-assets/icons/angle-right.svg') }}"
@@ -48,12 +48,24 @@
                                 </span>
                             </a>
                         </div>
-                        <!--Driver Assigned Item End-->
+                        <!--Driver Booked Item End-->
+                        <!--Driver Completed Item Start-->
+                        <div class="border-bottom-primary">
+                            <a href="{{ route('customer.trips.completed.page') }}" class="home-options-list href-decoration-none">
+                                Completed Trips
+                                <span class="fas fa-check icon chosen hidden"></span>
+                                <span class="icon choose float-right">
+                                    <img src="{{ asset('mobile-app-assets/icons/angle-right.svg') }}"
+                                        alt="Angle Right Icon" />
+                                </span>
+                            </a>
+                        </div>
+                        <!--Driver Completed Item End-->
 
-                        <!--Driver Assigned Item Start-->
+                        <!--Driver Cancelled Item Start-->
                         <div class="border-bottom-primary">
-                            <a href="{{ route('trips.completed.page') }}" class="home-options-list href-decoration-none">
-                                Completed
+                            <a href="{{ route('customer.trips.cancelled.page') }}" class="home-options-list href-decoration-none">
+                                Cancelled
                                 <span class="fas fa-check icon chosen hidden"></span>
                                 <span class="icon choose float-right">
                                     <img src="{{ asset('mobile-app-assets/icons/angle-right.svg') }}"
@@ -61,7 +73,8 @@
                                 </span>
                             </a>
                         </div>
-                        <!--Driver Assigned Item End-->
+                        <!--Driver Cancelled Item End-->
+
                     </div>
                 </div>
                 <!--Driver Registration Information Links Container End-->

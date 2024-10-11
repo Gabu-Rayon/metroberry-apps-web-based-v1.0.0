@@ -1,4 +1,4 @@
-@extends('layouts.driver-mobile-app')
+@extends('layouts.mobile-app')
 
 @section('title', 'Trips Assigned | Driver')
 
@@ -243,7 +243,7 @@
             </div>
 
             <!--Main Menu Start-->
-            @include('components.driver-mobile-app.main-menu')
+            @include('components.mobile-app.main-menu')
             <!--Main Menu End-->
 
         </div>
