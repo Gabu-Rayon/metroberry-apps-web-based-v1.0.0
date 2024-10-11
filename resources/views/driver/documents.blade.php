@@ -1,62 +1,171 @@
 @extends('layouts.driver-mobile-app')
 
-@section('title', 'Metroberry | Driver HomePage')
+@section('title', 'Driver Dashboard')
 @section('content')
-    <!--Loading Container Start-->
     <div id="load" class="loading-overlay display-flex flex-column justify-content-center align-items-center">
         <div class="primary-color font-28 fas fa-spinner fa-spin"></div>
     </div>
-    <!--Loading Container End-->
 
     <div class="row h-100">
+        @php
+            $user = Auth::user();
+            $driver = $user->driver;
+        @endphp
+
         <div class="col-xs-12 col-sm-12 remaining-height">
-            <!--Page Title & Icons Start-->
             <div class="header-icons-container text-center">
                 <span class="float-left back-to-map hidden">
-                    <img src="{ asset('driver-assets/icons/back.svg') }}" alt="Back Icon" />
+                    <i class="fa-solid fa-arrow-left"></i>
                 </span>
-                <span class="title">Offline</span>
+                @if ($driver->status == 'inactive')
+                    <span class="title">Deactivated</span>
+                @endif
                 <a href="#">
                     <span class="float-right menu-open closed">
-                        <img src="{{ asset('driver-assets/icons/menu.svg') }}" alt="Menu Hamburger Icon" />
+                        <i class="fa-solid fa-bars"></i>
                     </span>
                 </a>
             </div>
-            <!--Page Title & Icons End-->
-            <!--Google Maps Start-->
-            <div id="map" class="h-100"></div>
-            <!--Google Maps End-->
 
-            <!--All Notifications & Status Container Start-->
             <div class="change-request-status">
-                <label class="switch float-left">
-                    <input type="checkbox" />
-                    <span class="slider"></span>
-                </label>
-                <img src="{{ asset('driver-assets/icons/map-position.svg') }}" class="float-right" alt="Map Position" />
-                <div class="clearfix"></div>
 
-                <!--Notification Container Start-->
-                <div class="request-notification-container map-notification offline-notification map-notification-warning">
-                    You are offline!
-                    <div class="font-weight-light">Go online to accept jobs!</div>
-                </div>
-                <!--Notification Container End-->
-
-                <!--Notification Container Start-->
-                <div
-                    class="request-notification-container hidden map-notification meters-left-450 map-notification-warning">
-                    450 meters to the final goal
-                    <div class="font-weight-light">
-                        <span><img src="{{ asset('driver-assets/icons/path-right.svg') }}" class="direction-icon" />
-                        </span>
-                        Turn Right on Main Street
+                @if ($driver->status == 'inactive')
+                    <div
+                        class="request-notification-container map-notification offline-notification map-notification-warning">
+                        Your account is inactive
+                        <div class="font-weight-light">Contact your administrator</div>
                     </div>
-                </div>
-                <!--Notification Container End-->
+                @endif
 
-                <!--Notification Container Start-->
-                <div class="request-notification-container hidden map-notification meters-left-50 map-notification-warning">
+                <div class="request-notification-container map-notification meters-left-450 map-notification-warning">
+                    <div>
+                        <h5 for="national_id_front_avatar" class="form-label">National ID Pictures</h5>
+                        <img src="{{ asset('storage/' . $driver->national_id_front_avatar) }}" alt="National ID Front"
+                            class="img-fluid">
+
+                        <img src="{{ asset('storage/' . $driver->national_id_behind_avatar) }}" alt="National ID Back"
+                            class="img-fluid">
+
+                    </div>
+                    <h5 class="font-weight-dark m-3 my-3">
+                        Update your National ID Details
+                    </h5>
+
+
+                    <form action="{{ route('driver.personal-documents') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+
+                        <div class="mb-3">
+                            <label for="national_id_front_avatar" class="form-label">National ID Front Picture</label>
+                            <input type="file" id="national_id_front_avatar" name="national_id_front_avatar" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="national_id_back_avatar" class="form-label">National ID Back Picture</label>
+                            <input type="file" id="national_id_back_avatar" name="national_id_back_avatar" required>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-50 m-2 float-end font-weight-light text-uppercase">
+                            Submit
+                        </button>
+                    </form>
+                </div>
+
+
+
+                <div class="request-notification-container map-notification meters-left-450 map-notification-warning">
+                    <div>
+                        <h5 for="national_id_front_avatar" class="form-label">License Pictures</h5>
+                        <img src="{{ asset('storage/' . $driver->driverLicense->driving_license_avatar_front) }}"
+                            alt="National ID Front" class="img-fluid">
+
+                        <img src="{{ asset('storage/' . $driver->driverLicense->driving_license_avatar_back) }}"
+                            alt="National ID Back" class="img-fluid">
+
+                    </div>
+                    <h5 class="font-weight-dark m-3 my-3">
+                        Update your Driver's License details
+                    </h5>
+                    <form action="{{ route('driver.license', $driver->driverLicense->id) }}" method="POST"
+                        enctype="multipart/form-data">
+                        @csrf
+                        @method('PUT')
+                        <div class="mb-3">
+                            <label for="driving_license_no" class="form-label">License no</label>
+                            <input type="text" id="driving_license_no" name="driving_license_no" class="form-control"
+                                required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="issue_date" class="form-label">Issue Date</label>
+                            <input type="date" id="issue_date" name="issue_date" class="form-control" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="expiry_date" class="form-label">Expiry Date</label>
+                            <input type="date" id="expiry_date" name="expiry_date" class="form-control" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="national_id_front_avatar" class="form-label">License Front Picture</label>
+                            <input type="file" id="national_id_front_avatar" name="national_id_front_avatar" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="national_id_back_avatar" class="form-label">License Back Picture</label>
+                            <input type="file" id="national_id_back_avatar" name="national_id_back_avatar" required>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-50 m-2 float-end font-weight-light text-uppercase">
+                            Submit
+                        </button>
+                    </form>
+                </div>
+
+                <div class="request-notification-container map-notification meters-left-450 map-notification-warning">
+                    <div>
+                        <h5 for="national_id_front_avatar" class="form-label">PSV Badge Copy</h5>
+                        <img src="{{ asset('storage/' . $driver->psvBadge->psv_badge_avatar) }}" alt="National ID Front"
+                            class="img-fluid">
+                    </div>
+                    <h5 class="font-weight-dark m-3 my-3">
+                        Update your PSV Badge details
+                    </h5>
+                    <form action="{{ route('driver.psvbadge', $driver->psvBadge->id) }}" method="POST"
+                        enctype="multipart/form-data">
+                        @csrf
+                        @method('PUT')
+                        <div class="mb-3">
+                            <label for="psv_badge_no" class="form-label">Badge no</label>
+                            <input type="text" id="psv_badge_no" name="psv_badge_no" class="form-control" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="issue_date" class="form-label">Issue Date</label>
+                            <input type="date" id="issue_date" name="issue_date" class="form-control" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="expiry_date" class="form-label">Expiry Date</label>
+                            <input type="date" id="expiry_date" name="expiry_date" class="form-control" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="badge_copy" class="form-label">Copy</label>
+                            <input type="file" id="badge_copy" name="badge_copy" required>
+                        </div>
+
+                        <button type="submit"
+                            class="btn btn-primary w-50 m-2 float-end font-weight-light text-uppercase">
+                            Submit
+                        </button>
+                    </form>
+                </div>
+
+
+
+                <div
+                    class="request-notification-container hidden map-notification meters-left-50 map-notification-warning">
                     50 meters to the final goal
                     <div class="font-weight-light">
                         <span><img src="{{ asset('driver-assets/icons/path-left.svg') }}" class="direction-icon" />
@@ -325,111 +434,6 @@
             </div>
         </div>
 
-        <!--Main Menu Start-->
-        <div class="main-menu hidden-soft">
-            <div class="mini-profile-info">
-                <div class="menu-close">
-                    <span class="float-right">
-                        <img src="{{ asset('driver-assets/icons/close.svg') }}" alt="Close Icon" />
-                    </span>
-                </div>
-                <div class="profile-picture text-center">
-                    <img src="{{ asset('driver-assets/images/profile-3.png') }}" alt="Profile Picture" />
-                </div>
-                <div class="profile-info">
-                    <div class="profile-name text-center">Jonathan McBerly</div>
-                    <div class="profile-email text-center">lorem@loremipsum.com</div>
-                </div>
-            </div>
-            <div class="menu-items">
-                <div class="all-menu-items">
-                    <a class="menu-item" href="index.html">
-                        <div>
-                            <span class="menu-item-icon menu-dark">
-                                <img src="{{ asset('driver-assets/icons/home.svg') }}" alt="Home Icon" />
-                            </span>
-                            <span class="menu-item-icon menu-light">
-                                <img src="driver-assets/icons/home-light.svg {{ asset('') }}"
-                                    alt="Home Lighter Icon" />
-                            </span>
-                            <span class="menu-item-title">Home</span>
-                            <span class="menu-item-click fas fa-arrow-right"></span>
-                        </div>
-                    </a>
-                    <a class="menu-item" href="profile.html">
-                        <span class="menu-item-icon menu-dark profile">
-                            <img src="{{ asset('driver-assets/icons/avatar-dark.svg ') }}" alt="Avatar Darker Icon" />
-                        </span>
-                        <span class="menu-item-icon menu-light profile">
-                            <img src="{{ asset('driver-assets/icons/avatar.svg') }}" alt="Avatar Darker Icon" />
-                        </span>
-                        <span class="menu-item-title profile">Profile</span>
-                        <span class="menu-item-click fas fa-arrow-right"></span>
-                    </a>
-                    <a class="menu-item" href="wallet.html">
-                        <span class="menu-item-icon menu-dark">
-                            <img src="{{ asset('driver-assets/icons/my-wallet.svg ') }}" alt="Wallet Icon" />
-                        </span>
-                        <span class="menu-item-icon menu-light">
-                            <img src="{{ asset('driver-assets/icons/my-wallet-light.svg') }}" alt="Wallet Icon" />
-                        </span>
-                        <span class="menu-item-title">My Wallet</span>
-                        <span class="menu-item-click fas fa-arrow-right"></span>
-                    </a>
-                    <a class="menu-item" href="driver-registration.html">
-                        <span class="menu-item-icon menu-dark">
-                            <img src="{{ asset('driver-assets/icons/driver-registration-dark.svg') }}"
-                                alt="Driver Registration Icon" />
-                        </span>
-                        <span class="menu-item-icon menu-light">
-                            <img src="{{ asset('driver-assets/icons/driver-registration.svg') }}"
-                                alt="Driver Registration Icon" />
-                        </span>
-                        <span class="menu-item-title">Driver Registration</span>
-                        <span class="menu-item-click fas fa-check green-status"></span>
-                    </a>
-                    <a class="menu-item position-relative" href="notifications.html">
-                        <span class="menu-item-icon menu-dark">
-                            <img src="{{ asset('driver-assets/icons/notification.svg') }}" alt="Notification Icon" />
-                        </span>
-                        <span class="menu-item-icon menu-light">
-                            <img src="{{ asset('driver-assets/icons/notification-light.svg ') }}"
-                                alt="Notification Icon" />
-                        </span>
-                        <span class="menu-item-title">Notifications</span>
-                        <span class="notification-num">3</span>
-                        <span class="menu-item-click fas fa-arrow-right"></span>
-                    </a>
-                    <a class="menu-item" href="add-new-car.html">
-                        <span class="menu-item-icon fas fa-car"></span>
-                        <span class="menu-item-title">Car Registration</span>
-                        <span class="menu-item-click fas fa-check green-status"></span>
-                    </a>
-                    <a class="menu-item" href="support.html">
-                        <span class="menu-item-icon menu-dark support">
-                            <img src="{{ asset('driver-assets/icons/support.svg') }}" alt="Support Icon" />
-                        </span>
-                        <span class="menu-item-icon menu-light support">
-                            <img src="{{ asset('driver-assets/icons/support-light.svg') }}" alt="Support Lighter Icon" />
-                        </span>
-                        <span class="menu-item-title">Online Support</span>
-                        <span class="menu-item-click fas fa-arrow-right"></span>
-                    </a>
-                    <a href="loading-logo.html" class="menu-item margin-top-auto">
-                        <span class="menu-item-icon menu-dark logout">
-                            <img src="{{ asset('driver-assets/icons/logout.svg') }}" alt="Logout Icon" />
-                        </span>
-                        <span class="menu-item-icon menu-light logout">
-                            <img src="{{ asset('driver-assets/icons/logout-light.svg') }}" alt="Logout Icon" />
-                        </span>
-                        <span class="menu-item-title logout">Log out</span>
-                        <span class="menu-item-click fas fa-arrow-right"></span>
-                    </a>
-                </div>
-            </div>
-        </div>
-        <!--Main Menu End-->
+          @include('components.driver-mobile-app.main-menu')
     </div>
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 @endsection

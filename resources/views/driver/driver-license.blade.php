@@ -1,6 +1,6 @@
 @extends('layouts.driver-mobile-app')
 
-@section('title', 'Personal ID| Driver')
+@section('title', 'License | Driver')
 @section('content')
     <!--Loading Container Start-->
     <div id="load" class="loading-overlay display-flex flex-column justify-content-center align-items-center">
@@ -24,7 +24,7 @@
                 @if ($driver->status == 'inactive')
                     <span>Deactivated</span>
                 @else
-                    <span>Persona ID</span>
+                    <span>Driver's License</span>
                 @endif
                 <a href="#">
                     <span class="float-right menu-open closed">
@@ -35,24 +35,48 @@
             <!--Page Title & Icons End-->
 
             <div class="rest-container">
-                <div class="address-title">Personal ID</div>
+                <div class="address-title">Driver's License</div>
 
                 <!--Driver's License Fields Container Start-->
                 <div class="all-container all-container-with-classes">
-                    <form class="width-100" action="{{ route('personal.id.card.document.update', $driver->id) }}"
+                    <form class="width-100" action="{{ route('driver.license.document.update', $driver->id) }}"
                         method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
                         <!--Input Field Container Start-->
                         <div class="form-group form-control-margin">
-                            <label class="label-title">Personal ID</label>
+                            <label class="label-title">Driver License Number</label>
                             <div class="input-group">
                                 <input class="form-control form-control-with-padding" type="text" name="name"
                                     autocomplete="off" placeholder="Driver License Number"
-                                    value="{{ $driver->national_id_no }}" />
+                                    value="{{ $driver->driverLicense->driving_license_no }}" />
                                 <div class="input-group-append">
                                     <span class="fas fa-id-card icon-inherited-color"></span>
                                 </div>
+                            </div>
+                        </div>
+                        <!--Input Field Container End-->
+
+                        <!--Input Field Container Start-->
+                        <div class="form-group form-control-margin">
+                            <label class="label-title">Date of issue : <span class="text-primary">
+                                    {{ $driver->driverLicense->driving_license_date_of_issue }}</span></label>
+                            <div class="input-group">
+                                <input class="form-control form-control-with-padding" type="date"
+                                    name="driving_license_date_of_issue" autocomplete="off"
+                                    placeholder="Driver License Number" value="#" />
+                            </div>
+                        </div>
+                        <!--Input Field Container End-->
+
+                        <!--Input Field Container Start-->
+                        <div class="form-group form-control-margin">
+                            <label class="label-title">Expriry Date : <span
+                                    class="text-primary">{{ $driver->driverLicense->driving_license_date_of_expiry }}</span></label>
+                            <div class="input-group">
+                                <input class="form-control form-control-with-padding" type="date"
+                                    name="driving_license_date_of_expiry" autocomplete="off"
+                                    placeholder="Driver License Number" value="#" />
                             </div>
                         </div>
                         <!--Input Field Container End-->
@@ -61,7 +85,7 @@
                         <div class="display-flex justify-content-between">
                             <span class="position-relative upload-btn">
                                 <img src=" {{ asset('mobile-app-assets/icons/upload.svg') }}" alt="Upload Icon" />
-                                <input class="scan-prompt" type="file" accept="image/*" name="national_id_front_avatar" />
+                                <input class="scan-prompt" type="file" accept="image/*" />
                             </span>
                             <span class="text-uppercase">FRONT</span>
                             <span class="delete-btn">
@@ -74,7 +98,7 @@
                                     <div class="upload-camera-container text-center">
                                         <span class="#">
                                             {{-- <img src="mobile-app-assets/icons/photocamera.svg" alt="Camera Icon" /> --}}
-                                            <img src="{{ asset('storage/' . $driver->national_id_front_avatar) }}"
+                                            <img src="{{ asset('storage/' . $driver->driverLicense->driving_license_avatar_front) }}"
                                                 alt="National ID Back" class="img-fluid">
                                         </span>
                                     </div>
@@ -88,7 +112,7 @@
                         <div class="display-flex justify-content-between">
                             <span class="position-relative upload-btn">
                                 <img src=" {{ asset('mobile-app-assets/icons/upload.svg') }}" alt="Upload Icon" />
-                                <input class="scan-prompt" type="file" accept="image/*"   name="national_id_behind_avatar"/>
+                                <input class="scan-prompt" type="file" accept="image/*" />
                             </span>
                             <span class="text-uppercase">BACK</span>
                             <span class="delete-btn">
@@ -101,7 +125,7 @@
                                     <div class="upload-camera-container text-center">
                                         <span class="#">
                                             {{-- <img src="mobile-app-assets/icons/photocamera.svg" alt="Camera Icon" /> --}}
-                                            <img src="{{ asset('storage/' . $driver->national_id_behind_avatar) }}"
+                                            <img src="{{ asset('storage/' . $driver->driverLicense->driving_license_avatar_back) }}"
                                                 alt="National ID Back" class="img-fluid">
                                         </span>
                                     </div>
@@ -123,17 +147,17 @@
         </div>
         
         <!--Terms And Conditions Agreement Container Start-->
-            <div class="col-xs-12 col-sm-12 text-center sms-rate-text font-roboto flex-end margin-bottom-30">
-                <div class="container-sms-rate-text width-100 font-11">
-                    <span class="light-gray font-weight-light">
-                    </span>
-                    <br />
-                    <a href="#" class="dark-link">
-                        <span class="font-weight-light">Metroberry Tours & Travel</span>
-                    </a>
-                </div>
+        <div class="col-xs-12 col-sm-12 text-center sms-rate-text font-roboto flex-end margin-bottom-30">
+            <div class="container-sms-rate-text width-100 font-11">
+                <span class="light-gray font-weight-light">
+                </span>
+                <br />
+                <a href="#" class="dark-link">
+                    <span class="font-weight-light">Metroberry Tours & Travel</span>
+                </a>
             </div>
-            <!--Terms And Conditions Agreement Container End-->
+        </div>
+        <!--Terms And Conditions Agreement Container End-->
 
         <!--Main Menu Start-->
         @include('components.driver-mobile-app.main-menu')

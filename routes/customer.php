@@ -52,7 +52,7 @@ Route::post('customer/logout', [CustomerAppController::class, 'customerLogout'])
 
 Route::get('customer/booking/trip', [CustomerAppController::class, 'customerBookingPage'])
     ->name('customer.book.trip.page');
-    
+
 Route::post('customer/booking/trip/store', [CustomerAppController::class, 'customerBookingTrip'])
     ->name('customer.book.trip.store');
 
@@ -60,35 +60,32 @@ Route::post('route/locations/get/all', [CustomerAppController::class, 'getAllRou
     ->name('route.location.waypoints');
 
 
-    //Customer Profile
+//Customer Profile
 Route::get('customer/profile', [CustomerAppController::class, 'customerProfile'])
     ->name('customer.profile');
 
 Route::put('customer/profile/{id}', [CustomerAppController::class, 'customerProfileUpdate'])
     ->name('customer.profile.update');
-    
+
 // customer.trip.history
 Route::put('customer/trips/history', [CustomerAppController::class, 'customerTripHistory'])
     ->name('customer.trip.history');
 
 // Payment Methods
-Route::get('/customer/payment-methods', [CustomerAppController::class, 'paymentMethod'])->name('customer.payment.method.page');
+Route::get('customer/payment-methods', [CustomerAppController::class, 'index'])->name('customer.payment.method.page');
 
 // Customer Addresses
-Route::get('/customer/addresses', [CustomerAppController::class, 'customerAddress'])->name('customer.addresses.page');
+Route::get('customer/addresses', [CustomerAppController::class, 'index'])->name('customer.addresses.page');
 
 // Apply Promo Code
-Route::get('/customer/apply-promo-code', [CustomerAppController::class, 'applyPromoCode'])->name('customer.apply.promo.code.page');
+Route::get('customer/apply-promo-code', [CustomerAppController::class, 'index'])->name('customer.apply.promo.code.page');
 
 // Settings
-Route::get('/customer/settings', [CustomerAppController::class, 'customerSettings'])->name('customer.settings.page');
+Route::get('customer/settings', [CustomerAppController::class, 'index'])->name('customer.settings.page');
 
 // Online Support
-Route::get('/customer/online-support', [CustomerAppController::class, 'onlineSupport'])->name('customer.online.support.page');
+Route::get('customer/online-support', [CustomerAppController::class, 'index'])->name('customer.online.support.page');
 
 
-// customer.trip.show
-Route::get('/customer/show/trip-details/{id}', [CustomerAppController::class, 'showTripDetails'])->name('customer.trip.show');
-
-// customer.trip.cancel
-Route::put('/customer/cancel/trip/{id}', [CustomerAppController::class, 'cancelTrip'])->name('customer.trip.cancel');
+//customer update profile avatar 
+Route::post('customer/update-profile-picture', [CustomerAppController::class, 'updateProfilePicture'])->name('customer.updateProfilePicture')->middleware('auth');

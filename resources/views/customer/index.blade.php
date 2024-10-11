@@ -33,16 +33,18 @@
                         </div>
                     @else
                         <!-- Loop through booked trips -->
-                        @foreach ($trips as $trip)
-                            <div class="history-items-container history-items-padding">
-                                <!--Support Button Start-->
-                                <div class="p-1">
-                                    <a href="{{ route('customer.book.trip.page') }}"
-                                        class="btn btn-primary text-uppercase">Book A Trip</a>
-                                </div>
-                                <!--Support Button End-->
-                                <div class="history-item">
 
+                        <div class="history-items-container history-items-padding">
+                            <!--Support Button Start-->
+                            <div class="p-1">
+                                <a href="{{ route('customer.book.trip.page') }}" class="btn btn-primary text-uppercase">Book
+                                    A Trip</a>
+                            </div>
+                        </div>
+                        @foreach ($trips as $trip)
+                            <!--Support Button End-->
+                            <div class="history-items-container history-items-padding">
+                                <div class="history-item">
                                     <!--Date and Price Container Start-->
                                     <div class="border-bottom-primary thin">
                                         <div class="status-container">
