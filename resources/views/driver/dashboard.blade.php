@@ -1,4 +1,4 @@
-@extends('layoutsmobile-app')
+@extends('layouts.mobile-app')
 
 @section('title', 'Metroberry | Driver')
 @section('content')
@@ -261,7 +261,7 @@
         </div>
 
         <!--Main Menu Start-->
-        @include('componentsmobile-app.main-menu')
+        @include('components.driver-mobile-app.main-menu')
         <!--Main Menu End-->
     </div>
     <!--Terms And Conditions Agreement Container End-->

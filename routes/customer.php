@@ -3,16 +3,7 @@
 use App\Http\Controllers\CustomerAppController;
 use Illuminate\Support\Facades\Route;
 
-// Step 1: Welcome Page
-Route::get('/customer', [CustomerAppController::class, 'WelcomePage'])->name('welcome.page');
 
-// Step 2: Sign-up Options Page
-Route::get('customer/sign-up/options', [CustomerAppController::class, 'signUpOptions'])
-    ->name('sign.up.options.page');
-
-// Step 2 (Optional): Sign-in Page for Users with Account
-Route::get('customer/sign-in', [CustomerAppController::class, 'signInPage'])
-    ->name('customer.sign.in.page');
 
 // Step 3: Registration Page
 Route::get('customer/register', [CustomerAppController::class, 'registerPage'])
@@ -46,9 +37,6 @@ Route::post('customer/login', [CustomerAppController::class, 'customerLogin'])
 Route::get('customer/homepage', [CustomerAppController::class, 'customerIndexPage'])
     ->name('customer.index.page');
 
-//Log Out
-Route::post('customer/logout', [CustomerAppController::class, 'customerLogout'])
-    ->name('logout');
 
 Route::get('customer/booking/trip', [CustomerAppController::class, 'customerBookingPage'])
     ->name('customer.book.trip.page');

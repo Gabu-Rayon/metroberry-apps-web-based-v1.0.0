@@ -71,20 +71,14 @@
                         </div>
                         <!--Sign Up Input Field End-->
 
-                        {{-- For Mobile  here  --}}
+                         {{-- For Mobile  here  --}}
                         <div class="form-group">
                             <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span>
-                                        {{-- <img src="{{ asset('mobile-app-assets/icons/envelope.svg') }}"
-                                            alt="Envelope Icon"> --}}
-                                    </span>
-                                </div>
                                 <input class="form-control" id="phone-input" type="text" name="phone" autocomplete="on"
                                     data-intl-tel-input-id="0" placeholder="(254) 70 0000 000">
                             </div>
                         </div>
-                        {{-- For Email verification here  --}}
+                        {{-- For phone verification here  --}}
 
                         <!--Sign Up Input Field Start-->
                         <div class="form-group">
@@ -145,14 +139,14 @@
                         </div>
                         <!--Pickup organisations Field End-->
 
-
                         <div class="form-submit-button">
                             <button class="btn btn-primary text-uppercase" type="submit">Register </button>
                         </div>
                     </form>
+                     <div class="text-center sms-rate-text">
+                        <a href="{{ route('users.sign.in.page') }}" class="regular-link">Already have an account? Sign in </a>
+                    </div>
                 </div>
-                <!--Sign Up Container Start-->
-
             </div>
         </div>
 

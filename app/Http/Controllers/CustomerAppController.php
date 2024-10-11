@@ -56,20 +56,6 @@ class CustomerAppController extends Controller
         ]);
     }
 
-
-
-    // Welcome page method
-    public function WelcomePage()
-    {
-        return view('customer.welcome');
-    }
-
-    // Sign-up options method
-    public function signUpOptions()
-    {
-        return view('customer.sign-up-options');
-    }
-
     // Register page method
     public function registerPage()
     {
@@ -206,53 +192,6 @@ class CustomerAppController extends Controller
         // If the code is incorrect
         return redirect()->back()->withErrors(['verification-code' => 'Invalid code'])->withInput();
     }
-
-    // Customer login method
-    public function customerLogin(Request $request)
-    {
-        // Validate request data
-        $request->validate([
-            'email' => 'required|email',
-            'password' => 'required|string',
-        ]);
-
-        // Attempt to authenticate the user
-        if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
-            // Authentication passed, redirect to homepage
-            return redirect()->route('customer.index.page')->with('success', 'Welcome back!');
-        }
-
-        // Authentication failed
-        return redirect()->back()
-            ->with('error', 'Invalid credentials. Please try again.')
-            ->withInput($request->only('email'));
-    }
-
-    // Sign-in page method
-    public function signInPage()
-    {
-        return view('customer.sign-in');
-    }
-
-    public function customerLogout(Request $request)
-    {
-        // Log the logout attempt
-        Log::info('Customer logout attempt: ', ['user_id' => Auth::id()]);
-
-        // Log out the user
-        Auth::guard('web')->logout();
-
-        // Invalidate the session
-        $request->session()->invalidate();
-
-        // Regenerate the CSRF token
-        $request->session()->regenerateToken();
-
-        // Redirect to the login page with a success message
-        return redirect()->route('customer.sign.in.page')->with('success', 'You have been logged out successfully.');
-    }
-
-
 
     //Get all the routes  waypoint for the selected route
     public function getAllRouteWaypoints(Request $request)

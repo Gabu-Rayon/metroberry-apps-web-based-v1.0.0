@@ -27,7 +27,8 @@ class DriverAppController extends Controller
 
     public function signup()
     {
-        $organisations = DB::table('organisations')->get();
+        // Retrieve organisations from the database
+        $organisations = Organisation::all();
         return view('driver.signup', compact('organisations'));
     }
 
@@ -85,55 +86,7 @@ class DriverAppController extends Controller
             return back()->with('error', 'Something went wrong.')->withInput();
         }
     }
-
-    /**
-     * Show Driver Login Form
-     * 
-     * @return \Illuminate\View\View
-     */
-
-    public function login()
-    {
-        return view('driver.login');
-    }
-
-    /**
-     * Store Driver Login Form
-     * 
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\RedirectResponse
-     */
-
-    public function loginstore(Request $request)
-    {
-        try {
-            $data = $request->all();
-
-            $validator = Validator::make($data, [
-                'email' => 'required|string|email|max:255',
-                'password' => 'required|string|min:8',
-            ]);
-
-            if ($validator->fails()) {
-                Log::error('VALIDATION ERROR');
-                Log::error($validator->errors()->all());
-
-                return back()->with('error', $validator->errors()->first())->withInput();
-            }
-
-            if (!auth()->attempt(['email' => $data['email'], 'password' => $data['password'], 'role' => 'driver'])) {
-                return back()->with('error', 'Invalid credentials.')->withInput();
-            }
-
-            return redirect()->route('driver.dashboard')->with('success', 'Driver logged in successfully.');
-        } catch (Exception $e) {
-            Log::error('LOGIN DRIVER ERROR');
-            Log::error($e);
-
-            return back()->with('error', 'Something went wrong.')->withInput();
-        }
-    }
-
+  
     /**
      * Show Driver Dashboard
      * 

@@ -1,6 +1,6 @@
 @extends('layouts.mobile-app')
 
-@section('title', 'Sign Up Options')
+@section('title', 'Choose Appropriate | Metroberry Be-Spoken')
 @section('content')
 
     <div id="load" class="loading-overlay display-flex flex-column justify-content-center align-items-center">
@@ -8,6 +8,11 @@
     </div>
 
     <div class="row h-100 align-items-center">
+    <!--Page Title & Icons Start-->
+            <div class="header-icons-container text-center">
+                <span>Choose Appropriate | Metroberry Be-Spoken </span>
+            </div>
+            <!--Page Title & Icons End-->
         <div class="col-xs-12 col-sm-12 margin-bottom-up">
 
             @include('components.logometro')
@@ -25,7 +30,7 @@
             </div>
 
             <div class="have-an-account text-center">
-                <a href="{{ route('customer.sign.in.page') }}" class="regular-link">Already have an account?</a>
+                <a href="{{ route('users.sign.in.page') }}" class="regular-link">Already have an account ? Sign in</a>
             </div>
         </div>
     </div>
