@@ -111,10 +111,10 @@
                                     <!--Trip Details Address Container End-->
 
                                     <!--trip History Button Start-->
-                                    <div>
+                                    {{-- <div>
                                         <a href="#"
                                             class="btn btn-dark text-uppercase">More Details</a>
-                                    </div>
+                                    </div> --}}
                                     <!--trip History Button End-->
                                 </div>
                             </div>
