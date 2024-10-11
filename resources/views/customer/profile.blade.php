@@ -1,4 +1,4 @@
-  @extends('layouts.driver-mobile-app')
+  @extends('layouts.mobile-app')
 
   @section('title', 'Profile | Customer')
   @section('content')
@@ -30,24 +30,26 @@
 
               <div class="rest-container">
 
-                  <!--Profile Information Container Start-->
-                  <div class="text-center header-icon-logo-margin">
-                      <div class="profile-picture-container">
-                          <img id="profile-picture-preview"
-                              src="{{ isset($customer->profile_picture) ? asset($customer->profile_picture) : asset('mobile-app-assets/images/avatar.svg') }}"
-                              alt="Profile Picture">
-
-                          <span class="fas fa-camera">
-                              <input class="file-prompt" type="file" accept="image/*" name="profile_picture"
-                                  id="profile-picture-input">
-                          </span>
-                      </div>
-                      <div class="display-flex flex-column">
-                          <span class="profile-name">{{ $customer->user->name }}</span>
-                          <span class="profile-email font-weight-light">{{ $customer->user->email }}</span>
-                      </div>
-                  </div>
-                  <!--Profile Information Container End-->
+                <!--Profile Information Container Start-->
+                <div class="text-center header-icon-logo-margin">
+                    <form id="customer-profile-picture-form" enctype="multipart/form-data">
+                        @csrf
+                        <div class="profile-picture-container">
+                            <img id="profile-picture"
+                                src="{{ $customer->user->avatar ? asset('storage/' . $customer->user->avatar) : asset('mobile-app-assets/images/avatar.svg') }}"
+                                alt="Profile Picture"   class="rounded-profile-picture"/>
+                            <span class="fas fa-camera">
+                                <input class="file-prompt" type="file" accept="image/*" id="customer-profile-picture-input"
+                                    name="profile_picture" />
+                            </span>
+                        </div>
+                        <div class="display-flex flex-column">
+                            <span class="profile-name">{{ $customer->user->name }}</span>
+                            <span class="profile-email font-weight-light">{{ $customer->user->email }}</span>
+                        </div>
+                    </form>
+                </div>
+                <!--Profile Information Container End-->
 
                   <!--Profile Information Fields Container Start-->
                   <div class="sign-up-form-container text-center">
@@ -217,13 +219,31 @@
           @include('components.customer-mobile-app.main-menu')
           <!--Main Menu End-->
 
-      </div>
-      <!-- Optional JavaScript -->
-      <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-      @push('script')
-          <script></script>
-      @endpush
-
-  @endsection
+    </div>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+       @push('scripts')
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script>
+            $(document).ready(function() {
+                $('#customer-profile-picture-input').change(function() {
+                    var formData = new FormData($('#customer-profile-picture-form')[0]);
+                    $.ajax({
+                        url: "{{ route('customer.updateProfilePicture') }}",
+                        type: 'POST',
+                        data: formData,
+                        contentType: false,
+                        processData: false,
+                        success: function(response) {
+                            $('#profile-picture').attr('src', response.newProfilePictureUrl);
+                            alert('Profile picture updated successfully');
+                        },
+                        error: function(xhr) {
+                            alert('Failed to update profile picture');
+                        }
+                    });
+                });
+            });
+        </script>
+    @endpush
+@endsection

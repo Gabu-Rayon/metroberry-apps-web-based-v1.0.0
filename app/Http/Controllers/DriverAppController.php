@@ -2,12 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\DriversLicenses;
-use App\Models\PSVBadge;
 use Exception;
+use App\Models\Trip;
+use App\Models\Driver;
+use App\Models\PSVBadge;
+use App\Models\Organisation;
+use App\Models\VehicleClass;
 use Illuminate\Http\Request;
+use App\Models\DriversLicenses;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class DriverAppController extends Controller
@@ -21,7 +27,8 @@ class DriverAppController extends Controller
 
     public function signup()
     {
-        $organisations = DB::table('organisations')->get();
+        // Retrieve organisations from the database
+        $organisations = Organisation::all();
         return view('driver.signup', compact('organisations'));
     }
 
@@ -40,7 +47,16 @@ class DriverAppController extends Controller
             $validator = Validator::make($data, [
                 'name' => 'required|string|max:255',
                 'email' => 'required|string|email|max:255|unique:users',
-                'password' => 'required|string|min:8',
+                'password' => [
+                    'required',
+                    'string',
+                    'min:8',
+                    'confirmed',
+                    'regex:/[a-z]/',
+                    'regex:/[A-Z]/',
+                    'regex:/[0-9]/',
+                    'regex:/[@$!%*#?&]/'
+                ],
                 'national_id_no' => 'required|string|max:255|unique:drivers|unique:customers',
                 'organisation_id' => 'required|integer',
             ]);
@@ -79,55 +95,7 @@ class DriverAppController extends Controller
             return back()->with('error', 'Something went wrong.')->withInput();
         }
     }
-
-    /**
-     * Show Driver Login Form
-     * 
-     * @return \Illuminate\View\View
-     */
-
-    public function login()
-    {
-        return view('driver.login');
-    }
-
-    /**
-     * Store Driver Login Form
-     * 
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\RedirectResponse
-     */
-
-    public function loginstore(Request $request)
-    {
-        try {
-            $data = $request->all();
-
-            $validator = Validator::make($data, [
-                'email' => 'required|string|email|max:255',
-                'password' => 'required|string|min:8',
-            ]);
-
-            if ($validator->fails()) {
-                Log::error('VALIDATION ERROR');
-                Log::error($validator->errors()->all());
-
-                return back()->with('error', $validator->errors()->first())->withInput();
-            }
-
-            if (!auth()->attempt(['email' => $data['email'], 'password' => $data['password'], 'role' => 'driver'])) {
-                return back()->with('error', 'Invalid credentials.')->withInput();
-            }
-
-            return redirect()->route('driver.dashboard')->with('success', 'Driver logged in successfully.');
-        } catch (Exception $e) {
-            Log::error('LOGIN DRIVER ERROR');
-            Log::error($e);
-
-            return back()->with('error', 'Something went wrong.')->withInput();
-        }
-    }
-
+  
     /**
      * Show Driver Dashboard
      * 
@@ -136,7 +104,26 @@ class DriverAppController extends Controller
 
     public function dashboard()
     {
-        return view('driver.dashboard');
+
+        // Get the authenticated user
+        $user = Auth::user();
+
+        // Check if the user is a driver
+        if ($user->role !== 'driver') {
+            return redirect()->back()->with('error', 'Access Denied. Only Drivers can access this page.');
+        }
+
+        // Fetch the driver data based on the user_id in the drivers table
+        $driver = Driver::where('user_id', $user->id)->firstOrFail();
+
+        // Log driver information for debugging
+        Log::info('Driver is Huyo Apa:', ['driver' => $driver]);
+
+        // Fetch the completed trips for the driver
+        $trips = Trip::where('driver_id', $driver->id)->where('status', 'assigned')->get();
+        Log::info('Driver Trips Ndizo hzi  Apa:', ['trips' => $trips]);
+
+        return view('driver.dashboard', compact('trips'));
     }
 
     /**
@@ -430,17 +417,205 @@ class DriverAppController extends Controller
 
     public function vehicle()
     {
-        return view('driver.vehicle');
+
+        // Get the authenticated user
+        $user = Auth::user();
+        $organisations = Organisation::all();
+        $vehicleClasses = VehicleClass::all();
+
+        // Check if the user is a customer
+        if ($user->role !== 'driver') {
+            return redirect()->back()->with('error', 'Access Denied. Only Drivers can access this page.');
+        }
+
+        // Fetch the customer data based on the user_id in the customers table
+        $driver = Driver::where('user_id', $user->id)->firstOrFail();
+        return view('driver.vehicle', compact('driver', 'organisations', 'vehicleClasses'));
     }
 
     /**
-     * Driver Trips Page
+     * 
      * 
      * @return \Illuminate\View\View
      */
 
-    public function trips()
+
+    public function driverRegistrationPage()
     {
-        return view('driver.trips');
+        return view('driver.driver-registration');
     }
+
+    public function driverLicenseDocument()
+    {
+        return view('driver.driver-license');
+    }
+
+    public function personalIdCardDocument()
+    {
+        return view('driver.personal-id-card');
+    }
+}
+
+
+    public function psvbadgeDocument()
+    {
+        return view('driver.psv-badge');
+    }
+
+    public function profile()
+    {
+
+        // Get the authenticated user
+        $user = Auth::user();
+
+        // Check if the user is a customer
+        if ($user->role !== 'driver') {
+            return redirect()->back()->with('error', 'Access Denied. Only Drivers can access this page.');
+        }
+
+        // Fetch the customer data based on the user_id in the customers table
+        $driver = Driver::where('user_id', $user->id)->firstOrFail();
+        return view('driver.profile', compact('driver'));
+    }
+
+    public function profileUpdate(Request $request, $id)
+    {
+        try {
+            $data = $request->all();
+
+            Log::info('DATA');
+            Log::info($data);
+
+            $validator = Validator::make($data, [
+                'full-name' => 'nullable|string|max:255',
+                'email' => 'required|string|email|max:255',
+                'phone' => 'required|string|max:255',
+                'national_id_no' => 'required|string|max:255',
+                'organisation_id' => 'required|integer',
+            ]);
+
+            if ($validator->fails()) {
+                Log::error('VALIDATION ERROR');
+                Log::error($validator->errors()->all());
+
+                return back()->with('error', $validator->errors()->first())->withInput();
+            }
+
+            $driver = Driver::find($id);
+
+            $driver->name = $data['name'];
+            $driver->email = $data['email'];
+            $driver->phone = $data['phone'];
+            $driver->national_id_no = $data['national_id_no'];
+            $driver->organisation_id = $data['organisation_id'];
+
+            $driver->save();
+
+            return redirect()->route('driver.profile')->with('success', 'Driver profile updated successfully.');
+        } catch (Exception $e) {
+            Log::error('UPDATE DRIVER PROFILE ERROR');
+            Log::error($e);
+
+            return back()->with('error', 'Something went wrong.')->withInput();
+        }
+    }
+
+    /****
+     * 
+     * Driver Trips History 
+     * 
+     */
+
+    // Method to show trip history page
+    public function tripHistoryPage()
+    {
+        // $user = Auth::user();
+        // $driver = $user->driver;
+
+        // $trips = Trip::where('driver_id', $driver->id)->get();
+
+        return view('driver.trips-history');
+    }
+
+    // Method to show assigned trips page
+    public function tripsAssignedPage()
+    {
+        $user = Auth::user();
+        $driver = $user->driver;
+
+        $trips = Trip::where('driver_id', $driver->id)->where('status', 'assigned')->get();
+
+        return view('driver.trips-assigned', compact('trips'));
+    }
+
+    // Method to show a specific assigned trip details
+    public function tripAssignedShowPage($id)
+    {
+        $trip = Trip::findOrFail($id);
+
+        return view('driver.trip-assigned-show', compact('trip'));
+    }
+
+    // Method to show completed trips page
+    public function tripsCompletedPage()
+    {
+        // Get the authenticated user
+        $user = Auth::user();
+
+        // Check if the user is a driver
+        if ($user->role !== 'driver') {
+            return redirect()->back()->with('error', 'Access Denied. Only Drivers can access this page.');
+        }
+
+        // Fetch the driver data based on the user_id in the drivers table
+        $driver = Driver::where('user_id', $user->id)->firstOrFail();
+
+        // Log driver information for debugging
+        Log::info('Driver is Huyo Apa:', ['driver' => $driver]);
+
+        // Fetch the completed trips for the driver
+        $trips = Trip::where('driver_id', $driver->id)->where('status', 'completed')->get();
+        Log::info('Driver Trips Ndizo hzi  Apa:', ['trips' => $trips]);
+
+        // Return the view with the trips data
+        return view('driver.trips-completed', compact('trips'));
+    }
+
+
+    // Method to show a specific completed trip details
+    public function tripCompletedShowPage($id)
+    {
+        $trip = Trip::findOrFail($id);
+
+        return view('driver.trip-completed-show', compact('trip'));
+    }
+
+    public function updateProfilePicture(Request $request)
+    {
+        $request->validate([
+            'profile_picture' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        $user = Auth::user();
+        $driver = $user->driver;
+
+        if ($request->hasFile('profile_picture')) {
+            $file = $request->file('profile_picture');
+            $filePath = 'drivers/profile_pictures/' . $user->id . '/' . $file->getClientOriginalName();
+
+            // Store the file in the public disk
+            Storage::disk('public')->put($filePath, file_get_contents($file));
+
+            // Update the user's profile picture path
+            $driver->user->avatar = $filePath;
+            $driver->user->save();
+
+            return response()->json(['newProfilePictureUrl' => Storage::disk('public')->url($filePath)]);
+        }
+
+        return response()->json(['error' => 'Failed to upload profile picture'], 400);
+    }
+
+
+
 }

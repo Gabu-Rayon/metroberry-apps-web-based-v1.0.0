@@ -1,4 +1,4 @@
-@extends('layouts.driver-mobile-app')
+@extends('layouts.mobile-app')
 
 @section('title', 'Driver Dashboard')
 @section('content')
@@ -434,6 +434,6 @@
             </div>
         </div>
 
-        @include('components.mainmenu')
+          @include('components.driver-mobile-app.main-menu')
     </div>
 @endsection

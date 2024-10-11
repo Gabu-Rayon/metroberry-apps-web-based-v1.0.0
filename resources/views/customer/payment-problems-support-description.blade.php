@@ -1,4 +1,4 @@
-@extends('layouts.driver-mobile-app')
+@extends('layouts.mobile-app')
 
 @section('title', 'Payment Problems | Customer')
 @section('content')

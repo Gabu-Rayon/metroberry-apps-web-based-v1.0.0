@@ -1,6 +1,6 @@
-@extends('layouts.driver-mobile-app')
+@extends('layouts.mobile-app')
 
-@section('title', 'Login')
+@section('title', 'Login | Driver')
 
 @section('content')
     <div id="load" class="loading-overlay d-flex flex-column justify-content-center align-items-center">

@@ -1,4 +1,4 @@
-@extends('layouts.driver-mobile-app')
+@extends('layouts.mobile-app')
 
 @section('title', 'Homepage | Customer')
 @section('content')
@@ -33,16 +33,18 @@
                         </div>
                     @else
                         <!-- Loop through booked trips -->
-                        @foreach ($trips as $trip)
-                            <div class="history-items-container history-items-padding">
-                                <!--Support Button Start-->
-                                <div class="p-1">
-                                    <a href="{{ route('customer.book.trip.page') }}"
-                                        class="btn btn-primary text-uppercase">Book A Trip</a>
-                                </div>
-                                <!--Support Button End-->
-                                <div class="history-item">
 
+                        <div class="history-items-container history-items-padding">
+                            <!--Support Button Start-->
+                            <div class="p-1">
+                                <a href="{{ route('customer.book.trip.page') }}" class="btn btn-primary text-uppercase">Book
+                                    A Trip</a>
+                            </div>
+                        </div>
+                        @foreach ($trips as $trip)
+                            <!--Support Button End-->
+                            <div class="history-items-container history-items-padding">
+                                <div class="history-item">
                                     <!--Date and Price Container Start-->
                                     <div class="border-bottom-primary thin">
                                         <div class="status-container">
@@ -92,7 +94,7 @@
                                                         value="{{ $trip->drop_off_location }}" disabled>
                                                 </div>
                                             </div>
-                                            <a href="{{ route('customer.trip.show', $trip->id) }}"
+                                            <a href="#"
                                                 class="href-decoration-none">
                                                 <div class="w-100 map-input-container map-input-container-bottom">
                                                     <span class="map-input-icon"><img
@@ -109,10 +111,10 @@
                                     <!--Trip Details Address Container End-->
 
                                     <!--trip History Button Start-->
-                                    <div>
-                                        <a href="{{ route('customer.trip.show', $trip->id) }}"
+                                    {{-- <div>
+                                        <a href="#"
                                             class="btn btn-dark text-uppercase">More Details</a>
-                                    </div>
+                                    </div> --}}
                                     <!--trip History Button End-->
                                 </div>
                             </div>

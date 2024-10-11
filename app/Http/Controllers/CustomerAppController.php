@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class CustomerAppController extends Controller
@@ -53,20 +54,6 @@ class CustomerAppController extends Controller
             'routeLocations' => $routeLocations,
             'trips' => $trips, // Pass the trips to the view
         ]);
-    }
-
-
-
-    // Welcome page method
-    public function WelcomePage()
-    {
-        return view('customer.welcome');
-    }
-
-    // Sign-up options method
-    public function signUpOptions()
-    {
-        return view('customer.sign-up-options');
     }
 
     // Register page method
@@ -205,53 +192,6 @@ class CustomerAppController extends Controller
         // If the code is incorrect
         return redirect()->back()->withErrors(['verification-code' => 'Invalid code'])->withInput();
     }
-
-    // Customer login method
-    public function customerLogin(Request $request)
-    {
-        // Validate request data
-        $request->validate([
-            'email' => 'required|email',
-            'password' => 'required|string',
-        ]);
-
-        // Attempt to authenticate the user
-        if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
-            // Authentication passed, redirect to homepage
-            return redirect()->route('customer.index.page')->with('success', 'Welcome back!');
-        }
-
-        // Authentication failed
-        return redirect()->back()
-            ->with('error', 'Invalid credentials. Please try again.')
-            ->withInput($request->only('email'));
-    }
-
-    // Sign-in page method
-    public function signInPage()
-    {
-        return view('customer.sign-in');
-    }
-
-    public function customerLogout(Request $request)
-    {
-        // Log the logout attempt
-        Log::info('Customer logout attempt: ', ['user_id' => Auth::id()]);
-
-        // Log out the user
-        Auth::guard('web')->logout();
-
-        // Invalidate the session
-        $request->session()->invalidate();
-
-        // Regenerate the CSRF token
-        $request->session()->regenerateToken();
-
-        // Redirect to the login page with a success message
-        return redirect()->route('customer.sign.in.page')->with('success', 'You have been logged out successfully.');
-    }
-
-
 
     //Get all the routes  waypoint for the selected route
     public function getAllRouteWaypoints(Request $request)
@@ -440,9 +380,9 @@ class CustomerAppController extends Controller
         return redirect()->route('customer.profile', $id)->with('success', 'Profile updated successfully.');
     }
 
-    public function customerTripHistory()
+    public function tripsHistory()
     {
-        //customer trip history
+        return view('customer.trips-history');
     }
 
 
@@ -503,5 +443,68 @@ class CustomerAppController extends Controller
     {
        // view file resources/views/customer/online-support.blade.php
         return view('customer.online-support');
+    }
+
+    public function tripsCompleted()
+    {
+        $user = Auth::user();
+        $customer = $user->customer;
+
+        $trips = Trip::where('customer_id', $customer->id)->where('status', 'completed')->get();
+
+        return view('customer.trips-completed', compact('trips'));
+    }
+
+    // Method to show a specific Completed trip details
+    public function tripCompletedShowPage($id)
+    {
+        $trip = Trip::findOrFail($id);
+
+        return view('customer.trip-completed-show', compact('trip'));
+    }
+
+    // Method to show Booked trips page
+    public function tripsBooked()
+    {
+        // Get the authenticated user
+        $user = Auth::user();
+
+        // Check if the user is a customer
+        if ($user->role !== 'customer') {
+            return redirect()->back()->with('error', 'Access Denied. Only customers can access this page.');
+        }
+
+        // Fetch the customer data based on the user_id in the customers table
+        $customer = customer::where('user_id', $user->id)->firstOrFail();
+
+        // Log customer information for debugging
+        Log::info('customer is Huyo Apa:', ['customer' => $customer]);
+
+        // Fetch the completed trips for the customer
+        $trips = Trip::where('customer_id', $customer->id)->where('status', 'scheduled')->get();
+        Log::info('customer Trips Ndizo hzi  Apa:', ['trips' => $trips]);
+
+        // Return the view with the trips data
+        return view('customer.trips-booked', compact('trips'));
+    }
+
+
+
+    public function tripsCancelled()
+    {
+        $user = Auth::user();
+        $customer = $user->customer;
+
+        $trips = Trip::where('customer_id', $customer->id)->where('status', 'cancelled')->get();
+
+        return view('customer.trips-cancelled', compact('trips'));
+    }
+
+    // Method to show a specific cancelled trip details
+    public function tripCancelledShowPage($id)
+    {
+        $trip = Trip::findOrFail($id);
+
+        return view('customer.trip-cancelled-show', compact('trip'));
     }
 }

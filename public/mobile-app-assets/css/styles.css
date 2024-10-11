@@ -2880,6 +2880,13 @@ button:hover,
 .box-shadow-0 {
   box-shadow: none !important;
 }
+.rounded-profile-picture {
+    width: 70px; /* Ensure the width and height are the same for a perfect circle */
+    height: 70px;
+    border-radius: 50%; /* This makes the image circular */
+    object-fit: cover; /* This ensures the image covers the area */
+}
+
 /**==============================Border End===================================**/
 /**============================Font Sizes Start===============================**/
 .font-10 {

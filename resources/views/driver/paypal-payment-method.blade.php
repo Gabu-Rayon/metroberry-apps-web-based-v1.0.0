@@ -1,6 +1,6 @@
-@extends('layouts.driver-mobile-app')
+@extends('layouts.mobile-app')
 
-@section('title', 'Paypal')
+@section('title', 'Paypal | Driver')
 @section('content')
     <!--Loading Container Start-->
     <div id="load" class="loading-overlay display-flex flex-column justify-content-center align-items-center">

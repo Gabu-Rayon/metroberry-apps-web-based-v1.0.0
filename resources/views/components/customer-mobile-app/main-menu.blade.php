@@ -6,11 +6,17 @@
                  </span>
              </div>
              <div class="profile-picture text-center">
-                 <img src="{{ asset('mobile-app-assets/images/profile-1.png') }} " alt="Profile Picture">
+                 @if (Auth::user()->avatar)
+                     <img src="{{ asset('storage/' . Auth::user()->avatar) }}" alt="Profile Picture"
+                         class="rounded-profile-picture" />
+                 @else
+                     <img src="{{ asset('mobile-app-assets/images/anonymous.jpeg') }}" alt="Profile Picture"
+                         class="rounded-profile-picture" />
+                 @endif
              </div>
              <div class="profile-info">
-                 <div class="profile-name text-center">Nata Vacheishvili</div>
-                 <div class="profile-email text-center">nata_vacheishvili@gurucar.com</div>
+                 <div class="profile-name text-center">{{ Auth::user()->name }}</div>
+                 <div class="profile-email text-center">{{ Auth::user()->email }}</div>
              </div>
          </div>
          <div class="menu-items">
@@ -37,11 +43,11 @@
                      <span class="menu-item-title profile">Profile</span>
                      <span class="menu-item-click fas fa-arrow-right"></span>
                  </a>
-                 <a class="menu-item" href="{{ asset('customer.payment.method.page')}}">
+                 {{-- <a class="menu-item" href="#">
                      <span class="menu-item-icon far fa-money-bill-alt"></span>
                      <span class="menu-item-title">Payment Methods</span>
                      <span class="menu-item-click fas fa-arrow-right"></span>
-                 </a>
+                 </a> --}}
                  <a class="menu-item" href="{{ route('customer.trip.history') }}">
                      <span class="menu-item-icon menu-light">
                          <img src="{{ asset('mobile-app-assets/icons/history-light.svg') }} " alt="History Icon">
@@ -49,10 +55,10 @@
                      <span class="menu-item-icon menu-dark">
                          <img src="{{ asset('mobile-app-assets/icons/history.svg') }} " alt="History Icon">
                      </span>
-                     <span class="menu-item-title">History</span>
+                     <span class="menu-item-title">Trips History</span>
                      <span class="menu-item-click fas fa-arrow-right"></span>
                  </a>
-                 <a class="menu-item" href="{{ route('customer.addresses.page') }}">
+                 {{-- <a class="menu-item" href="#">
                      <span class="menu-item-icon menu-dark">
                          <img src="{{ asset('mobile-app-assets/icons/my-addresses-dark.svg') }} "
                              alt="My Addresses Icon">
@@ -63,12 +69,12 @@
                      <span class="menu-item-title">My Addresses</span>
                      <span class="menu-item-click fas fa-arrow-right"></span>
                  </a>
-                 <a class="menu-item" href="{{ route('customer.apply.promo.code.page') }}">
+                 <a class="menu-item" href="#">
                      <span class="menu-item-icon far fa-plus-square"></span>
                      <span class="menu-item-title promo">Apply Promo Code</span>
                      <span class="menu-item-click fas fa-arrow-right"></span>
-                 </a>
-                 <a class="menu-item" href="{{ route('customer.settings.page') }}">
+                 </a> --}}
+                 {{-- <a class="menu-item" href="{{ route('customer.settings.page') }}">
                      <span class="menu-item-icon menu-dark setting">
                          <img src="{{ asset('mobile-app-assets/icons/settings.svg') }} " alt="My Settings Icon">
                      </span>
@@ -77,8 +83,8 @@
                      </span>
                      <span class="menu-item-title">Settings</span>
                      <span class="menu-item-click fas fa-arrow-right"></span>
-                 </a>
-                 <a class="menu-item" href="{{ route('customer.online.support.page') }}">
+                 </a> --}}
+                 {{-- <a class="menu-item" href="#">
                      <span class="menu-item-icon menu-dark support">
                          <img src="{{ asset('mobile-app-assets/icons/support.svg') }}" alt="Support Icon">
                      </span>
@@ -88,20 +94,20 @@
                      </span>
                      <span class="menu-item-title">Online Support</span>
                      <span class="menu-item-click fas fa-arrow-right"></span>
-                 </a>
+                 </a> --}}
 
-                <form method="POST" action="{{route('logout')}}" class="menu-item margin-top-auto">
+                 <form method="POST" action="{{ route('logout') }}" class="menu-item margin-top-auto">
                      @csrf
-                        <span class="menu-item-icon menu-dark logout">
-                            <img src="{{ asset('mobile-app-assets/icons/logout.svg') }} " alt="Logout Icon">
-                        </span>
-                        <span class="menu-item-icon menu-light logout">
-                            <img src="{{ asset('mobile-app-assets/icons/logout-light.svg') }} " alt="Logout Icon">
-                        </span>
+                     <span class="menu-item-icon menu-dark logout">
+                         <img src="{{ asset('mobile-app-assets/icons/logout.svg') }} " alt="Logout Icon">
+                     </span>
+                     <span class="menu-item-icon menu-light logout">
+                         <img src="{{ asset('mobile-app-assets/icons/logout-light.svg') }} " alt="Logout Icon">
+                     </span>
 
-                       <button><span type="submit" class="menu-item-title logout">Log out</span></button> 
-                        <span class="menu-item-click fas fa-arrow-right"></span>
-                    </form>
+                     <button><span type="submit" class="menu-item-title logout">Log out</span></button>
+                     <span class="menu-item-click fas fa-arrow-right"></span>
+                 </form>
              </div>
          </div>
      </div>

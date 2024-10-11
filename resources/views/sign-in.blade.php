@@ -1,6 +1,6 @@
-@extends('layouts.driver-mobile-app')
+@extends('layouts.mobile-app')
 
-@section('title', 'Sign in | Customer')
+@section('title', 'Sign in | Metroberry Be-Spoken')
 @section('content')
 
     <!--Loading Container Start-->
@@ -19,7 +19,7 @@
                         <img src="{{ asset('mobile-app-assets/icons/back.svg') }}" alt="Back Icon">
                     </span>
                 </a>
-                <span>Sign In</span>
+                <span>Sign In | Metroberry Be-Spoken </span>
             </div>
             <!--Page Title & Icons End-->
 
@@ -32,14 +32,16 @@
                 <div class="sign-up-form-container text-center">
 
                     @if (session('success'))
-                        <div class="alert alert-success">{{ session('success') }}</div>
+                        <div class="text-success">{{ session('success') }}</div>
                     @endif
 
                     @if (session('error'))
-                        <div class="alert alert-danger">{{ session('error') }}</div>
+                        <div class="text-danger">{{ session('error') }} !</div>
                     @endif
+                </div>
+                <div class="sign-up-form-container text-center">
 
-                    <form class="width-100"method="POST" action="{{ route('auth.customer.login') }}">
+                    <form class="width-100"method="POST" action="{{ route('auth.users.sign.in') }}">
                         @csrf
                         <!--Sign In Form Field Start-->
                         <div class="form-group">
@@ -78,6 +80,10 @@
                             <button class="btn btn-primary text-uppercase" type="submit">Sign In </button>
                         </div>
                     </form>
+
+                      <div class="have-an-account text-center mt-3">
+                    <a href="{{ route('sign.up.options.page') }}" class="regular-link">Don't have an account ? Sign up</a>
+                </div>
                 </div>
                 <!--Sign Up Container Start-->
 
