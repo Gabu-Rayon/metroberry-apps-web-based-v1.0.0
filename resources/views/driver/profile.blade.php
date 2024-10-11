@@ -29,23 +29,29 @@
             <div class="rest-container">
                 <!--Profile Information Container Start-->
                 <div class="text-center header-icon-logo-margin">
-                    <div class="profile-picture-container">
-                        <img src="{{ asset('mobile-app-assets/images/avatar.svg') }}" alt="Profile Picture" />
-                        <span class="fas fa-camera">
-                            <input class="file-prompt" type="file" accept="image/*" />
-                        </span>
-                    </div>
-                    <div class="display-flex flex-column">
-                        <span class="profile-name">Jonathan McBerly</span>
-                        <span class="profile-email font-weight-light">lorem@loremipsum.com</span>
-                    </div>
+                    <form id="profile-picture-form" enctype="multipart/form-data">
+                        @csrf
+                        <div class="profile-picture-container">
+                            <img id="profile-picture"
+                                src="{{ $driver->user->avatar ? asset('storage/' . $driver->user->avatar) : asset('mobile-app-assets/images/avatar.svg') }}"
+                                alt="Profile Picture"   class="rounded-profile-picture"/>
+                            <span class="fas fa-camera">
+                                <input class="file-prompt" type="file" accept="image/*" id="profile-picture-input"
+                                    name="profile_picture" />
+                            </span>
+                        </div>
+                        <div class="display-flex flex-column">
+                            <span class="profile-name">{{ $driver->user->name }}</span>
+                            <span class="profile-email font-weight-light">{{ $driver->user->email }}</span>
+                        </div>
+                    </form>
                 </div>
                 <!--Profile Information Container End-->
 
                 <!--Profile Information Fields Container Start-->
                 <div class="sign-up-form-container text-center">
-                     <form class="width-100" action="{{ route('driver.profile.update', $driver->id) }}"
-                        method="POST" enctype="multipart/form-data">
+                    <form class="width-100" action="{{ route('driver.profile.update', $driver->id) }}" method="POST"
+                        enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
                         <!--Profile Field Container Start-->
@@ -53,11 +59,12 @@
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <span>
-                                        <img src="{{ asset('mobile-app-assets/icons/avatar-light.svg') }}" alt="Avatar Icon" />
+                                        <img src="{{ asset('mobile-app-assets/icons/avatar-light.svg') }}"
+                                            alt="Avatar Icon" />
                                     </span>
                                 </div>
                                 <input class="form-control" type="text" autocomplete="off" name="full-name"
-                                    placeholder="Full Name"  value="{{ $driver->user->name }}"/>
+                                    placeholder="Full Name" value="{{ $driver->user->name }}" />
                             </div>
                         </div>
                         <!--Profile Field Container End-->
@@ -67,11 +74,12 @@
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <span>
-                                        <img src="{{ asset('mobile-app-assets/icons/personal-id.svg') }}" alt="ID Card Icon" />
+                                        <img src="{{ asset('mobile-app-assets/icons/personal-id.svg') }}"
+                                            alt="ID Card Icon" />
                                     </span>
                                 </div>
                                 <input class="form-control" type="text" autocomplete="off" name="id-number"
-                                    placeholder="Personal Id Number"  value="{{ $driver->national_id_no }}" />
+                                    placeholder="Personal Id Number" value="{{ $driver->national_id_no }}" />
                             </div>
                         </div>
                         <!--Profile Field Container End-->
@@ -99,8 +107,8 @@
                                         <img src="{{ asset('mobile-app-assets/icons/phone.svg') }}" alt="Phone Number" />
                                     </span>
                                 </div>
-                                <input class="form-control" type="text" name="phone"
-                                    placeholder="Mobile Phone Number"  value="{{ $driver->user->phone }}" />
+                                <input class="form-control" type="text" name="phone" placeholder="Mobile Phone Number"
+                                    value="{{ $driver->user->phone }}" />
                             </div>
                         </div>
                         <!--Profile Field Container End-->
@@ -110,15 +118,17 @@
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <span>
-                                        <img src="{{ asset('mobile-app-assets/icons/envelope.svg') }}" alt="Envelope Icon" />
+                                        <img src="{{ asset('mobile-app-assets/icons/envelope.svg') }}"
+                                            alt="Envelope Icon" />
                                     </span>
                                 </div>
-                                <input class="form-control" type="email" name="email" placeholder="Email"    value="{{ $driver->user->email }}" />
+                                <input class="form-control" type="email" name="email" placeholder="Email"
+                                    value="{{ $driver->user->email }}" />
                             </div>
                         </div>
                         <!--Profile Field Container End-->
 
-                         <div class="form-submit-button text-center">
+                        <div class="form-submit-button text-center">
                             <button type="submit" class="btn btn-dark text-uppercase">
                                 Update
                             </button>
@@ -142,10 +152,34 @@
         </div>
         <!--Terms And Conditions Agreement Container End-->
 
-       <!--Main Menu Start-->
+        <!--Main Menu Start-->
         @include('components.driver-mobile-app.main-menu')
         <!--Main Menu End-->
     </div>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    @push('scripts')
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script>
+            $(document).ready(function() {
+                $('#profile-picture-input').change(function() {
+                    var formData = new FormData($('#profile-picture-form')[0]);
+                    $.ajax({
+                        url: "{{ route('driver.updateProfilePicture') }}",
+                        type: 'POST',
+                        data: formData,
+                        contentType: false,
+                        processData: false,
+                        success: function(response) {
+                            $('#profile-picture').attr('src', response.newProfilePictureUrl);
+                            alert('Profile picture updated successfully');
+                        },
+                        error: function(xhr) {
+                            alert('Failed to update profile picture');
+                        }
+                    });
+                });
+            });
+        </script>
+    @endpush
 @endsection

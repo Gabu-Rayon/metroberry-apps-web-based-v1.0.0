@@ -13,6 +13,7 @@ use App\Models\DriversLicenses;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class DriverAppController extends Controller
@@ -625,6 +626,33 @@ class DriverAppController extends Controller
 
         return view('driver.trip-completed-show', compact('trip'));
     }
+
+    public function updateProfilePicture(Request $request)
+    {
+        $request->validate([
+            'profile_picture' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        $user = Auth::user();
+        $driver = $user->driver;
+
+        if ($request->hasFile('profile_picture')) {
+            $file = $request->file('profile_picture');
+            $filePath = 'drivers/profile_pictures/' . $user->id . '/' . $file->getClientOriginalName();
+
+            // Store the file in the public disk
+            Storage::disk('public')->put($filePath, file_get_contents($file));
+
+            // Update the user's profile picture path
+            $driver->user->avatar = $filePath;
+            $driver->user->save();
+
+            return response()->json(['newProfilePictureUrl' => Storage::disk('public')->url($filePath)]);
+        }
+
+        return response()->json(['error' => 'Failed to upload profile picture'], 400);
+    }
+
 
 
 }

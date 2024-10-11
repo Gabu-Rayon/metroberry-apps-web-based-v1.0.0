@@ -2929,6 +2929,14 @@ button:hover,
 .height-100 {
   height: 100%;
 }
+
+.rounded-profile-picture {
+    width: 70px; /* Ensure the width and height are the same for a perfect circle */
+    height: 70px;
+    border-radius: 50%; /* This makes the image circular */
+    object-fit: cover; /* This ensures the image covers the area */
+}
+
 /**============================Width/Height End=================================**/
 /**============================Animations Start===================================**/
 @-webkit-keyframes pulse {

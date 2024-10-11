@@ -8,10 +8,9 @@
         </div>
         <div class="profile-picture text-center">
             @if (Auth::user()->avatar)
-                <img src="{{ asset('storage/' . Auth::user()->avatar) }}" alt="Profile Picture" />
+                <img src="{{ asset('storage/' . Auth::user()->avatar) }}" alt="Profile Picture" class="rounded-profile-picture" />
             @else
-                <img src="{{ asset('mobile-app-assets/images/anonymous.jpeg') }}" alt="Profile Picture" width="100"
-                    height="100" style="border-radius: 50%" />
+                <img src="{{ asset('mobile-app-assets/images/anonymous.jpeg') }}" alt="Profile Picture" class="rounded-profile-picture" />
             @endif
         </div>
         <div class="profile-info">

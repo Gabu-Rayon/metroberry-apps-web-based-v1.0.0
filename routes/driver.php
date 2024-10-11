@@ -60,3 +60,7 @@ Route::put('driver/trip-assigned/show/{id}', [DriverAppController::class, 'tripA
 
 Route::get('driver/trips-completed', [DriverAppController::class, 'tripsCompletedPage'])->name('trips.completed.page')->middleware('auth');
 Route::put('driver/trip-completed/show/{id}', [DriverAppController::class, 'tripCompletedShowPage'])->name('trip.compelete.show.page')->middleware('auth');
+
+
+//Driver update profile avatar 
+Route::post('driver/update-profile-picture', [DriverAppController::class, 'updateProfilePicture'])->name('driver.updateProfilePicture')->middleware('auth');
