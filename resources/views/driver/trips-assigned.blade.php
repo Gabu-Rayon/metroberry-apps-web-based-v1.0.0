@@ -1,4 +1,3 @@
-
 @extends('layouts.driver-mobile-app')
 
 @section('title', 'Trips Assigned | Driver')
@@ -29,7 +28,7 @@
                         <img src="{{ asset('mobile-app-assets/icons/back.svg') }}" alt="Back Icon" />
                     </span>
                 </a>
-                <span class="title"> Trips : {{ $driver->status == 'inactive' ? 'Inactive' : 'Active' }}</span>
+                <span class="title"> Trips | Assigned</span>
 
                 <a href="#">
                     <span class="float-right menu-open closed">
@@ -83,8 +82,8 @@
                                             </div>
                                             <div class="mb-3">
                                                 <label for="issue_date" class="form-label">Issue Date</label>
-                                                <input type="date" id="issue_date" name="issue_date"
-                                                    class="form-control" required>
+                                                <input type="date" id="issue_date" name="issue_date" class="form-control"
+                                                    required>
                                             </div>
                                             <div class="mb-3">
                                                 <label for="expiry_date" class="form-label">Expiry Date</label>
@@ -94,8 +93,8 @@
                                             <div class="mb-3">
                                                 <label for="license_front_avatar" class="form-label">License Front
                                                     Picture</label>
-                                                <input type="file" id="license_front_avatar"
-                                                    name="license_front_avatar" required>
+                                                <input type="file" id="license_front_avatar" name="license_front_avatar"
+                                                    required>
                                             </div>
                                             <div class="mb-3">
                                                 <label for="license_back_avatar" class="form-label">License Back
@@ -154,7 +153,89 @@
                                     </div>
                                 @endif
 
-                                Trips
+                                <!-- Trips Assigned -->
+                                <div
+                                    class="request-notification-container map-notification meters-left-450 map-notification-warning">
+                                    <h3>Assigned Trips</h3>
+                                    <div class="all-history-items remaining-height">
+                                        <!-- Check if there are trips booked -->
+                                        @if ($trips->isEmpty())
+                                            <div class="text-center">
+                                                <p>No Assigned trips found.</p>
+                                            </div>
+                                        @else
+                                            <!-- Loop through booked trips -->
+                                            @foreach ($trips as $trip)
+                                                <div class="history-items-container history-items-padding">
+                                                    <div class="history-item">
+                                                        <!--Date and Price Container Start-->
+                                                        <div class="border-bottom-primary thin">
+                                                            <div class="status-container">
+                                                                <div class="date float-left">
+                                                                    Date :
+                                                                    {{ \Carbon\Carbon::parse($trip->trip_date)->format('d M Y') }},
+                                                                    @if ($driver->time_format === '12-hour')
+                                                                        Time :
+                                                                        {{ \Carbon\Carbon::parse($trip->pick_up_time)->format('h:i A') }}
+                                                                        <!-- 12-hour format -->
+                                                                    @else
+                                                                        Time :
+                                                                        {{ \Carbon\Carbon::parse($trip->pick_up_time)->format('H:i') }}
+                                                                        <!-- 24-hour format -->
+                                                                    @endif
+                                                                </div>
+                                                                <br>
+                                                                <div class="status-none float-right text-uppercase">
+                                                                    Charges Kes {{ number_format($trip->total_price, 2) }}
+                                                                    <!-- Format charges -->
+                                                                </div>
+                                                                <div class="clearfix"></div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="addresses-container position-relative">
+                                                            Customer : {{ $trip->customer->user->name }}
+                                                            <br>
+                                                            Route : {{ $trip->route->name }}
+                                                        </div>
+                                                        <!--Trips Details Address Container Start-->
+                                                        <div class="addresses-container position-relative">
+                                                            <div class="height-auto">
+                                                                <div
+                                                                    class="w-100 map-input-container map-input-container-top">
+                                                                    <span
+                                                                        class="fas fa-location-arrow location-icon-rotate map-input-icon"></span>
+                                                                    <div class="map-input display-flex">
+                                                                        <input class="controls flex-1 font-weight-light"
+                                                                            type="text"
+                                                                            placeholder="Enter an origin location"
+                                                                            value="{{ $trip->drop_off_location }}"
+                                                                            disabled>
+                                                                    </div>
+                                                                </div>
+                                                                <a href="#"
+                                                                    class="href-decoration-none">
+                                                                    <div
+                                                                        class="w-100 map-input-container map-input-container-bottom">
+                                                                        <span class="map-input-icon"><img
+                                                                                src="{{ asset('mobile-app-assets/icons/circle.svg') }}"
+                                                                                alt="Current Location Icon"></span>
+                                                                        <div
+                                                                            class="map-input display-flex controls flex-1 align-items-center">
+                                                                            {{ $trip->pick_up_location }}
+                                                                        </div>
+                                                                        <span class="dotted-line"></span>
+                                                                    </div>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                        <!--Trip Details Address Container End-->
+                                                    </div>
+                                                </div>
+                                            @endforeach
+                                        @endif
+                                    </div>
+                                </div>
+                                <!-- End of Assgined Completed -->
                             @endif
                         @endif
                     </div>

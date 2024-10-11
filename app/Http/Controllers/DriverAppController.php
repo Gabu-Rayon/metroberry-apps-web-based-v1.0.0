@@ -141,7 +141,26 @@ class DriverAppController extends Controller
 
     public function dashboard()
     {
-        return view('driver.dashboard');
+
+        // Get the authenticated user
+        $user = Auth::user();
+
+        // Check if the user is a driver
+        if ($user->role !== 'driver') {
+            return redirect()->back()->with('error', 'Access Denied. Only Drivers can access this page.');
+        }
+
+        // Fetch the driver data based on the user_id in the drivers table
+        $driver = Driver::where('user_id', $user->id)->firstOrFail();
+
+        // Log driver information for debugging
+        Log::info('Driver is Huyo Apa:', ['driver' => $driver]);
+
+        // Fetch the completed trips for the driver
+        $trips = Trip::where('driver_id', $driver->id)->where('status', 'assigned')->get();
+        Log::info('Driver Trips Ndizo hzi  Apa:', ['trips' => $trips]);
+
+        return view('driver.dashboard', compact('trips'));
     }
 
     /**
@@ -456,7 +475,7 @@ class DriverAppController extends Controller
      * 
      * @return \Illuminate\View\View
      */
- 
+
 
     public function driverRegistrationPage()
     {

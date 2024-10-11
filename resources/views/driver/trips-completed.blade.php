@@ -157,18 +157,83 @@
                                 <div
                                     class="request-notification-container map-notification meters-left-450 map-notification-warning">
                                     <h3>Completed Trips</h3>
-                                    @if ($trips->isEmpty())
-                                        <p>No completed trips found.</p>
-                                    @else
-                                        <ul>
+                                    <div class="all-history-items remaining-height">
+                                        <!-- Check if there are trips booked -->
+                                        @if ($trips->isEmpty())
+                                            <div class="text-center">
+                                                <p>No booked trips found.</p>
+                                            </div>
+                                        @else
+                                            <!-- Loop through booked trips -->
                                             @foreach ($trips as $trip)
-                                                <p>
-                                                         Date: {{ $trip->trip_date }}, 
-                                                         Distance: {{ $trip->distance }} km
-                                                </p>
+                                                <div class="history-items-container history-items-padding">
+                                                    <div class="history-item">
+                                                        <!--Date and Price Container Start-->
+                                                        <div class="border-bottom-primary thin">
+                                                            <div class="status-container">
+                                                                <div class="date float-left">
+                                                                    Date :
+                                                                    {{ \Carbon\Carbon::parse($trip->trip_date)->format('d M Y') }},
+                                                                    @if ($driver->time_format === '12-hour')
+                                                                        Time :
+                                                                        {{ \Carbon\Carbon::parse($trip->pick_up_time)->format('h:i A') }}
+                                                                        <!-- 12-hour format -->
+                                                                    @else
+                                                                        Time :
+                                                                        {{ \Carbon\Carbon::parse($trip->pick_up_time)->format('H:i') }}
+                                                                        <!-- 24-hour format -->
+                                                                    @endif
+                                                                </div>
+                                                                <div class="status-none float-right text-uppercase">
+                                                                    Charges Kes {{ number_format($trip->total_price, 2) }}
+                                                                    <!-- Format charges -->
+                                                                </div>
+                                                                <div class="clearfix"></div>
+                                                            </div>
+                                                        </div>
+                                                        <!--Date and Price Container End-->
+                                                        <div class="addresses-container position-relative">
+                                                            Customer : {{ $trip->customer->user->name }}
+                                                            <br>
+                                                            Route : {{ $trip->route->name }}
+                                                        </div>
+                                                        <!--Trips Details Address Container Start-->
+                                                        <div class="addresses-container position-relative">
+                                                            <div class="height-auto">
+                                                                <div
+                                                                    class="w-100 map-input-container map-input-container-top">
+                                                                    <span
+                                                                        class="fas fa-location-arrow location-icon-rotate map-input-icon"></span>
+                                                                    <div class="map-input display-flex">
+                                                                        <input class="controls flex-1 font-weight-light"
+                                                                            type="text"
+                                                                            placeholder="Enter an origin location"
+                                                                            value="{{ $trip->drop_off_location }}"
+                                                                            disabled>
+                                                                    </div>
+                                                                </div>
+                                                                <a href="#"
+                                                                    class="href-decoration-none">
+                                                                    <div
+                                                                        class="w-100 map-input-container map-input-container-bottom">
+                                                                        <span class="map-input-icon"><img
+                                                                                src="{{ asset('mobile-app-assets/icons/circle.svg') }}"
+                                                                                alt="Current Location Icon"></span>
+                                                                        <div
+                                                                            class="map-input display-flex controls flex-1 align-items-center">
+                                                                            {{ $trip->pick_up_location }}
+                                                                        </div>
+                                                                        <span class="dotted-line"></span>
+                                                                    </div>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                        <!--Trip Details Address Container End-->
+                                                    </div>
+                                                </div>
                                             @endforeach
-                                        </ul>
-                                    @endif
+                                        @endif
+                                    </div>
                                 </div>
                                 <!-- End of Trips Completed -->
                             @endif

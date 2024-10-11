@@ -90,18 +90,18 @@
                      <span class="menu-item-click fas fa-arrow-right"></span>
                  </a>
 
-                <form method="POST" action="{{route('logout')}}" class="menu-item margin-top-auto">
+                 <form method="POST" action="{{ route('logout') }}" class="menu-item margin-top-auto">
                      @csrf
-                        <span class="menu-item-icon menu-dark logout">
-                            <img src="{{ asset('mobile-app-assets/icons/logout.svg') }} " alt="Logout Icon">
-                        </span>
-                        <span class="menu-item-icon menu-light logout">
-                            <img src="{{ asset('mobile-app-assets/icons/logout-light.svg') }} " alt="Logout Icon">
-                        </span>
+                     <span class="menu-item-icon menu-dark logout">
+                         <img src="{{ asset('mobile-app-assets/icons/logout.svg') }} " alt="Logout Icon">
+                     </span>
+                     <span class="menu-item-icon menu-light logout">
+                         <img src="{{ asset('mobile-app-assets/icons/logout-light.svg') }} " alt="Logout Icon">
+                     </span>
 
-                       <button><span type="submit" class="menu-item-title logout">Log out</span></button> 
-                        <span class="menu-item-click fas fa-arrow-right"></span>
-                    </form>
+                     <button><span type="submit" class="menu-item-title logout">Log out</span></button>
+                     <span class="menu-item-click fas fa-arrow-right"></span>
+                 </form>
              </div>
          </div>
      </div>
