@@ -80,6 +80,18 @@
                         </div>
                         {{-- For phone verification here  --}}
 
+                         <!--Sign Up Input Field Start-->
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span><i class="fa fa-id-card" aria-hidden="true"></i></span>
+                                </div>
+                                <input class="form-control" type="number" autocomplete="on" name="national_id_no"
+                                    placeholder="National Id" value ="{{ old('national_id_no') }}">
+                            </div>
+                        </div>
+                        <!--Sign Up Input Field End-->
+
                         <!--Sign Up Input Field Start-->
                         <div class="form-group">
                             <div class="input-group">

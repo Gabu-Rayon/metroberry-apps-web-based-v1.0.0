@@ -47,7 +47,16 @@ class DriverAppController extends Controller
             $validator = Validator::make($data, [
                 'name' => 'required|string|max:255',
                 'email' => 'required|string|email|max:255|unique:users',
-                'password' => 'required|string|min:8',
+                'password' => [
+                    'required',
+                    'string',
+                    'min:8',
+                    'confirmed',
+                    'regex:/[a-z]/',
+                    'regex:/[A-Z]/',
+                    'regex:/[0-9]/',
+                    'regex:/[@$!%*#?&]/'
+                ],
                 'national_id_no' => 'required|string|max:255|unique:drivers|unique:customers',
                 'organisation_id' => 'required|integer',
             ]);
