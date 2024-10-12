@@ -507,4 +507,31 @@ class CustomerAppController extends Controller
 
         return view('customer.trip-cancelled-show', compact('trip'));
     }
+
+
+     public function updateProfilePicture(Request $request)
+    {
+        $request->validate([
+            'profile_picture' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        $user = Auth::user();
+        $customer = $user->customer;
+
+        if ($request->hasFile('profile_picture')) {
+            $file = $request->file('profile_picture');
+            $filePath = 'customers/profile_pictures/' . $user->id . '/' . $file->getClientOriginalName();
+
+            // Store the file in the public disk
+            Storage::disk('public')->put($filePath, file_get_contents($file));
+
+            // Update the user's profile picture path
+            $customer->user->avatar = $filePath;
+            $customer->user->save();
+
+            return response()->json(['newProfilePictureUrl' => Storage::disk('public')->url($filePath)]);
+        }
+
+        return response()->json(['error' => 'Failed to upload profile picture'], 400);
+    }
 }
